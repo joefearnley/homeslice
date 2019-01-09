@@ -13,10 +13,11 @@ class HomePageTest extends TestCase
      *
      * @return void
      */
-    public function testShowHomeSlice()
+    public function testShowHomePage()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->visit('/')
+            ->see('Home Slice')
+            ->see('Login')
+            ->see('Sign Up');
     }
 }
