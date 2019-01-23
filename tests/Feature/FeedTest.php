@@ -8,8 +8,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class FeedTest extends TestCase
 {
-    public function feedShowsPostsText()
+    public function testFeedShowsPostsText()
     {
+
+        $this->assertTrue(true);
+
         // insert some posts
 
         // call /feed
