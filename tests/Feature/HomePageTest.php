@@ -22,7 +22,7 @@ class HomePageTest extends TestCase
     {
         $user = factory(User::class)->create();
         $this->actingAs($user)
-            ->get('')
+            ->get('/')
             ->assertStatus(200)
             ->assertSee('Home')
             ->assertDontSee('Login');
