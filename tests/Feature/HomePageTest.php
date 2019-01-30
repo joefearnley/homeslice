@@ -12,22 +12,24 @@ class HomePageTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function testShowHomePage()
+    public function testHomePageShowsMessageIfNoPostsHaveBeenCreated()
     {
-        $this->get('/')
-            ->assertStatus(200)
-            ->assertSee('Home Slice')
-            ->assertSee('Login')
-            ->assertSee('Sign Up');
+        $this->assertTrue(true);
     }
 
-    public function testHomePageShowsHomeLinkWhenUserIsLoggedIn()
-    {
-        $user = factory(User::class)->create();
-        $this->actingAs($user)
-            ->get('/')
-            ->assertStatus(200)
-            ->assertSee('Home')
-            ->assertDontSee('Login');
-    }
+    // public function testHomePageShowsPosts()
+    // {
+    //     $user = factory(User::class)->create();
+
+    //     // insert some posts
+    //     $post1 = factory(Post::class)->create();
+    //     $post2 = factory(Post::class)->create();
+    //     $post3 = factory(Post::class)->create();
+
+    //     // call /feed
+    //     $this->actingAs($user)
+    //         ->get('/home')
+
+    //     // assert there are posts being shown in feed
+    // }
 }

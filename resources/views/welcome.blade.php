@@ -3,10 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
+        <title>HomeSlice</title>
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
@@ -76,7 +73,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Home Slice
+                    HomeSlice
                 </div>
                 @guest
                     <div class="links">
