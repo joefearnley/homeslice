@@ -58,6 +58,9 @@
                                     </form>
                                 </div>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-primary" href="/post/add">Add Post</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>

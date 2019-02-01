@@ -12,9 +12,10 @@ class HomePageTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function testHomePageShowsMessageIfNoPostsHaveBeenCreated()
+    public function testHomePageRedirectsToWelcomePageIfNotLoggedIn()
     {
-        $this->assertTrue(true);
+        $this->get('/home')
+            ->assertRedirect('/login');
     }
 
     // public function testHomePageShowsPosts()

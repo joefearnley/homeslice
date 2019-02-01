@@ -8,7 +8,7 @@ class PostController extends Controller
 {
     public function add()
     {
-        
+        return view('posts.add');
     }
 
     public function show()
