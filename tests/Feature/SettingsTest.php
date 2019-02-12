@@ -30,6 +30,39 @@ class SettingsTest extends TestCase
             ->assertSee($user->username);
     }
 
-    // update user settings
+    public function testUpdatesUserSettings()
+    {
+        $user = factory(User::class)->create();
+        $oldName = $user->name;
+        $oldUsername = $user->username;
 
+        $formData = [
+            'name' => 'Joe Fearnley',
+            'username' => 'joefearnley',
+            'email' => 'joe.fearnley@gmail.com'
+        ];
+
+        $this->actingAs($user)
+            ->post('/settings/save', $formData)
+            ->assertStatus(302);
+
+        $updatedUser = User::find($user->id);
+
+        $this->assertFalse($oldName === $updatedUser->name);
+        $this->assertFalse($oldUsername === $updatedUser->username);
+    }
+
+    public function testNameUsernameEmailAreRequired()
+    {
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)
+            ->post('/settings/save', [])
+            ->assertStatus(302)
+            ->assertSessionHasErrors([
+                'name' => 'The name field is required.',
+                'username' => 'The username field is required.',
+                'email' => 'The email field is required.'
+            ]);
+    }
 }

@@ -22,17 +22,30 @@ class SettingsController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:50', 'unique:users'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'username' => ['required', 'string', 'max:50'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['string', 'min:6', 'confirmed'],
         ]);
 
         $user = Auth::user();
         $user->name = $request->input('name');
         $user->username = $request->input('username');
         $user->email = $request->input('email');
-        $user->name = Hash::make($request->input('password'));
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
 
-        return view('settings')->with('successMessage', 'Settings updated.');
+        $user->save();
+
+        return redirect('settings')->with('successMessage', 'Settings updated.');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+        ]);
+
+        return redirect('settings')->with('successMessage', 'Password updated.');
     }
 }
