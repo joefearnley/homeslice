@@ -10,4 +10,8 @@ class Post extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function getDisplayDateAttribute($value) {
+        return \Carbon\Carbon::parse($value)->format('d/m/Y');
+    }
 }

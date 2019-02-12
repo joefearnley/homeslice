@@ -33,9 +33,9 @@ class HomePageTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $post1 = factory(Post::class)->create([ 'user_id' => $user->id ]);
-        $post2 = factory(Post::class)->create([ 'user_id' => $user->id ]);
-        $post3 = factory(Post::class)->create([ 'user_id' => $user->id ]);
+        $post1 = factory(Post::class)->create(['user_id' => $user->id]);
+        $post2 = factory(Post::class)->create(['user_id' => $user->id]);
+        $post3 = factory(Post::class)->create(['user_id' => $user->id]);
 
         $this->actingAs($user)
             ->get('/home')
