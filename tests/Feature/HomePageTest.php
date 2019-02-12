@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\User;
+use App\Post;
 
 class HomePageTest extends TestCase
 {
@@ -18,19 +19,20 @@ class HomePageTest extends TestCase
             ->assertRedirect('/login');
     }
 
-    // public function testHomePageShowsPosts()
-    // {
-    //     $user = factory(User::class)->create();
+    public function testHomePageShowsPosts()
+    {
+        $user = factory(User::class)->create();
 
-    //     // insert some posts
-    //     $post1 = factory(Post::class)->create();
-    //     $post2 = factory(Post::class)->create();
-    //     $post3 = factory(Post::class)->create();
+        // insert some posts
+        $post1 = factory(Post::class)->create([ 'user_id' => $user->id ]);
+        $post2 = factory(Post::class)->create([ 'user_id' => $user->id ]);
+        $post3 = factory(Post::class)->create([ 'user_id' => $user->id ]);
 
-    //     // call /feed
-    //     $this->actingAs($user)
-    //         ->get('/home')
-
-    //     // assert there are posts being shown in feed
-    // }
+        // call /feed
+        $this->actingAs($user)
+            ->get('/home')
+            ->assertSee(e($post1->body))
+            ->assertSee(e($post2->body))
+            ->assertSee(e($post3->body));
+    }
 }
