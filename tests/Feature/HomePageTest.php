@@ -19,16 +19,24 @@ class HomePageTest extends TestCase
             ->assertRedirect('/login');
     }
 
+    public function testHomePageShowsMessageWhenThereAreNoPosts()
+    {
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)
+            ->get('/home')
+            ->assertSee(e('You have not created any posts yet.'))
+            ->assertSee(e('Click on the Add Post button to get started.'));
+    }
+
     public function testHomePageShowsPosts()
     {
         $user = factory(User::class)->create();
 
-        // insert some posts
         $post1 = factory(Post::class)->create([ 'user_id' => $user->id ]);
         $post2 = factory(Post::class)->create([ 'user_id' => $user->id ]);
         $post3 = factory(Post::class)->create([ 'user_id' => $user->id ]);
 
-        // call /feed
         $this->actingAs($user)
             ->get('/home')
             ->assertSee(e($post1->body))
