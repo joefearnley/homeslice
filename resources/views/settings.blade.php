@@ -10,7 +10,7 @@
                 {{ session('successMessage') }}
             </div>
             @endif
-            <div class="card">
+            <div class="card mt-5">
                 <div class="card-header">{{ __('Personal Info') }}</div>
                 <div class="card-body">
                     <form method="POST" action="/settings/save">

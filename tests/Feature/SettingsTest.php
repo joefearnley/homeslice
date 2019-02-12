@@ -36,14 +36,12 @@ class SettingsTest extends TestCase
         $oldName = $user->name;
         $oldUsername = $user->username;
 
-        $formData = [
-            'name' => 'Joe Fearnley',
-            'username' => 'joefearnley',
-            'email' => 'joe.fearnley@gmail.com'
-        ];
-
         $this->actingAs($user)
-            ->post('/settings/save', $formData)
+            ->post('/settings/save', [
+                'name' => 'Joe Fearnley',
+                'username' => 'joefearnley',
+                'email' => 'joe.fearnley@gmail.com'
+            ])
             ->assertStatus(302);
 
         $updatedUser = User::find($user->id);
@@ -64,5 +62,52 @@ class SettingsTest extends TestCase
                 'username' => 'The username field is required.',
                 'email' => 'The email field is required.'
             ]);
+    }
+
+    public function testPasswordIsRequired()
+    {
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)
+            ->post('/settings/password/save', [])
+            ->assertStatus(302)
+            ->assertSessionHasErrors([
+                'password' => 'The password field is required.'
+            ]);
+    }
+
+    public function testPasswordsMustMatch()
+    {
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)
+            ->post('/settings/password/save', [
+                'password' => '123456',
+                'password_confirmation' => '1234567'
+            ])
+            ->assertStatus(302)
+            ->assertSessionHasErrors([
+                'password' => 'The password confirmation does not match.'
+            ]);
+    }
+
+    public function testPasswordIsUpdated()
+    {
+        $oldPassword = 'password';
+        $newPassword = 'secret';
+
+        $user = factory(User::class)->create([
+            'password' => \Hash::make($oldPassword)
+        ]);
+
+        $this->actingAs($user)
+            ->post('/settings/password/save', [
+                'password' => $newPassword,
+                'password_confirmation' => $newPassword
+            ])
+            ->assertStatus(302);
+
+        $user->refresh();
+        $this->assertTrue(\Hash::check($newPassword, $user->password));
     }
 }

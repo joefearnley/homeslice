@@ -26,12 +26,8 @@ class SettingsController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:50'],
-            'email' => ['required', 'string', 'email', 'max:255',
-                Rule::unique('users')->ignore($user->id)
-            ],
-            'password' => ['string', 'min:6', 'confirmed',
-                Rule::unique('users')->ignore($user->id)
-            ],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'password' => ['string', 'min:6', 'confirmed', Rule::unique('users')->ignore($user->id)],
         ]);
 
         $user->name = $request->input('name');
@@ -51,6 +47,10 @@ class SettingsController extends Controller
         $request->validate([
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
+
+        $user = Auth::user();
+        $user->password = Hash::make($request->input('password'));
+        $user->save();
 
         return redirect('settings')->with('successMessage', 'Password updated.');
     }
