@@ -44,4 +44,10 @@ class ProfileTest extends TestCase
             ->assertSee(e($post3->body))
             ->assertSee($post3->display_date);
     }
+
+    public function testRedirectToHomePageWhenUserNotFound()
+    {
+        $this->get('/johndoe123')
+            ->assertStatus(404);
+    }
 }

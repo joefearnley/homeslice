@@ -11,10 +11,13 @@ class ProfileController extends Controller
     public function index($username)
     {
         $user = User::where('username', $username)->first();
-        $posts = $user->posts;
+
+        if (empty($user)) {
+            abort(404);
+        }
 
         return view('profile')
             ->with('user', $user)
-            ->with('posts', $posts);
+            ->with('posts', $user->posts);
     }
 }
