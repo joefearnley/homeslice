@@ -1,3 +1,3 @@
 ## HomeSlice
 
-HomeSlice is a bookmarking sevice built with Laravel.
+A bookmarking sevice built with Laravel.

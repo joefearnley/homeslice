@@ -24863,10 +24863,11 @@ var render = function() {
                                 },
                                 [
                                   _c("img", {
-                                    staticClass: "h-8 w-8 rounded-full",
+                                    staticClass:
+                                      "h-8 w-8 rounded-full object-cover",
                                     attrs: {
                                       src: _vm.$page.user.profile_photo_url,
-                                      alt: ""
+                                      alt: _vm.$page.user.name
                                     }
                                   })
                                 ]
@@ -25181,7 +25182,10 @@ var render = function() {
                 _c("div", { staticClass: "flex-shrink-0" }, [
                   _c("img", {
                     staticClass: "h-10 w-10 rounded-full",
-                    attrs: { src: _vm.$page.user.profile_photo_url, alt: "" }
+                    attrs: {
+                      src: _vm.$page.user.profile_photo_url,
+                      alt: _vm.$page.user.name
+                    }
                   })
                 ]),
                 _vm._v(" "),
@@ -27224,8 +27228,11 @@ var render = function() {
                       },
                       [
                         _c("img", {
-                          staticClass: "rounded-full h-20 w-20",
-                          attrs: { src: _vm.$page.user.profile_photo_url }
+                          staticClass: "rounded-full h-20 w-20 object-cover",
+                          attrs: {
+                            src: _vm.$page.user.profile_photo_url,
+                            alt: "Current Profile Photo"
+                          }
                         })
                       ]
                     ),
