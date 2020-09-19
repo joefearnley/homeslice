@@ -23,3 +23,10 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::middleware(['auth:sanctum', 'verified'])
     ->get('/home', [HomeController::class, 'index'])
     ->name('home');
+
+
+Route::get('/bookmark/add', [BookmarkController::class, 'create']);
+Route::post('/bookmark/add', [BookmarkController::class, 'store']);
+Route::get('/bookmark/edit', [BookmarkController::class, 'edit']);  
+Route::post('/bookmark/update', [BookmarkController::class, 'update']);
+Route::post('/bookmark/update', [BookmarkController::class, 'update']);
