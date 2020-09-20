@@ -11,31 +11,29 @@ class HomepageTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testHomepageShouldDisplayAppName()
+    protected $user = null;
+
+    protected function setUp(): void
     {
-        $response = $this->get('/');
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+    }
+
+    public function testShouldRedirectToLoginIfNotAuthenticated()
+    {
+        $response = $this->get('/home');
+
+        $response->assertStatus(302);
+
+        $response->assertRedirect('/login');
+    }
+
+    public function testShouldSeeAccountLinkWhenAuthenticated()
+    {
+        $response = $this->actingAs($this->user)->get('/home');
 
         $response->assertStatus(200);
-        $response->assertViewIs('welcome');
-        $response->assertSee('Homeslice - your bookmarking buddy.');
+        $response->assertSeeText($this->user->name);
     }
-
-    public function testHomepageShouldDisplayLoginRegister()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-        $response->assertSee('Login');
-        $response->assertSee('Register');
-    }
-
-    public function testHomepageShouldRedirectToHomeWhenLoggedIn()
-    {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get('/');
-        
-        $response->assertRedirect('/home');
-    }
-
 }
