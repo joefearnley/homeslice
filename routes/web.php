@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BookmarkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +26,7 @@ Route::middleware(['auth:sanctum', 'verified'])
     ->name('home');
 
 
-Route::get('/bookmark/add', [BookmarkController::class, 'create']);
+Route::get('/bookmark/add', [BookmarkController::class, 'create'])->name('add-bookmark');
 Route::post('/bookmark/add', [BookmarkController::class, 'store']);
-Route::get('/bookmark/edit', [BookmarkController::class, 'edit']);  
-Route::post('/bookmark/update', [BookmarkController::class, 'update']);
+Route::get('/bookmark/edit', [BookmarkController::class, 'edit'])->name('edit-bookmark');
 Route::post('/bookmark/update', [BookmarkController::class, 'update']);

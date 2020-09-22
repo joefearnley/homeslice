@@ -36,4 +36,12 @@ class HomepageTest extends TestCase
         $response->assertStatus(200);
         $response->assertSeeText($this->user->name);
     }
+
+    public function testShouldSeeAddBookmarkButton()
+    {
+        $response = $this->actingAs($this->user)->get('/home');
+
+        $response->assertStatus(200);
+        $response->assertSeeText('Add Bookmark');
+    }
 }

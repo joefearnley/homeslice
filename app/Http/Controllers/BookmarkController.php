@@ -24,7 +24,7 @@ class BookmarkController extends Controller
      */
     public function create()
     {
-        // 
+        return view('add-bookmark');
     }
 
     /**
@@ -57,7 +57,7 @@ class BookmarkController extends Controller
      */
     public function edit(Bookmark $bookmark)
     {
-        //
+        return view('edit-bookmark');
     }
 
     /**
