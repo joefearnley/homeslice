@@ -1,10 +1,10 @@
 import unittest
-from django.test import Client
+from django.test import Client, SimpleTestCase
 
-class HomepageTest(unittest.TestCase):
+
+class HomepageTest(SimpleTestCase):
 
     def setUp(self):
-        # Every test needs a client.
         self.client = Client()
 
     def test_homepage_renders(self):
@@ -12,4 +12,7 @@ class HomepageTest(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        print(response.context)
+        self.assertTemplateUsed(response, 'home.html')
+        self.assertContains(response, 'Homeslice - your bookmarking buddy.')
+        self.assertContains(response, 'Login')
+        self.assertContains(response, 'Register')
