@@ -11,3 +11,5 @@ class HomepageTest(unittest.TestCase):
         response = self.client.get('/')
 
         self.assertEqual(response.status_code, 200)
+
+        print(response.context)
