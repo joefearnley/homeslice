@@ -20,5 +20,4 @@ from .views import HomeView
 urlpatterns = [
     url(r'^$', HomeView.as_view()),
     url(r'^admin/', admin.site.urls),
-    url(r'^admin/', admin.site.urls),
 ]
