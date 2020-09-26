@@ -124,3 +124,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 TAILWIND_APP_NAME = 'theme'
+
+TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
