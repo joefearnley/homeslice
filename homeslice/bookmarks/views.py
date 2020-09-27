@@ -1,6 +1,28 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from .models import Bookmark
 
-from django.views.generic import TemplateView
 
-class HomeView(TemplateView):
-    template_name = "base.html"
+class BookmarkListView(ListView):
+    model = Bookmark
+    template_name = 'list.html'
+    context_object_name = 'bookmarks'
+    ordering = ['-date_posted']
+
+# class BookmarkCreateView(CreateView):
+#     template_name = 'edit.html'
+#     model = Bookmark
+#     fields = ['name', 'url']
+#     form = EditBookmarkForm()
+#     success_url = reverse_lazy('bookmark_list')
+
+# class BookmarkUpdateView(UpdateView):
+#     model = Bookmark
+#     fields = ['name', 'pages']
+#     success_url = reverse_lazy('bookmark_list')
+
+# class BookmarkDeleteView(DeleteView):
+#     model = Bookmark
+#     success_url = reverse_lazy('bookmark_list')
