@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="login-form min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+    <div>
+        <a href="/">
+            <img src="{% static 'images/homeslice.png' %}" class="w-20 h-auto align-middle border-none" alt="Homeslice"/>
+        </a>
+    </div>
+
+    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        <form method="POST" action="/login/">
+            {% csrf_token %}
+            <div>
+                 <label class="block font-medium text-sm text-gray-700">Email</label>
+                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="email" id="email" type="email">
+                 <p class="text-red-500 text-xs italic py-2 hidden">Incorrect Email</p>
+            </div>
+
+            <div class="mt-4">
+                <label class="block font-medium text-sm text-gray-700">Password</label>
+                <input class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="password" id="password" type="password">
+                <p class="text-red-500 text-xs italic py-2 hidden">Please choose a password.</p>
+            </div>
+
+            <div class="block mt-4">
+                <label class="flex items-center">
+                    <input type="checkbox" class="form-checkbox" name="remember">
+                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                </label>
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="/forgot-password">
+                    Forgot your password?
+                </a>
+                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 ml-4">
+                    Login
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

@@ -16,8 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from .views import HomeView
+from useradmin.views import UserLoginView, UserRegisterView
+
 
 urlpatterns = [
     url(r'^$', HomeView.as_view()),
     url(r'^admin/', admin.site.urls),
+    url(r'^login/', UserLoginView.as_view()),
+    url(r'^register/', UserRegisterView.as_view()),
 ]
