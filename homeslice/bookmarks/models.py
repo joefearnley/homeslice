@@ -10,7 +10,7 @@ class Bookmark(models.Model):
     )
     name = models.CharField(max_length=150)
     url = models.CharField(max_length=100)
-    notes = models.CharField(max_length=256)
+    notes = models.CharField(max_length=256, null=True, blank=True)
     created_date = models.DateTimeField()
     updated_date = models.DateTimeField()
 

@@ -12,7 +12,17 @@ class BookmarksTest(TestCase):
             password='top_secret'
         )
 
-    def test_bookmarks_page_renders(self):
+    def test_bookmarks_list_redirects_not_authenticated(self):
         response = self.client.get('/bookmarks/')
 
-        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, '/login/?next=/bookmarks/', 302)
+
+    def test_bookmarks_list_renders_with_no_bookmarks(self):
+        self.client.force_login(self.user)
+
+        response = self.client.get('/bookmarks/')
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'list.html')
+        self.assertContains(response, 'No bookmarks yet!')
+        self.assertContains(response, 'Add one!')

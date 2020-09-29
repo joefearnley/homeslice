@@ -2,9 +2,15 @@
 
 {% block content %}
     <h2>Boookmarks</h2>
+    {% if bookmarks.count > 0 %}
     <ul>
         {% for bookmark in bookmarks %}
             <li>{{ bookmark.name }}</li>
         {% endfor %}
     </ul>
+
+    {% else %}
+        <p>No bookmarks yet!</p>
+        <p><button>Add one!</button></p>
+    {% endif %}
 {% endblock %}
