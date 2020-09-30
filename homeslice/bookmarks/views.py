@@ -15,12 +15,12 @@ class BookmarkListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Bookmark.objects.filter(user=self.request.user)
 
-# class BookmarkCreateView(CreateView):
-#     template_name = 'edit.html'
-#     model = Bookmark
-#     fields = ['name', 'url']
-#     form = EditBookmarkForm()
-#     success_url = reverse_lazy('bookmark_list')
+class BookmarkCreateView(CreateView):
+    template_name = 'edit.html'
+    model = Bookmark
+    fields = ['name', 'url']
+    form = EditBookmarkForm()
+    success_url = reverse_lazy('bookmark_list')
 
 # class BookmarkUpdateView(UpdateView):
 #     model = Bookmark
