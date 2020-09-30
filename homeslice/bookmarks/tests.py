@@ -31,14 +31,14 @@ class BookmarksTest(TestCase):
     def test_bookmarks_list_shows_users_bookmarks(self):
         bookmark1 = Bookmark.objects.create(
             user=self.user,
-            name = 'Bookmark 1',
-            url = 'https://www.google.com',
+            name='Bookmark 1',
+            url='https://www.google.com',
         )
 
         bookmark2 = Bookmark.objects.create(
             user=self.user,
-            name = 'Bookmark 2',
-            url = 'https://www.yahoo.com',
+            name='Bookmark 2',
+            url='https://www.yahoo.com',
         )
 
         self.client.force_login(self.user)
@@ -71,20 +71,20 @@ class BookmarksTest(TestCase):
 
         bookmark1 = Bookmark.objects.create(
             user=user1,
-            name = 'Bookmark 1',
-            url = 'https://www.google.com',
+            name='Bookmark 1',
+            url='https://www.google.com',
         )
 
         bookmark2 = Bookmark.objects.create(
             user=user1,
-            name = 'Bookmark 2',
-            url = 'https://www.yahoo.com',
+            name='Bookmark 2',
+            url='https://www.yahoo.com',
         )
 
         bookmark3 = Bookmark.objects.create(
             user=user2,
-            name = 'Bookmark 3',
-            url = 'https://www.bing.com',
+            name='Bookmark 3',
+            url='https://www.bing.com',
         )
 
         self.client.force_login(user1)
@@ -98,3 +98,28 @@ class BookmarksTest(TestCase):
 
         self.assertNotContains(response, 'Bookmark 3')
         self.assertNotContains(response, 'https://www.bing.com')
+
+
+    def test_bookmarks_list_shows_notes(self):
+        bookmark1 = Bookmark.objects.create(
+            user=self.user,
+            name = 'Bookmark 1',
+            url = 'https://www.google.com',
+            notes='This is the first note.',
+        )
+
+        bookmark2 = Bookmark.objects.create(
+            user=self.user,
+            name='Bookmark 2',
+            url='https://www.yahoo.com',
+            notes='This is the second note.',
+        )
+
+        self.client.force_login(self.user)
+
+        response = self.client.get('/bookmarks/')
+
+        self.assertEquals(response.status_code, 200)
+
+        self.assertContains(response, 'This is the first note.')
+        self.assertContains(response, 'This is the second note.')
