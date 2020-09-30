@@ -12,6 +12,9 @@ class BookmarkListView(LoginRequiredMixin, ListView):
     context_object_name = 'bookmarks'
     ordering = ['-created_date']
 
+    def get_queryset(self):
+        return Bookmark.objects.filter(user=self.request.user)
+
 # class BookmarkCreateView(CreateView):
 #     template_name = 'edit.html'
 #     model = Bookmark

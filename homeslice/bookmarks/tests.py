@@ -87,7 +87,7 @@ class BookmarksTest(TestCase):
             url = 'https://www.bing.com',
         )
 
-        self.client.force_login(self.user)
+        self.client.force_login(user1)
 
         response = self.client.get('/bookmarks/')
 
