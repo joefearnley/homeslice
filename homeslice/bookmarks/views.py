@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Bookmark
+from .forms import BookmarkForm
 
 
 class BookmarkListView(LoginRequiredMixin, ListView):
@@ -15,11 +16,12 @@ class BookmarkListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Bookmark.objects.filter(user=self.request.user)
 
+
 class BookmarkCreateView(CreateView):
-    template_name = 'edit.html'
+    template_name = 'create.html'
     model = Bookmark
     fields = ['name', 'url']
-    form = EditBookmarkForm()
+    form = BookmarkForm()
     success_url = reverse_lazy('bookmark_list')
 
 # class BookmarkUpdateView(UpdateView):
