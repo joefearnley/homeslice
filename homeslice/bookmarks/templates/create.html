@@ -3,10 +3,28 @@
 
 {% block content %}
 
-<form action="/your-name/" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form>
+<header class="bg-white">
+    <div class="flex max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 justify-content">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Create Bookmark
+        </h2>
+    </div>
+</header>
+
+<div class="px-3 py-3">
+    <form action="/bookmarks/" method="post" class=" w-1/2">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="mb-4">
+                <label for="{{ field.id_for_label }}" class="block text-gray-700 text-sm font-bold mb-2">{{ field.html_name }}</label>
+                {{ field }}
+            </div>
+        {% endfor %}
+        <input type="submit" value="Create" class="cursor-pointer inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 ml-0">
+        <a href="/bookmarks/" class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-800 focus:outline-none focus:border-red-800 focus:shadow-outline-red disabled:opacity-25 transition ease-in-out duration-150 ml-4">
+            Cancel
+        </a>
+    </form>
+</div>
 
 {% endblock %}
