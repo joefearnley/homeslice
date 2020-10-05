@@ -123,3 +123,26 @@ class BookmarksTest(TestCase):
 
         self.assertContains(response, 'This is the first note.')
         self.assertContains(response, 'This is the second note.')
+
+
+class BookmarksCreateTest(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='joe',
+            email='joe124@gmail.com',
+            password='top_secret'
+        )
+
+    def test_can_create_bookmark(self):
+        self.client.force_login(self.user)
+
+        response = self.client.get('/bookmarks/create')
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'create.html')
+        self.assertContains(response, 'Create Bookmark')
+        self.assertContains(response, 'Name')
+        self.assertContains(response, 'URL')
+        self.assertContains(response, 'Notes')
