@@ -135,14 +135,14 @@ class BookmarksCreateTest(TestCase):
             password='top_secret'
         )
 
-    def test_can_create_bookmark(self):
+    def test_can_add_bookmark(self):
         self.client.force_login(self.user)
 
-        response = self.client.get('/bookmarks/create')
+        response = self.client.get('/bookmarks/add')
 
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'create.html')
-        self.assertContains(response, 'Create Bookmark')
+        self.assertTemplateUsed(response, 'add.html')
+        self.assertContains(response, 'Add Bookmark')
         self.assertContains(response, 'Name')
         self.assertContains(response, 'URL')
         self.assertContains(response, 'Notes')
