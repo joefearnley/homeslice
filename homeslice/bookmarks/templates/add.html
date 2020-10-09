@@ -11,8 +11,8 @@
     </div>
 </header>
 
-<div class="px-3 py-3">
-    <form action="/bookmarks/" method="post" class=" w-1/2">
+<div class="px-3 py-3 w-full">
+    <form method="post" class="w-1/2 mx-auto">
         {% csrf_token %}
         {% for field in form %}
             <div class="mb-4">

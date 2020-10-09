@@ -138,11 +138,19 @@ class BookmarksCreateTest(TestCase):
     def test_can_add_bookmark(self):
         self.client.force_login(self.user)
 
-        response = self.client.get('/bookmarks/add')
+        form_data = {
+            'name': 'Bookmark 1',
+            'url': 'https://www.google.com',
+            'notes': 'This is the first note.',
+        }
 
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'add.html')
-        self.assertContains(response, 'Add Bookmark')
-        self.assertContains(response, 'Name')
-        self.assertContains(response, 'URL')
-        self.assertContains(response, 'Notes')
+        response = self.client.post('/bookmarks/add', data=form_data)
+
+        self.assertRedirects(response, '/bookmarks/')
+
+        bookmark = Bookmark.objects.latest('created_date')
+
+        self.assertEquals(form_data['name'], bookmark.name)
+        self.assertEquals(form_data['url'], bookmark.url)
+        self.assertEquals(form_data['notes'], bookmark.notes)
+

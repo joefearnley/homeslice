@@ -23,14 +23,17 @@ class BookmarkAddView(CreateView):
     form_class = BookmarkAddForm
     success_url = reverse_lazy('bookmark_list')
 
-    def post(self, request, *args, **kwargs):
-        if request.method == 'POST':
-            print('Get post req')
-            form = self.form_class
-            if form.is_valid():
-                print('Valid form')
-                return 'Success'
-            return 'failed'
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(BookmarkAddView, self).form_valid(form)
+
+    # def post(self, request, *args, **kwargs):
+    #     print('Get post req')
+    #     # form = self.form_class
+    #     # if form.is_valid():
+    #     #     print('Valid form')
+    #     #     return 'Success'
+    #     return 'failed'
 
 # class BookmarkUpdateView(UpdateView):
 #     model = Bookmark
