@@ -184,11 +184,8 @@ class BookmarksCreateTest(TestCase):
         self.assertEquals(form_data['notes'], bookmark.notes)
 
 
-class BookmarkAddFormTest(TestCase):
-    # def setUp(self):
-    #     self.form = BookmarkAddForm()
-
-    def test_bookmark_form_does_not_validate_with_empty_data(self):
+class BookmarkFormTest(TestCase):
+    def test_form_does_not_validate_with_empty_data(self):
         form_data = {
             'name': '',
             'url': '',
@@ -196,10 +193,27 @@ class BookmarkAddFormTest(TestCase):
         }
 
         form = BookmarkAddForm(data=form_data)
-
         self.assertFalse(form.is_valid())
 
-    def test_bookmark_form_validates(self):
+    def test_form_does_not_validate_with_no_name(self):
+        form_data = {
+            'name': '',
+            'url': 'https://www.google.com',
+        }
+
+        form = BookmarkAddForm(data=form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_form_does_not_validate_with_no_url(self):
+        form_data = {
+            'name': '',
+            'url': 'https://www.google.com',
+        }
+
+        form = BookmarkAddForm(data=form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_form_validates(self):
         form_data = {
             'name': 'Bookmark 1',
             'url': 'https://www.google.com',
@@ -207,5 +221,4 @@ class BookmarkAddFormTest(TestCase):
         }
 
         form = BookmarkAddForm(data=form_data)
-
         self.assertTrue(form.is_valid())
