@@ -27,14 +27,6 @@ class BookmarkAddView(CreateView):
         form.instance.user = self.request.user
         return super(BookmarkAddView, self).form_valid(form)
 
-    # def post(self, request, *args, **kwargs):
-    #     print('Get post req')
-    #     # form = self.form_class
-    #     # if form.is_valid():
-    #     #     print('Valid form')
-    #     #     return 'Success'
-    #     return 'failed'
-
 # class BookmarkUpdateView(UpdateView):
 #     model = Bookmark
 #     fields = ['name', 'pages']

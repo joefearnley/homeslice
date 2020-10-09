@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from bookmarks.models import Bookmark
+from bookmarks.forms import BookmarkAddForm
 
 
 class BookmarksTest(TestCase):
@@ -135,6 +136,33 @@ class BookmarksCreateTest(TestCase):
             password='top_secret'
         )
 
+    def test_cannot_add_bookmark_with_no_name(self):
+        self.client.force_login(self.user)
+
+        form_data = {
+            'name': '',
+            'url': 'https://www.google.com',
+            'notes': '',
+        }
+
+        response = self.client.post('/bookmarks/add', data=form_data)
+
+        self.assertContains(response, 'Please enter a name.')
+
+    def test_cannot_add_bookmark_with_no_url(self):
+        self.client.force_login(self.user)
+
+        form_data = {
+            'name': 'Bookmark 1',
+            'url': '',
+            'notes': '',
+        }
+
+        response = self.client.post('/bookmarks/add', data=form_data)
+
+        self.assertContains(response, 'Please enter a valid URL.')
+
+
     def test_can_add_bookmark(self):
         self.client.force_login(self.user)
 
@@ -146,6 +174,7 @@ class BookmarksCreateTest(TestCase):
 
         response = self.client.post('/bookmarks/add', data=form_data)
 
+        self.assertEquals(response.status_code, 302)
         self.assertRedirects(response, '/bookmarks/')
 
         bookmark = Bookmark.objects.latest('created_date')
@@ -154,3 +183,29 @@ class BookmarksCreateTest(TestCase):
         self.assertEquals(form_data['url'], bookmark.url)
         self.assertEquals(form_data['notes'], bookmark.notes)
 
+
+class BookmarkAddFormTest(TestCase):
+    # def setUp(self):
+    #     self.form = BookmarkAddForm()
+
+    def test_bookmark_form_does_not_validate_with_empty_data(self):
+        form_data = {
+            'name': '',
+            'url': '',
+            'notes': '',
+        }
+
+        form = BookmarkAddForm(data=form_data)
+
+        self.assertFalse(form.is_valid())
+
+    def test_bookmark_form_validates(self):
+        form_data = {
+            'name': 'Bookmark 1',
+            'url': 'https://www.google.com',
+            'notes': 'This is the first note.',
+        }
+
+        form = BookmarkAddForm(data=form_data)
+
+        self.assertTrue(form.is_valid())
