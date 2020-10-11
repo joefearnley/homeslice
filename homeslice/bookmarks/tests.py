@@ -245,6 +245,33 @@ class BookmarksUpdateTest(TestCase):
         self.assertEquals(form_data['notes'], bookmark.notes)
 
 
+class BookmarksDeleteTest(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='joe',
+            email='joe124@gmail.com',
+            password='top_secret'
+        )
+
+        self.bookmark = Bookmark.objects.create(
+            user=self.user,
+            name='Bookmark 1',
+            url='https://www.google.com',
+            notes='This is the first note.',
+        ).save()
+
+    def test_can_delete_bookmark(self):
+        self.client.force_login(self.user)
+
+        form_data = {
+            'id': self.bookmark,
+        }
+
+        self.assertEquals(response.status_code, 302)
+        self.assertRedirects(response, '/bookmarks/')
+
 class BookmarkFormTest(TestCase):
     def test_form_does_not_validate_with_empty_data(self):
         form_data = {
