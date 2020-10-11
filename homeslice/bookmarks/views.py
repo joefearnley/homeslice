@@ -33,6 +33,7 @@ class BookmarkUpdateView(UpdateView):
     form_class = BookmarkForm
     success_url = reverse_lazy('bookmark_list')
 
-# class BookmarkDeleteView(DeleteView):
-#     model = Bookmark
-#     success_url = reverse_lazy('bookmark_list')
+
+class BookmarkDeleteView(DeleteView):
+    model = Bookmark
+    success_url = reverse_lazy('bookmark_list')

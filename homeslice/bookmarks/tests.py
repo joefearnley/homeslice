@@ -56,7 +56,7 @@ class BookmarksTest(TestCase):
 
     def test_bookmarks_list_shows_users_bookmarks_only(self):
         ''' set up bookmarks for multiple users - main users should not 
-            see those that belong to the second users'''
+            see those that belong to the second users '''
 
         user1 = User.objects.create_user(
             username='user1',
@@ -136,7 +136,7 @@ class BookmarksCreateTest(TestCase):
             password='top_secret'
         )
 
-    def test_cannot_add_bookmark_with_no_name(self):
+    def test_cannot_create_bookmark_with_no_name(self):
         self.client.force_login(self.user)
 
         form_data = {
@@ -146,10 +146,9 @@ class BookmarksCreateTest(TestCase):
         }
 
         response = self.client.post('/bookmarks/add', data=form_data)
-
         self.assertContains(response, 'Please enter a name.')
 
-    def test_cannot_add_bookmark_with_no_url(self):
+    def test_cannot_create_bookmark_with_no_url(self):
         self.client.force_login(self.user)
 
         form_data = {
@@ -159,11 +158,9 @@ class BookmarksCreateTest(TestCase):
         }
 
         response = self.client.post('/bookmarks/add', data=form_data)
-
         self.assertContains(response, 'Please enter a valid URL.')
 
-
-    def test_can_add_bookmark(self):
+    def test_can_create_bookmark(self):
         self.client.force_login(self.user)
 
         form_data = {
@@ -182,6 +179,40 @@ class BookmarksCreateTest(TestCase):
         self.assertEquals(form_data['name'], bookmark.name)
         self.assertEquals(form_data['url'], bookmark.url)
         self.assertEquals(form_data['notes'], bookmark.notes)
+
+class BookmarksUpdateTest(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='joe',
+            email='joe124@gmail.com',
+            password='top_secret'
+        )
+
+    def test_cannot_update_bookmark_with_no_name(self):
+        self.client.force_login(self.user)
+
+        form_data = {
+            'name': '',
+            'url': 'https://www.google.com',
+            'notes': '',
+        }
+
+        response = self.client.post('/bookmarks/add', data=form_data)
+        self.assertContains(response, 'Please enter a name.')
+
+    def test_cannot_update_bookmark_with_no_url(self):
+        self.client.force_login(self.user)
+
+        form_data = {
+            'name': 'Bookmark 1',
+            'url': '',
+            'notes': '',
+        }
+
+        response = self.client.post('/bookmarks/add', data=form_data)
+        self.assertContains(response, 'Please enter a valid URL.')
 
     def test_can_update_bookmark(self):
         bookmark = Bookmark(
