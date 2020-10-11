@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from bookmarks.models import Bookmark
-from bookmarks.forms import BookmarkAddForm
+from bookmarks.forms import BookmarkForm
 
 
 class BookmarksTest(TestCase):
@@ -183,6 +183,36 @@ class BookmarksCreateTest(TestCase):
         self.assertEquals(form_data['url'], bookmark.url)
         self.assertEquals(form_data['notes'], bookmark.notes)
 
+    def test_can_update_bookmark(self):
+        bookmark = Bookmark(
+            user=self.user,
+            name='Bookmark 1',
+            url='https://www.google.com',
+            notes='This is the first note.',
+        )
+
+        bookmark.save()
+
+        form_data = {
+            'name': 'Bookmark 8',
+            'url': 'https://www.google123.com',
+            'notes': 'This is the first note.',
+        }
+
+        self.client.force_login(self.user)
+
+        update_url = "/bookmarks/edit/%s" % bookmark.id
+        response = self.client.post(update_url, data=form_data)
+
+        self.assertEquals(response.status_code, 302)
+        self.assertRedirects(response, '/bookmarks/')
+
+        bookmark.refresh_from_db()
+
+        self.assertEquals(form_data['name'], bookmark.name)
+        self.assertEquals(form_data['url'], bookmark.url)
+        self.assertEquals(form_data['notes'], bookmark.notes)
+
 
 class BookmarkFormTest(TestCase):
     def test_form_does_not_validate_with_empty_data(self):
@@ -192,7 +222,7 @@ class BookmarkFormTest(TestCase):
             'notes': '',
         }
 
-        form = BookmarkAddForm(data=form_data)
+        form = BookmarkForm(data=form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_does_not_validate_with_no_name(self):
@@ -201,7 +231,7 @@ class BookmarkFormTest(TestCase):
             'url': 'https://www.google.com',
         }
 
-        form = BookmarkAddForm(data=form_data)
+        form = BookmarkForm(data=form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_does_not_validate_with_no_url(self):
@@ -210,7 +240,7 @@ class BookmarkFormTest(TestCase):
             'url': 'https://www.google.com',
         }
 
-        form = BookmarkAddForm(data=form_data)
+        form = BookmarkForm(data=form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_validates(self):
@@ -220,5 +250,5 @@ class BookmarkFormTest(TestCase):
             'notes': 'This is the first note.',
         }
 
-        form = BookmarkAddForm(data=form_data)
+        form = BookmarkForm(data=form_data)
         self.assertTrue(form.is_valid())
