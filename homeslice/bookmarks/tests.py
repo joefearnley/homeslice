@@ -191,6 +191,16 @@ class BookmarksUpdateTest(TestCase):
             password='top_secret'
         )
 
+
+    def test_edit_bookmark_uses_form_template(self):
+        self.client.force_login(self.user)
+
+        update_url = "/bookmarks/edit/%s" % self.bookmark.id
+        response = self.client.get(update_url)
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'form.html')
+
     def test_cannot_update_bookmark_with_no_name(self):
         self.client.force_login(self.user)
 
