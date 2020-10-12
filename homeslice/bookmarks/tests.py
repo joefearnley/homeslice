@@ -136,6 +136,7 @@ class BookmarksCreateTest(TestCase):
             password='top_secret'
         )
 
+
     def test_cannot_create_bookmark_with_no_name(self):
         self.client.force_login(self.user)
 
@@ -255,24 +256,33 @@ class BookmarksDeleteTest(TestCase):
             password='top_secret'
         )
 
-        self.bookmark = Bookmark.objects.create(
+        self.bookmark = Bookmark(
             user=self.user,
             name='Bookmark 1',
             url='https://www.google.com',
             notes='This is the first note.',
-        ).save()
+        )
 
-    def test_can_delete_bookmark(self):
+        self.bookmark.save()
+
+    def test_can_see_delete_bookmark_form(self):
         self.client.force_login(self.user)
 
-        form_data = {
-            'id': self.bookmark,
-        }
+        delete_url = "/bookmarks/delete/%s" % self.bookmark.id
+        response = self.client.get(delete_url)
 
-        response = self.client.post('/bookmarks/delete', data=form_data)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'confirm_delete.html')
 
-        self.assertEquals(response.status_code, 302)
-        self.assertRedirects(response, '/bookmarks/')
+    # def test_can_see_delete_bookmark_form(self):
+    #     self.client.force_login(self.user)
+
+    #     delete_url = "/bookmarks/edit/%s" % self.bookmark.id
+    #     response = self.client.post(delete_url)
+
+    #     self.assertEquals(response.status_code, 302)
+    #     self.assertRedirects(response, '/bookmarks/')
+
 
 class BookmarkFormTest(TestCase):
     def test_form_does_not_validate_with_empty_data(self):

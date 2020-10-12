@@ -36,4 +36,5 @@ class BookmarkUpdateView(UpdateView):
 
 class BookmarkDeleteView(DeleteView):
     model = Bookmark
+    template_name = 'confirm_delete.html'
     success_url = reverse_lazy('bookmark_list')
