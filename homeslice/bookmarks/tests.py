@@ -137,6 +137,14 @@ class BookmarksCreateTest(TestCase):
         )
 
 
+    def test_add_bookmark_uses_form_template(self):
+        self.client.force_login(self.user)
+
+        response = self.client.get('/bookmarks/add')
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'form.html')
+
     def test_cannot_create_bookmark_with_no_name(self):
         self.client.force_login(self.user)
 
@@ -191,6 +199,14 @@ class BookmarksUpdateTest(TestCase):
             password='top_secret'
         )
 
+        self.bookmark = Bookmark(
+            user=self.user,
+            name='Bookmark 1',
+            url='https://www.google.com',
+            notes='This is the first note.',
+        )
+
+        self.bookmark.save()
 
     def test_edit_bookmark_uses_form_template(self):
         self.client.force_login(self.user)
@@ -210,7 +226,8 @@ class BookmarksUpdateTest(TestCase):
             'notes': '',
         }
 
-        response = self.client.post('/bookmarks/add', data=form_data)
+        update_url = "/bookmarks/edit/%s" % self.bookmark.id
+        response = self.client.post(update_url, data=form_data)
         self.assertContains(response, 'Please enter a name.')
 
     def test_cannot_update_bookmark_with_no_url(self):
@@ -222,7 +239,8 @@ class BookmarksUpdateTest(TestCase):
             'notes': '',
         }
 
-        response = self.client.post('/bookmarks/add', data=form_data)
+        update_url = "/bookmarks/edit/%s" % self.bookmark.id
+        response = self.client.post(update_url, data=form_data)
         self.assertContains(response, 'Please enter a valid URL.')
 
     def test_can_update_bookmark(self):
