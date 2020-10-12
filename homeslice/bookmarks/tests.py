@@ -302,14 +302,14 @@ class BookmarksDeleteTest(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'confirm_delete.html')
 
-    # def test_can_see_delete_bookmark_form(self):
-    #     self.client.force_login(self.user)
+    def test_can_see_delete_bookmark_form(self):
+        self.client.force_login(self.user)
 
-    #     delete_url = "/bookmarks/edit/%s" % self.bookmark.id
-    #     response = self.client.post(delete_url)
+        delete_url = "/bookmarks/edit/%s" % self.bookmark.id
+        response = self.client.post(delete_url)
 
-    #     self.assertEquals(response.status_code, 302)
-    #     self.assertRedirects(response, '/bookmarks/')
+        self.assertEquals(response.status_code, 302)
+        self.assertRedirects(response, '/bookmarks/')
 
 
 class BookmarkFormTest(TestCase):
