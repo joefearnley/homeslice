@@ -37,11 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
+    'bookmarks',
     'tailwind',
     'theme',
-    'bookmarks',
-    'useradmin',
-    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -130,3 +129,5 @@ TEST_RUNNER = "redgreenunittest.django.runner.RedGreenDiscoverRunner"
 
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
+
+LOGIN_REDIRECT_URL = 'bookmark_list'

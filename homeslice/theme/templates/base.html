@@ -18,95 +18,10 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen">
-        <nav class="bg-white border-b border-gray-100">
-            <div class="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <div class="flex">
-                        <div class="flex-shrink-0 flex items-center">
-                            <a href="/">
-                                <img src="{% static 'images/homeslice.png' %}" class="max-w-xs h-auto align-middle border-none" alt="Homeslice"/>
-                            </a>
-                        </div>
-                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <a href="/bookmarks/" class="inline-flex items-center px-1 pt-1 border-b-2 border-gray-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-gray-700 transition duration-150 ease-in-out">
-                                Bookmarks
-                            </a>
-                        </div>
-                    </div>
-                    <div class="hidden sm:flex sm:items-center sm:ml-6">
-                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                            <a href="/bookmarks/add" class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-gray-700 transition duration-150 ease-in-out">
-                                Add Bookmark
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                            </a>
-                        </div>
-                        <div class="ml-3 relative">
-                            <div class="relative">
-                                <div><button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"><img src="https://ui-avatars.com/api/?name=Joe+Fearnley&amp;color=7F9CF5&amp;background=EBF4FF" alt="Joe Fearnley" class="h-8 w-8 rounded-full object-cover"></button></div>
-                                <div class="fixed inset-0 z-40" style="display: none;"></div>
-                                <div class="absolute z-50 mt-2 rounded-md shadow-lg w-48 origin-top-right right-0" style="display: none;">
-                                    <div class="rounded-md shadow-xs py-1 bg-white">
-                                        <div class="block px-4 py-2 text-xs text-gray-400">
-                                            Manage Account
-                                        </div>
-                                        <div class="border-t border-gray-100"></div>
-                                        <form>
-                                            <div>
-                                                <button type="submit" class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 text-left hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
-                                                    Logout
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="-mr-2 flex items-center sm:hidden">
-                        <button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                            <svg stroke="currentColor" fill="none" viewBox="0 0 24 24" class="h-6 w-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" class="inline-flex"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" class="hidden"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="sm:hidden hidden">
-                <div class="pt-2 pb-3 space-y-1">
-                    <div>
-                        <a href="/bookmarks/create" class="block pl-3 pr-4 py-2 border-l-4 border-gray-400 text-base font-medium text-gray-700 bg-gray-50 focus:outline-none focus:text-gray-800 focus:bg-gray-100 focus:border-gray-700 transition duration-150 ease-in-out">
-                            Add Bookmark
-                        </a>
-                    </div>
-                </div>
-                <div class="pt-4 pb-1 border-t border-gray-200">
-                    <div class="flex items-center px-4">
-                        <div class="flex-shrink-0"><img src="https://ui-avatars.com/api/?name=Joe+Fearnley&amp;color=7F9CF5&amp;background=EBF4FF" alt="Joe Fearnley" class="h-10 w-10 rounded-full"></div>
-                        <div class="ml-3">
-                            <div class="font-medium text-base text-gray-800">Joe Fearnley</div>
-                            <div class="font-medium text-sm text-gray-500">joe.fearnley@gmail.com</div>
-                        </div>
-                    </div>
-                    <div class="mt-3 space-y-1">
-                        <div><a href="/user/profile" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
-                            Profile
-                            </a>
-                        </div>
-                        <div><a href="/user/api-tokens" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
-                            API Tokens
-                            </a>
-                        </div>
-                        <form method="POST">
-                            <div><button class="w-full text-left block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out">
-                                Logout
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </nav>
+        {% if user.is_authenticated %}
+        {% block nav %}
+        {% endblock %}
+        {% endif %}
 
         <div class="container mx-auto">
             {% block content %}
