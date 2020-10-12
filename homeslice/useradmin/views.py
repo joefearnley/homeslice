@@ -13,7 +13,7 @@ class UserLoginView(TemplateView):
         form = self.form_class(request.POST)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.INFO, "You are now logged-In, welcome")
+            messages.add_message(request, messages.INFO, 'You are now logged-In, welcome')
             return HttpResponseRedirect('/bookmarks/')
 
         return render(request, 'login.html', {'form': form}) 

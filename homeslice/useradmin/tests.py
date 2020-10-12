@@ -19,15 +19,14 @@ class LoginTest(TestCase):
         self.assertContains(response, 'Login')
 
     def test_login_form_requires_email(self):
-        pass
-        # form_data = {
-        #     'email': '',
-        #     'password': 'secret123'
-        # }
+        form_data = {
+            'email': '',
+            'password': 'secret123'
+        }
 
-        # response = self.client.post('/login/', form_data)
+        response = self.client.post('/login/', form_data)
 
-        # self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 405)
 
     def test_user_can_login(self):
         pass

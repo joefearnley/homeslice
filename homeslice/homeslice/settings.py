@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'theme',
     'bookmarks',
     'useradmin',
+    'accounts'
 ]
 
 MIDDLEWARE = [
