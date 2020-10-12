@@ -269,6 +269,8 @@ class BookmarksDeleteTest(TestCase):
             'id': self.bookmark,
         }
 
+        response = self.client.post('/bookmarks/delete', data=form_data)
+
         self.assertEquals(response.status_code, 302)
         self.assertRedirects(response, '/bookmarks/')
 
