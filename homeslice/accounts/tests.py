@@ -39,10 +39,10 @@ from django.contrib.auth.models import User
 
 
 
-class RegisterTest(TestCase):
+class SignUpTest(TestCase):
 
     def test_registration_page_renders(self):
-        response = self.client.get('/register/')
+        response = self.client.get('/sigup/')
 
         self.assertEqual(response.status_code, 200)
 
@@ -50,6 +50,6 @@ class RegisterTest(TestCase):
         self.assertContains(response, 'Email')
         self.assertContains(response, 'Password')
         self.assertContains(response, 'Confirm Password')
-        self.assertContains(response, 'Already registered?')
-        self.assertContains(response, 'Register')
+        self.assertContains(response, 'Already have an account?')
+        self.assertContains(response, 'Sign up')
 

@@ -19,5 +19,5 @@ class HomepageTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        self.assertContains(response, 'Login')
-        self.assertContains(response, 'Register')
+        self.assertContains(response, 'Log in')
+        self.assertContains(response, 'Sign up')

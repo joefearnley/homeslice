@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from accounts.models import Account
+# from accounts.models import Account
 
 
 class Bookmark(models.Model):
     user = models.ForeignKey(
-        Account, 
+        User,
         on_delete=models.CASCADE,
         blank=True,
         null=True,
