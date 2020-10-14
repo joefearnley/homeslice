@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from .forms import UserLoginForm
 
 
-class UserLoginView(LoginView):
+class UserLoginView(TemplateView):
     template_name = 'login.html'
-# /    form_class = AuthenticationForm
+    form_class = UserLoginForm
 
     # def post(self, request, *args, **kwargs):
     #     form = self.form_class(request.POST)
@@ -20,5 +20,5 @@ class UserLoginView(LoginView):
     #     return render(request, 'login.html', {'form': form}) 
 
 
-# class UserRegisterView(TemplateView):
-#     template_name = 'register.html'
+class UserRegisterView(TemplateView):
+    template_name = 'register.html'

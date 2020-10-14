@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.urls import include, path
 from django.contrib import admin
 from .views import HomeView
-from useradmin.views import UserLoginView, UserRegisterView
+from accounts.views import UserLoginView, UserRegisterView
 
 
 urlpatterns = [
