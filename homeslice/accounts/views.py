@@ -1,18 +1,26 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
-from django.contrib.auth.views import LoginView
 from django.contrib import messages
+from django.contrib.auth import login
+from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
-from .forms import LoginForm
+from .forms import LoginForm, SignUpForm
+from django.views.generic.edit import FormView
 
 
-class SignupView(TemplateView):
+class SignupView(FormView):
     template_name = 'signup.html'
+    form_class = SignUpForm
+    success_url = reverse_lazy('bookmark_list')
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return super(SignupView, self).form_valid(form)
 
 
-class LoginView(TemplateView):
-    template_name = 'login.html'
-    form_class = LoginForm
+class LoginView(FormView):
+     template_name = 'login.html'
+     form_class = LoginForm
 
     # def post(self, request, *args, **kwargs):
     #     form = self.form_class(request.POST)
