@@ -143,7 +143,7 @@ class BookmarksCreateTest(TestCase):
         response = self.client.get('/bookmarks/add')
 
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'form.html')
+        self.assertTemplateUsed(response, 'create_update.html')
 
     def test_cannot_create_bookmark_with_no_name(self):
         self.client.force_login(self.user)
@@ -215,7 +215,7 @@ class BookmarksUpdateTest(TestCase):
         response = self.client.get(update_url)
 
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'form.html')
+        self.assertTemplateUsed(response, 'create_update.html')
 
     def test_cannot_update_bookmark_with_no_name(self):
         self.client.force_login(self.user)

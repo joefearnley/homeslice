@@ -17,7 +17,7 @@ class BookmarkListView(LoginRequiredMixin, ListView):
 
 
 class BookmarkCreateView(CreateView):
-    template_name = 'form.html'
+    template_name = 'create_update.html'
     model = Bookmark
     form_class = BookmarkForm
     success_url = reverse_lazy('bookmark_list')
@@ -29,7 +29,7 @@ class BookmarkCreateView(CreateView):
 
 class BookmarkUpdateView(UpdateView):
     model = Bookmark
-    template_name = 'form.html'
+    template_name = 'create_update.html'
     form_class = BookmarkForm
     success_url = reverse_lazy('bookmark_list')
 
