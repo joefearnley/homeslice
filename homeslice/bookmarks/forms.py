@@ -6,15 +6,15 @@ from .models import Bookmark
 class BookmarkForm(forms.ModelForm):
     class Meta:
         model = Bookmark
-        fields = ['name', 'url', 'notes']
+        fields = ['name', 'url', 'notes',]
         labels = {
             'name': _('Name'),
             'url': _('URL'),
-            'notes': _('Notes')
+            'notes': _('Notes'),
         }
         help_texts = {
-            'name': 'Please enter a name.',
-            'url': 'Please enter a valid URL.'
+            'name': 'Please enter a name',
+            'url': 'Please enter a valid URL',
         }
         widgets = {
             'name': forms.TextInput(attrs={'class': 'appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}),

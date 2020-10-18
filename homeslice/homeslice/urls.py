@@ -17,13 +17,14 @@ from django.conf.urls import url
 from django.urls import include, path
 from django.contrib import admin
 from .views import HomeView
-from accounts.views import LoginView, SignupView
+from accounts.views import LoginView, SignupView, LogoutView
 
 
 urlpatterns = [
     url(r'^$', HomeView.as_view()),
     url(r'^admin/', admin.site.urls),
     url(r'^login/', LoginView.as_view(), name='login'),
+    url(r'^logout/', LogoutView.as_view(), name='logout'),
     url(r'^signup/', SignupView.as_view(), name='signup'),
     path('bookmarks/', include('bookmarks.urls')),
 ]

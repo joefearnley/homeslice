@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from .forms import LoginForm, SignUpForm
-from django.views.generic.edit import FormView
+from django.views.generic import View
+from django.views.generic.edit import FormView, CreateView
 
 
-class SignupView(FormView):
+class SignupView(CreateView):
     template_name = 'signup.html'
     form_class = SignUpForm
     success_url = reverse_lazy('bookmark_list')
@@ -30,3 +31,9 @@ class LoginView(FormView):
     #         return HttpResponseRedirect('/bookmarks/')
 
     #     return render(request, 'login.html', {'form': form}) 
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect('/')

@@ -155,7 +155,7 @@ class BookmarksCreateTest(TestCase):
         }
 
         response = self.client.post('/bookmarks/add', data=form_data)
-        self.assertContains(response, 'Please enter a name.')
+        self.assertContains(response, 'Please enter a name')
 
     def test_cannot_create_bookmark_with_no_url(self):
         self.client.force_login(self.user)
@@ -167,7 +167,7 @@ class BookmarksCreateTest(TestCase):
         }
 
         response = self.client.post('/bookmarks/add', data=form_data)
-        self.assertContains(response, 'Please enter a valid URL.')
+        self.assertContains(response, 'Please enter a valid URL')
 
     def test_can_create_bookmark(self):
         self.client.force_login(self.user)
@@ -228,7 +228,7 @@ class BookmarksUpdateTest(TestCase):
 
         update_url = "/bookmarks/edit/%s" % self.bookmark.id
         response = self.client.post(update_url, data=form_data)
-        self.assertContains(response, 'Please enter a name.')
+        self.assertContains(response, 'Please enter a name')
 
     def test_cannot_update_bookmark_with_no_url(self):
         self.client.force_login(self.user)
@@ -241,7 +241,7 @@ class BookmarksUpdateTest(TestCase):
 
         update_url = "/bookmarks/edit/%s" % self.bookmark.id
         response = self.client.post(update_url, data=form_data)
-        self.assertContains(response, 'Please enter a valid URL.')
+        self.assertContains(response, 'Please enter a valid URL')
 
     def test_can_update_bookmark(self):
         bookmark = Bookmark(

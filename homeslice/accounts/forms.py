@@ -1,21 +1,21 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 
-class SignUpForm(forms.ModelForm):
-    email = forms.EmailField(max_length=254, required=True,)
-    password = forms.CharField(max_length=32, widget=forms.PasswordInput)
+class SignUpForm(forms.Form):
+    email = forms.EmailField(required=True,)
+    password = forms.CharField(required=True, widget=forms.PasswordInput)
 
     class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'email', 'password')
+        fields = ['email', 'password',]
         labels = {
-            'first_name': _('First Name'),
-            'last_name': _('Last Name'),
-            'email': _('Email'),
-            'password': _('Password'),
+            'email': _('Emailsadfsasdf'),
+            'password1': _('Pasfdafdsfassword'),
+        }
+        help_texts = {
+            'email': 'Please enter a valid Email address',
+            'password1': 'Please enter password',
         }
 
     def __init__(self, *args, **kwargs):
@@ -30,8 +30,6 @@ class SignUpForm(forms.ModelForm):
     def save(self):
         user = super(SignUpForm, self).save(commit=False)
         user.username = self.cleaned_data['email']
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
         user.email = self.cleaned_data['email']
         user.save()
         return user
