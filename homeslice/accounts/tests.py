@@ -37,11 +37,56 @@ class SignUpFormTest(TestCase):
         form = SignUpForm(data=form_data)
         self.assertFalse(form.is_valid())
 
-    # def test_form_does_not_validate_with_no_name(self):
-    #     form_data = {
-    #         'name': '',
-    #         'url': 'https://www.google.com',
-    #     }
+    def test_form_does_not_validate_with_no_email(self):
+        form_data = {
+            'email': '',
+            'password1': 'topsecret123',
+            'password2': 'topsecret123',
+        }
+
+        form = SignUpForm(data=form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_form_does_not_validate_with_no_password(self):
+        form_data = {
+            'email': 'john.doe123@gmail.com',
+            'password1': '',
+            'password2': '',
+        }
+
+        form = SignUpForm(data=form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_form_does_not_validate_with_no_password_confirmation(self):
+        form_data = {
+            'email': 'john.doe123@gmail.com',
+            'password1': 'topsecret123',
+            'password2': '',
+        }
+
+        form = SignUpForm(data=form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_form_does_not_validate_with_no_password_confirmation_match(self):
+        form_data = {
+            'email': 'john.doe123@gmail.com',
+            'password1': 'topsecret123',
+            'password2': 'topsecret1234',
+        }
+
+        form = SignUpForm(data=form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_form_validates(self):
+        form_data = {
+            'email': 'john.doe123@gmail.com',
+            'password1': 'topsecret1234',
+            'password2': 'topsecret1234',
+        }
+
+        form = SignUpForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
 
 # class LoginTest(TestCase):
 
