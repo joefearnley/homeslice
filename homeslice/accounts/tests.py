@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
+from .forms import SignUpForm
 
 class SignUpTest(TestCase):
 
@@ -25,6 +26,22 @@ class SignUpTest(TestCase):
         response = self.client.post('/signup/', data=form_data)
         self.assertRedirects(response, '/bookmarks/', 302)
 
+class SignUpFormTest(TestCase):
+    def test_form_does_not_validate_with_empty_data(self):
+        form_data = {
+            'email': '',
+            'password1': '',
+            'password2': '',
+        }
+
+        form = SignUpForm(data=form_data)
+        self.assertFalse(form.is_valid())
+
+    # def test_form_does_not_validate_with_no_name(self):
+    #     form_data = {
+    #         'name': '',
+    #         'url': 'https://www.google.com',
+    #     }
 
 # class LoginTest(TestCase):
 
