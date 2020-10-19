@@ -57,7 +57,17 @@
     </div>
 
     {% else %}
-        <p>No bookmarks yet!</p>
-        <p><button>Add one!</button></p>
+        <div class="py-6">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-6">
+                <p class="text-xl">No bookmarks yet!</p>
+            </div>
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-4">
+                <p>
+                    <a href="/bookmarks/add" class="cursor-pointer inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:border-gray-700 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 ml-0">
+                        Add One!
+                    </a>
+                  </p>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

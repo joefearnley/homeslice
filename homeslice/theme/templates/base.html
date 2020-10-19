@@ -19,8 +19,7 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen">
         {% if user.is_authenticated %}
-        {% block nav %}
-        {% endblock %}
+        {% include "nav.html" %}
         {% endif %}
 
         <div class="container mx-auto">
