@@ -3,19 +3,16 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 
-class SignUpForm(forms.Form):
-    email = forms.EmailField(required=True,)
-    password = forms.CharField(required=True, widget=forms.PasswordInput)
+class SignUpForm(forms.ModelForm):
+    email = forms.EmailField(required=True, help_text='Please enter a valid Email address',)
+    password = forms.CharField(required=True, widget=forms.PasswordInput, help_text='Please enter password',)
 
     class Meta:
+        model = User
         fields = ['email', 'password',]
         labels = {
             'email': _('Emailsadfsasdf'),
-            'password1': _('Pasfdafdsfassword'),
-        }
-        help_texts = {
-            'email': 'Please enter a valid Email address',
-            'password1': 'Please enter password',
+            'password': _('Pasfdafdsfassword'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -24,7 +21,6 @@ class SignUpForm(forms.Form):
             visible.field.widget.attrs['class'] = 'appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
 
     def send_email(self):
-        # send email using the self.cleaned_data dictionary
         pass
 
     def save(self):
@@ -38,4 +34,4 @@ class SignUpForm(forms.Form):
 class LoginForm(forms.Form):
     class Meta:
         model = User
-        fields = ('email', 'password')
+        fields = ('email', 'password',)
