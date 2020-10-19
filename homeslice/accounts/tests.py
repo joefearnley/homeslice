@@ -1,6 +1,30 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 
+class SignUpTest(TestCase):
+
+    def test_signup_page_renders(self):
+        response = self.client.get('/signup/')
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertTemplateUsed(response, 'signup.html')
+        self.assertContains(response, 'Create an Account')
+        self.assertContains(response, 'Email')
+        self.assertContains(response, 'Password')
+        self.assertContains(response, 'Already have an account?')
+        self.assertContains(response, 'Sign up')
+
+    def test_signup_redirects_after_saved(self):
+        form_data = {
+            'email': 'john.doe123@gmail.com',
+            'password1': 'topsecret123',
+            'password2': 'topsecret123',
+        }
+
+        response = self.client.post('/signup/', data=form_data)
+        self.assertRedirects(response, '/bookmarks/', 302)
+
 
 # class LoginTest(TestCase):
 
@@ -36,22 +60,6 @@ from django.contrib.auth.models import User
         #     password='top_secret',
         #     password_confirmation="top_secret"
         # )
-
-
-
-class SignUpTest(TestCase):
-
-    def test_signup_page_renders(self):
-        response = self.client.get('/signup/')
-
-        self.assertEqual(response.status_code, 200)
-
-        self.assertTemplateUsed(response, 'signup.html')
-        self.assertContains(response, 'Create an Account')
-        self.assertContains(response, 'Email')
-        self.assertContains(response, 'Password')
-        self.assertContains(response, 'Already have an account?')
-        self.assertContains(response, 'Sign up')
 
 
 class LogoutTest(TestCase):
