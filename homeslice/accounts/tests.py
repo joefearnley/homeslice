@@ -53,17 +53,27 @@ class SignUpTest(TestCase):
         self.assertContains(response, 'Already have an account?')
         self.assertContains(response, 'Sign up')
 
-    def test_signup_requires_email(self):
+    # def test_signup_requires_email(self):
+    #     form_data = {
+    #         'email': '',
+    #         'password1': 'secret123',
+    #         'password2': 'secret123',
+    #     }
+
+    #     response = self.client.post('/signup/', data=form_data)
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertContains(response, 'Please enter a valid Email address')
+
+    def test_signup_requires_password(self):
         form_data = {
-            'email': 'joe.doe@gmail.com',
-            'password': 'secret123',
+            'email': 'john.doe123@gmail.com',
+            'password1': '',
+            'password2': '',
         }
 
         response = self.client.post('/signup/', data=form_data)
-        self.assertContains(response, 'Please enter a valid Email address')
-
         self.assertEqual(response.status_code, 200)
-
+        self.assertContains(response, 'Please enter a password')
 
 class LogoutTest(TestCase):
     def setUp(self):

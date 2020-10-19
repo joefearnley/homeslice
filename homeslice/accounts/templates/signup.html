@@ -11,7 +11,6 @@
         </a>
     </div>
     <h2 class="my-2 text-xl">Create an Account</h2>
-
     <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white border overflow-hidden sm:rounded-lg">
         <form method="POST" action="/signup/">
             {% csrf_token %}
@@ -26,7 +25,6 @@
                  {% endif %}
             </div>
             {% endfor %}
-
             <div class="flex items-center justify-between mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="/login/">
                     Already have an account?

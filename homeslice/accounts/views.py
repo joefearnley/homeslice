@@ -5,10 +5,10 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from .forms import LoginForm, SignUpForm
 from django.views.generic import View
-from django.views.generic.edit import FormView, CreateView
+from django.views.generic.edit import FormView
 
 
-class SignupView(CreateView):
+class SignupView(FormView):
     template_name = 'signup.html'
     form_class = SignUpForm
     success_url = reverse_lazy('bookmark_list')
