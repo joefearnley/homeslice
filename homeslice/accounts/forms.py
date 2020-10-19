@@ -10,21 +10,6 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('email','password1','password2',)
-        # error_messages = {
-        #     'email': {
-        #         'required': 'Please enter a valid Email address',
-        #         'unique': 'This email address is already registered',
-        #     },
-        #     'password1': {
-        #         'required': 'Please enter a password',
-        #     },
-        #     'password2': {
-        #         'required': 'Please enter a password confirmation',
-        #     },
-        # },
-        help_texts = {
-            'password1': 'Please enter a password',
-        }
 
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
