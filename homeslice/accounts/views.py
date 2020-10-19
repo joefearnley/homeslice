@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from .forms import LoginForm, SignupForm
@@ -20,12 +20,17 @@ class SignupView(FormView):
 
 
 class LoginView(FormView):
-     template_name = 'login.html'
-     form_class = LoginForm
+    template_name = 'login.html'
+    form_class = LoginForm
+    success_url = reverse_lazy('bookmark_list')
 
     def form_valid(self, form):
+        user = authenticate(
+            username=self.request.POST['email'], 
+            password=self.request.POST['password']
+        )
         login(self.request, user)
-        return super(SignupView, self).form_valid(form)
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class LogoutView(View):

@@ -99,6 +99,7 @@ class LoginTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertTemplateUsed(response, 'login.html')
+        self.assertContains(response, 'Log in')
         self.assertContains(response, 'Email')
         self.assertContains(response, 'Password')
         self.assertContains(response, 'Forgot your password?')
