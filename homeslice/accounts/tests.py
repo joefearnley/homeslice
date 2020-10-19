@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from .forms import SignUpForm
+from .forms import SignupForm
 
 class SignUpTest(TestCase):
 
@@ -26,7 +26,7 @@ class SignUpTest(TestCase):
         response = self.client.post('/signup/', data=form_data)
         self.assertRedirects(response, '/bookmarks/', 302)
 
-class SignUpFormTest(TestCase):
+class SignupFormTest(TestCase):
     def test_form_does_not_validate_with_empty_data(self):
         form_data = {
             'email': '',
@@ -34,7 +34,7 @@ class SignUpFormTest(TestCase):
             'password2': '',
         }
 
-        form = SignUpForm(data=form_data)
+        form = SignupForm(data=form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_does_not_validate_with_no_email(self):
@@ -44,7 +44,7 @@ class SignUpFormTest(TestCase):
             'password2': 'topsecret123',
         }
 
-        form = SignUpForm(data=form_data)
+        form = SignupForm(data=form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_does_not_validate_with_no_password(self):
@@ -54,7 +54,7 @@ class SignUpFormTest(TestCase):
             'password2': '',
         }
 
-        form = SignUpForm(data=form_data)
+        form = SignupForm(data=form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_does_not_validate_with_no_password_confirmation(self):
@@ -64,7 +64,7 @@ class SignUpFormTest(TestCase):
             'password2': '',
         }
 
-        form = SignUpForm(data=form_data)
+        form = SignupForm(data=form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_does_not_validate_with_no_password_confirmation_match(self):
@@ -74,7 +74,7 @@ class SignUpFormTest(TestCase):
             'password2': 'topsecret1234',
         }
 
-        form = SignUpForm(data=form_data)
+        form = SignupForm(data=form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_validates(self):
@@ -84,7 +84,7 @@ class SignUpFormTest(TestCase):
             'password2': 'topsecret1234',
         }
 
-        form = SignUpForm(data=form_data)
+        form = SignupForm(data=form_data)
         self.assertTrue(form.is_valid())
 
 

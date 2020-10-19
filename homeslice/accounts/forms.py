@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import ugettext_lazy as _
 
 
-class SignUpForm(UserCreationForm):
+class SignupForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
     class Meta:
@@ -18,7 +18,7 @@ class SignUpForm(UserCreationForm):
             visible.field.widget.attrs['class'] = 'appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
 
     def save(self):
-        user = super(SignUpForm, self).save(commit=False)
+        user = super(SignupForm, self).save(commit=False)
         user.username = self.cleaned_data['email']
         user.email = self.cleaned_data['email']
         user.save()
