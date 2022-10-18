@@ -31,6 +31,10 @@ class AccountsTest(APITestCase):
         self.assertContains(response, self.account.username)
         self.assertContains(response, self.account.email)
 
+    def test_can_update_account_information(self):
+        pass
+
+    
     # update name
     #  validation
     #       not empty
