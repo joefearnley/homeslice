@@ -127,10 +127,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
-    'DEFAULT_PARSER_CLASSES': (
-        'rest_framework.parsers.JSONParser',
-    )
 }
 
 
@@ -155,8 +151,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-AUTH_USER_MODEL='accounts.Account'
 
 # TEST_RUNNER="redgreenunittest.django.runner.RedGreenDiscoverRunner"
 RAINBOWTESTS_HIGHLIGHT_PATH = '~/projects/homeslice/'

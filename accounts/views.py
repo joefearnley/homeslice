@@ -4,9 +4,17 @@ from .serializers import AccountSerializer
 from .models import Account
 
 
+class AccountSignupView(APIView):
+    """
+    API for handling registration, login, and logout
+    """
+    queryset = Account.objects.all()
+    permission_classes = [AllowAny,]
+    serializer_class = SignupSerializer
+
 class AccountViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows accounts to be viewed or edited.
     """
     queryset = Account.objects.all().order_by('-date_joined')
     serializer_class = AccountSerializer
