@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from rest_framework import permissions
-from .serializers import AccountSerializer
+from .serializers import AccountSerializer, SignupSerializer
 from .models import Account
 
 
@@ -9,8 +9,8 @@ class AccountSignupView(APIView):
     API for handling registration, login, and logout
     """
     queryset = Account.objects.all()
-    permission_classes = [AllowAny,]
-    serializer_class = SignupSerializer
+    serializer = SignupSerializer(data=request.data)
+
 
 class AccountViewSet(viewsets.ModelViewSet):
     """

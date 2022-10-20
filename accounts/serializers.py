@@ -14,15 +14,6 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SignupSerializer(serializers.Serializer):
-    username = serializers.CharField(
-        required=True,
-        validators=[UniqueValidator(queryset=Account.objects.all())]
-    )
-
-    email = serializers.EmailField(
-        required=True,
-        validators=[UniqueValidator(queryset=Account.objects.all())]
-    )
 
     class Meta:
         model = Account
@@ -40,5 +31,5 @@ class SignupSerializer(serializers.Serializer):
         return account
 
 
-class LoginSerilizer(serializers.Serializer)
+class LoginSerilizer(serializers.Serializer):
     pass
