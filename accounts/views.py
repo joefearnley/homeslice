@@ -1,4 +1,5 @@
-from rest_framework import viewsets
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 from rest_framework import permissions
 from .serializers import AccountSerializer, SignupSerializer
 from .models import Account
@@ -9,10 +10,14 @@ class AccountSignupView(APIView):
     API for handling registration, login, and logout
     """
     queryset = Account.objects.all()
-    serializer = SignupSerializer(data=request.data)
+    serializer_class = SignupSerializer
+
+    def post(self, ):
+        serializer = SignupSerializer(data=self.request.data)
+        serializer.signup()
 
 
-class AccountViewSet(viewsets.ModelViewSet):
+class AccountViewSet(ModelViewSet):
     """
     API endpoint that allows accounts to be viewed or edited.
     """

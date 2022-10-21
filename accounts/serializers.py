@@ -13,14 +13,14 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
 
-class SignupSerializer(serializers.Serializer):
+class SignupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
         fields = ['username', 'email', 'password']
 
     def signup(self, validated_data):
-        account = Account.objects.create(
+        account = Account.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
         )
