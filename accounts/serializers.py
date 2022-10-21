@@ -1,6 +1,4 @@
-from django.contrib.auth.models import Group
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
 from .models import Account
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
@@ -13,7 +11,7 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
 
-class SignupSerializer(serializers.ModelSerializer):
+class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account

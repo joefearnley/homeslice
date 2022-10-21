@@ -1,23 +1,21 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.views import APIView
-from rest_framework import permissions
+from rest_framework import views, viewsets, permissions
 from .serializers import AccountSerializer, SignupSerializer
 from .models import Account
 
 
-class AccountSignupView(APIView):
+class AccountSignUpView(views.APIView):
     """
     API for handling registration, login, and logout
     """
     queryset = Account.objects.all()
-    serializer_class = SignupSerializer
+    serializer_class = SignUpSerializer
 
-    def post(self, ):
-        serializer = SignupSerializer(data=self.request.data)
+    def post(self):
+        serializer = self.serializer_class(data=self.request.data)
         serializer.signup()
 
 
-class AccountViewSet(ModelViewSet):
+class AccountViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows accounts to be viewed or edited.
     """
