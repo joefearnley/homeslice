@@ -4,7 +4,7 @@ from .serializers import AccountSerializer, SignUpSerializer
 from .models import Account
 
 
-class AccountSignUpView(views.APIView):
+class AccountSignUpAPIView(views.APIView):
     """
     API for handling registration, login, and logout
     """

@@ -12,10 +12,21 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SignUpSerializer(serializers.ModelSerializer):
+    # email = serializers.EmailField(
+    #     required=True,
+    #     validators=[
+    #         UniqueValidator(queryset=Account.objects.all())
+    #     ]
+    # )
+    # password = serializers.CharField(write_only=True);
 
     class Meta:
         model = Account
         fields = ['username', 'email', 'password']
+        extra_kwargs = {
+            'email': {'allow_null': False, 'allow_blank': False, 'required': True},
+            'password': {'write_only': True}
+        }
 
     def create(self, validated_data):
         account = Account.objects.create_user(
