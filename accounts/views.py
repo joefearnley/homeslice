@@ -1,5 +1,6 @@
-from rest_framework import views, viewsets, permissions
-from .serializers import AccountSerializer, SignupSerializer
+from rest_framework import views, viewsets, permissions, status
+from rest_framework.response import Response
+from .serializers import AccountSerializer, SignUpSerializer
 from .models import Account
 
 
@@ -7,12 +8,17 @@ class AccountSignUpView(views.APIView):
     """
     API for handling registration, login, and logout
     """
-    queryset = Account.objects.all()
+    # queryset = Account.objects.all()
     serializer_class = SignUpSerializer
+    permissions_classes = [permissions.AllowAny]
 
-    def post(self):
-        serializer = self.serializer_class(data=self.request.data)
-        serializer.signup()
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AccountViewSet(viewsets.ModelViewSet):

@@ -5,9 +5,11 @@ from django.contrib.auth.admin import User
 from accounts.models import Account
 
 
-class SignupTest(APITestCase):
+class SignUpTest(APITestCase):
     def test_cannot_signup_for_an_account_with_no_data(self):
-        response = self.client.post('/api/v1/accounts/')
+        response = self.client.post('/api/v1/signup/')
+
+        print(response.data)
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
