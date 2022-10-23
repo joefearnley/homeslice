@@ -16,7 +16,7 @@ class SignUpTest(APITestCase):
 
     def test_cannot_signup_for_an_account_with_no_username(self):
         post_data = {
-            'email': 'joe123@gmail.com',
+            'email': 'john.m.doe@gmail.com',
             'password': 'secret_123'
         }
         response = self.client.post('/api/v1/signup/', post_data)
@@ -27,7 +27,7 @@ class SignUpTest(APITestCase):
     def test_cannot_signup_for_an_account_when_username_is_blank(self):
         post_data = {
             'username': '',
-            'email': 'joe123@gmail.com',
+            'email': 'john.m.doe@gmail.com',
             'password': 'secret_123'
         }
         response = self.client.post('/api/v1/signup/', post_data)
@@ -37,7 +37,7 @@ class SignUpTest(APITestCase):
 
     def test_cannot_signup_for_an_account_with_no_email_address(self):
         post_data = {
-            'username': 'joe123',
+            'username': 'johndoe',
             'password': 'secret_123'
         }
         response = self.client.post('/api/v1/signup/', post_data)
@@ -47,7 +47,7 @@ class SignUpTest(APITestCase):
 
     def test_cannot_signup_for_an_account_when_email_address_is_blank(self):
         post_data = {
-            'username': 'joe123',
+            'username': 'johndoe',
             'email': '',
             'password': 'secret_123'
         }
@@ -58,8 +58,8 @@ class SignUpTest(APITestCase):
 
     def test_can_sign_up_for_an_account(self):
         post_data = {
-            'username': 'joe123',
-            'email': 'joe123@gmail.com',
+            'username': 'johndoe',
+            'email': 'john.m.doe@gmail.com',
             'password': 'secret_123'
         }
 

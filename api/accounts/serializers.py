@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Account
 
+
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
@@ -12,13 +13,6 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SignUpSerializer(serializers.ModelSerializer):
-    # email = serializers.EmailField(
-    #     required=True,
-    #     validators=[
-    #         UniqueValidator(queryset=Account.objects.all())
-    #     ]
-    # )
-    # password = serializers.CharField(write_only=True);
 
     class Meta:
         model = Account
