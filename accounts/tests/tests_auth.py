@@ -59,15 +59,27 @@ class SignUpTest(APITestCase):
     def test_can_sign_up_for_an_account(self):
         post_data = {
             'username': 'joe123',
-            'email': '',
+            'email': 'joe123@gmail.com',
             'password': 'secret_123'
         }
+
         response = self.client.post('/api/v1/signup/', post_data)
 
-        print(response)
+        self.assertEquals(response.status_code, status.HTTP_201_CREATED)
 
-        # self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
-        # self.assertEqual(response.data['email'][0], 'This field may not be blank.')
+        # confirm account info is returned
+        response_user_data = response.data['user']
+        self.assertEqual(response_user_data['username'], post_data['username'])
+        self.assertEqual(response_user_data['email'], post_data['email'])
+
+        # confirm a token with a value is returned
+        self.assertNotEqual(response.data['token'], '')
+
+        # confirm we have stored new accout in DB
+        new_account = Account.objects.get(username=post_data['username'])
+        self.assertEqual(new_account.username, post_data['username'])
+        self.assertEqual(new_account.email, post_data['email'])
+
 
 class LoginTest(APITestCase):
     pass
