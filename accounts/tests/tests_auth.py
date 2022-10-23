@@ -87,28 +87,3 @@ class LoginTest(APITestCase):
 
 class LogoutTest(APITestCase):
     pass
-
-
-    # def test_can_update_account_information(self):
-    #     pass
-
-    # update name
-    #  validation
-    #       not empty
-
-    # update email address
-    #  validation
-    #       not empty
-    #       valid email
-    #       email not already i user
-
-    # update username
-    #  validation
-    #       not empty
-    #       not already in use
-
-    # update password
-    #  validation
-    #    not empty
-    #    at least 8 characters
-    #    confirmation matches
