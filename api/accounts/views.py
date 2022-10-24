@@ -25,11 +25,16 @@ class AccountSignUpAPIView(views.APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class LoginAPIView(views.APIView):
+class LogoutAPIView(views.APIView):
     """
-    API for handling application login and token generation
+    API for handling application logout
     """
-    
+    def get(self, request, format=None):
+
+        print(request.user)
+
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 class AccountViewSet(viewsets.ModelViewSet):

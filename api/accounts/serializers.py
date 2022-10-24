@@ -34,5 +34,5 @@ class SignUpSerializer(serializers.ModelSerializer):
         return account
 
 
-class LoginSerilizer(serializers.Serializer):
+class LogOutSerilizer(serializers.Serializer):
     pass

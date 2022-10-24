@@ -158,4 +158,18 @@ class LoginTest(APITestCase):
 
 
 class LogoutTest(APITestCase):
-    pass
+    def setUp(self):
+        self.account = Account.objects.create_user(
+            username='johndoe',
+            first_name='John',
+            last_name='Doe',
+            email='john.m.doe@gmail.com',
+            password=self.account_password
+        )
+
+    def test_user_cannot_logout_when_not_authenticated(self):
+        response = self.client.post(reverse('logout'), post_data)
+
+
+    def test_user_can_log_out(self):
+        pass
