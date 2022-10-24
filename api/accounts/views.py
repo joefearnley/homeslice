@@ -7,9 +7,8 @@ from .models import Account
 
 class AccountSignUpAPIView(views.APIView):
     """
-    API for handling registration, login, and logout
+    API for handling registration
     """
-    # queryset = Account.objects.all()
     serializer_class = SignUpSerializer
     permissions_classes = [permissions.AllowAny]
 
@@ -24,6 +23,13 @@ class AccountSignUpAPIView(views.APIView):
                 }, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoginAPIView(views.APIView):
+    """
+    API for handling application login and token generation
+    """
+    
 
 
 class AccountViewSet(viewsets.ModelViewSet):

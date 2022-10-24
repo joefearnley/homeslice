@@ -1,3 +1,4 @@
+from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
@@ -82,7 +83,78 @@ class SignUpTest(APITestCase):
 
 
 class LoginTest(APITestCase):
-    pass
+
+    def setUp(self):
+        self.account_password = 'top_secret'
+        self.account = Account.objects.create_user(
+            username='johndoe',
+            first_name='John',
+            last_name='Doe',
+            email='john.m.doe@gmail.com',
+            password=self.account_password
+        )
+
+    def test_cannot_login_without_username_and_password(self):
+        post_data = {}
+
+        response = self.client.post(reverse('login'), post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['username'][0], 'This field is required.')
+        self.assertEqual(response.data['password'][0], 'This field is required.')
+
+    def test_cannot_login_without_username(self):
+        post_data = {
+            'password': self.account_password
+        }
+
+        response = self.client.post(reverse('login'), post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['username'][0], 'This field is required.')
+
+    def test_cannot_login_with_empty_username(self):
+        post_data = {
+            'username': '',
+            'password': self.account_password
+        }
+
+        response = self.client.post(reverse('login'), post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['username'][0], 'This field may not be blank.')
+
+    def test_cannot_login_without_password(self):
+        post_data = {
+            'username': self.account.username,
+        }
+
+        response = self.client.post(reverse('login'), post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['password'][0], 'This field is required.')
+
+    def test_cannot_login_with_empty_password(self):
+        post_data = {
+            'username': self.account.username,
+            'password': ''
+        }
+
+        response = self.client.post(reverse('login'), post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['password'][0], 'This field may not be blank.')
+
+    def test_can_log_in(self):
+        post_data = {
+            'username': self.account.username,
+            'password': self.account_password
+        }
+
+        response = self.client.post(reverse('login'), post_data)
+
+        self.assertContains(response, 'token')
+        self.assertNotEqual(response.data['token'], '')
 
 
 class LogoutTest(APITestCase):
