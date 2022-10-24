@@ -83,11 +83,32 @@ class UpdateAccountTest(APITestCase):
         self.assertEqual(updated_user.first_name, self.account.first_name)
         self.assertEqual(updated_user.last_name, post_data['last_name'])
 
+
+    def test_cannot_update_account_email_address_when_empty(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        post_data = {
+            'username': self.account.username,
+            'email': '',
+        }
+
+        response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+        updated_user = Account.objects.get(username=post_data['username'])
+
+        print(updated_user.email)
+
+        # self.assertEqual(updated_user.first_name, self.account.first_name)
+        # self.assertEqual(updated_user.last_name, post_data['last_name'])
+
     # update email address
     #  validation
-    #       not empty
-    #       valid email
-    #       email not already i user
+    #       [ ] not empty
+    #       [ ] valid email
+    #       [ ] email not already i user
 
     # update username
     #  validation
