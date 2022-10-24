@@ -30,11 +30,18 @@ class LogoutAPIView(views.APIView):
     API for handling application logout
     """
     def get(self, request, format=None):
-
-        print(request.user)
+        if request.user.is_anonymous:
+            errors = {
+                'message': 'Unauthenticated request.'
+            }
+            return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
         request.user.auth_token.delete()
-        return Response(status=status.HTTP_200_OK)
+
+        success_message = {
+            'message': 'Account successfully logged out.'
+        }
+        return Response(success_message, status=status.HTTP_200_OK)
 
 
 class AccountViewSet(viewsets.ModelViewSet):

@@ -164,12 +164,24 @@ class LogoutTest(APITestCase):
             first_name='John',
             last_name='Doe',
             email='john.m.doe@gmail.com',
-            password=self.account_password
+            password='top_secret'
         )
 
     def test_user_cannot_logout_when_not_authenticated(self):
-        response = self.client.post(reverse('logout'), post_data)
+        response = self.client.get(reverse('logout'))
 
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['message'], 'Unauthenticated request.')
 
     def test_user_can_log_out(self):
-        pass
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        response = self.client.get(reverse('logout'))
+
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['message'], 'Account successfully logged out.')
+
+        updated_account = Account.objects.get(username=self.account.username)
+        has_token = Token.objects.filter(user=updated_account).exists()
+        self.assertFalse(has_token)

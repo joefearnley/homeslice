@@ -62,9 +62,9 @@ class UpdateAccountTest(APITestCase):
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
-        updated_user = Account.objects.get(username=post_data['username'])
-        self.assertEqual(updated_user.first_name, post_data['first_name'])
-        self.assertEqual(updated_user.last_name, self.account.last_name)
+        updated_account = Account.objects.get(username=post_data['username'])
+        self.assertEqual(updated_account.first_name, post_data['first_name'])
+        self.assertEqual(updated_account.last_name, self.account.last_name)
 
     def test_can_update_account_last_name(self):
         token = Token.objects.create(user=self.account)
@@ -79,9 +79,9 @@ class UpdateAccountTest(APITestCase):
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
-        updated_user = Account.objects.get(username=post_data['username'])
-        self.assertEqual(updated_user.first_name, self.account.first_name)
-        self.assertEqual(updated_user.last_name, post_data['last_name'])
+        updated_account = Account.objects.get(username=post_data['username'])
+        self.assertEqual(updated_account.first_name, self.account.first_name)
+        self.assertEqual(updated_account.last_name, post_data['last_name'])
 
 
     def test_cannot_update_account_email_address_when_empty(self):
@@ -97,12 +97,12 @@ class UpdateAccountTest(APITestCase):
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
-        updated_user = Account.objects.get(username=post_data['username'])
+        updated_account = Account.objects.get(username=post_data['username'])
 
-        print(updated_user.email)
+        print(updated_account.email)
 
-        # self.assertEqual(updated_user.first_name, self.account.first_name)
-        # self.assertEqual(updated_user.last_name, post_data['last_name'])
+        # self.assertEqual(updated_account.first_name, self.account.first_name)
+        # self.assertEqual(updated_account.last_name, post_data['last_name'])
 
     # update email address
     #  validation
