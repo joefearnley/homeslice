@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.admin import User
 from accounts.models import Account
 
+
 class AccessAccountTest(APITestCase):
 
     def setUp(self):
@@ -54,16 +55,33 @@ class UpdateAccountTest(APITestCase):
 
         post_data = {
             'username': self.account.username,
-            'first_name': 'Jan',
+            'first_name': 'Jane',
         }
 
-        response = self.client.post('/api/v1/account/', post_data)
+        response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
         updated_user = Account.objects.get(username=post_data['username'])
         self.assertEqual(updated_user.first_name, post_data['first_name'])
         self.assertEqual(updated_user.last_name, self.account.last_name)
+
+    def test_can_update_account_last_name(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        post_data = {
+            'username': self.account.username,
+            'last_name': 'Dole',
+        }
+
+        response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+        updated_user = Account.objects.get(username=post_data['username'])
+        self.assertEqual(updated_user.first_name, self.account.first_name)
+        self.assertEqual(updated_user.last_name, post_data['last_name'])
 
     # update email address
     #  validation
