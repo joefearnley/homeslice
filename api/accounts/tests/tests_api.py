@@ -44,6 +44,14 @@ class UpdateAccountTest(APITestCase):
             password='top_secret'
         )
 
+        self.other_account = Account.objects.create_user(
+           username='janedoe',
+            first_name='Jane',
+            last_name='Dole',
+            email='jane.m.doe@gmail.com',
+            password='top_secret'
+        )
+
     def test_cannot_update_account_when_not_authenticated(self):
         response = self.client.get('/api/v1/accounts/')
 
@@ -55,7 +63,7 @@ class UpdateAccountTest(APITestCase):
 
         post_data = {
             'username': self.account.username,
-            'first_name': 'Jane',
+            'first_name': 'Johnny',
         }
 
         response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
@@ -72,7 +80,7 @@ class UpdateAccountTest(APITestCase):
 
         post_data = {
             'username': self.account.username,
-            'last_name': 'Dole',
+            'last_name': 'Doh!',
         }
 
         response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
@@ -95,20 +103,40 @@ class UpdateAccountTest(APITestCase):
 
         response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
 
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['email'][0], 'This field may not be blank.')
+
+    def test_cannot_update_account_email_address_when_not_unique(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        other_users_email = self.other_account.email
+
+        post_data = {
+            'username': self.account.username,
+            'email': other_users_email
+        }
+
+        response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['email'][0], 'This field must be unique.')
+
+    def test_can_update_email_addres(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        post_data = {
+            'username': self.account.username,
+            'email': 'johnny.d.doe@gmail.com'
+        }
+
+        response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
+
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
         updated_account = Account.objects.get(username=post_data['username'])
-
-        print(updated_account.email)
-
-        # self.assertEqual(updated_account.first_name, self.account.first_name)
-        # self.assertEqual(updated_account.last_name, post_data['last_name'])
-
-    # update email address
-    #  validation
-    #       [ ] not empty
-    #       [ ] valid email
-    #       [ ] email not already i user
+        self.assertEqual(updated_account.email, post_data['email'])
 
     # update username
     #  validation

@@ -1,8 +1,14 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 from .models import Account
 
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
+    email = serializers.EmailField(
+        required=True,
+        validators=[UniqueValidator(queryset=Account.objects.all())]
+    )
+
     class Meta:
         model = Account
         fields = [
