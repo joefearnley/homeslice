@@ -33,7 +33,7 @@ class AccessAccountTest(APITestCase):
         self.assertContains(response, self.account.email)
 
 
-class UpdateAccountTest(APITestCase):
+class UpdateAccountNameTest(APITestCase):
 
     def setUp(self):
         self.account = Account.objects.create_user(
@@ -41,14 +41,6 @@ class UpdateAccountTest(APITestCase):
             first_name='John',
             last_name='Doe',
             email='john.m.doe@gmail.com',
-            password='top_secret'
-        )
-
-        self.other_account = Account.objects.create_user(
-           username='janedoe',
-            first_name='Jane',
-            last_name='Dole',
-            email='jane.m.doe@gmail.com',
             password='top_secret'
         )
 
@@ -92,7 +84,25 @@ class UpdateAccountTest(APITestCase):
         self.assertEqual(updated_account.last_name, post_data['last_name'])
 
 
-    def test_cannot_update_account_email_address_when_empty(self):
+class UpdateAccountEmailAddressTest(APITestCase):
+    def setUp(self):
+        self.account = Account.objects.create_user(
+            username='johndoe',
+            first_name='John',
+            last_name='Doe',
+            email='john.m.doe@gmail.com',
+            password='top_secret'
+        )
+
+        self.other_account = Account.objects.create_user(
+            username='janedoe',
+            first_name='Jane',
+            last_name='Dole',
+            email='jane.m.doe@gmail.com',
+            password='top_secret'
+        )
+
+    def test_cannot_update_email_address_when_empty(self):
         token = Token.objects.create(user=self.account)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
@@ -106,7 +116,7 @@ class UpdateAccountTest(APITestCase):
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['email'][0], 'This field may not be blank.')
 
-    def test_cannot_update_account_email_address_when_not_unique(self):
+    def test_cannot_update_email_address_when_not_unique(self):
         token = Token.objects.create(user=self.account)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
@@ -122,7 +132,7 @@ class UpdateAccountTest(APITestCase):
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['email'][0], 'This field must be unique.')
 
-    def test_can_update_email_addres(self):
+    def test_can_update_email_address(self):
         token = Token.objects.create(user=self.account)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
@@ -142,6 +152,36 @@ class UpdateAccountTest(APITestCase):
     #  validation
     #       not empty
     #       not already in use
+class UpdateAccountUsernameTest(APITestCase):
+    def setUp(self):
+        self.account = Account.objects.create_user(
+            username='johndoe',
+            first_name='John',
+            last_name='Doe',
+            email='john.m.doe@gmail.com',
+            password='top_secret'
+        )
+
+        self.other_account = Account.objects.create_user(
+            username='janedoe',
+            first_name='Jane',
+            last_name='Dole',
+            email='jane.m.doe@gmail.com',
+            password='top_secret'
+        )
+
+    def test_cannot_update_username_when_not_given(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        post_data = {
+            'username': '',
+        }
+
+        response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['username'][0], 'This field may not be blank.')
 
     # update password
     #  validation
