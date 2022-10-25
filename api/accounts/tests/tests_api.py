@@ -148,10 +148,7 @@ class UpdateAccountEmailAddressTest(APITestCase):
         updated_account = Account.objects.get(username=post_data['username'])
         self.assertEqual(updated_account.email, post_data['email'])
 
-    # update username
-    #  validation
-    #       not empty
-    #       not already in use
+
 class UpdateAccountUsernameTest(APITestCase):
     def setUp(self):
         self.account = Account.objects.create_user(
@@ -182,6 +179,33 @@ class UpdateAccountUsernameTest(APITestCase):
 
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['username'][0], 'This field may not be blank.')
+
+    def test_cannot_update_username_when_not_unique(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        post_data = {
+            'username': self.other_account.username,
+        }
+
+        response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['username'][0], 'A user with that username already exists.')
+
+    def test_username_can_be_updated(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        post_data = {
+            'username': 'johnnydoe',
+        }
+
+        response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+        updated_account = Account.objects.get(username=post_data['username'])
+        self.assertEqual(updated_account.username, post_data['username'])
 
     # update password
     #  validation
