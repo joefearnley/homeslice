@@ -219,10 +219,10 @@ class AccountUpdatePasswordTest(APITestCase):
             password='top_secret'
         )
 
-    def test_cannot_update_password_with_missing_fields(self):
         token = Token.objects.create(user=self.account)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
+    def test_cannot_update_password_with_missing_fields(self):
         post_data = {}
 
         response = self.client.patch(reverse('update-password'), post_data)
@@ -232,9 +232,6 @@ class AccountUpdatePasswordTest(APITestCase):
         self.assertEqual(response.data['confirm_password'][0], 'This field is required.')
 
     def test_cannot_update_password_with_black_fields(self):
-        token = Token.objects.create(user=self.account)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-
         post_data = {
             'password': '',
             'confirm_password': '',
@@ -247,9 +244,6 @@ class AccountUpdatePasswordTest(APITestCase):
         self.assertEqual(response.data['confirm_password'][0], 'This field may not be blank.')
 
     def test_cannot_update_password_when_too_short_common_numeric(self):
-        token = Token.objects.create(user=self.account)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-
         post_data = {
             'password': '1',
             'confirm_password': '1',
@@ -263,9 +257,6 @@ class AccountUpdatePasswordTest(APITestCase):
         self.assertEqual(response.data['non_field_errors'][2], 'This password is entirely numeric.')
 
     def test_cannot_update_password_when_do_not_match(self):
-        token = Token.objects.create(user=self.account)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-
         post_data = {
             'password': 'top_secret_123',
             'confirm_password': 'top_secret_1234',
