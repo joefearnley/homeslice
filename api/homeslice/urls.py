@@ -13,6 +13,6 @@ urlpatterns = [
     path('api/v1/signup/', AccountSignUpAPIView.as_view(), name='signup'),
     path('api/v1/login/', obtain_auth_token, name='login'),
     path('api/v1/logout/', LogoutAPIView.as_view(), name='logout'),
-    path('api/v1/account/update-password', UpdatePasswordAPIView.as_view(), name='update-password'),
+    path('api/v1/account/update-password/', UpdatePasswordAPIView.as_view(), name='update-password'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

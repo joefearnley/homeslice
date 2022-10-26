@@ -49,13 +49,10 @@ class UpdatePasswordSerializer(serializers.Serializer):
         model = Account
 
     def validate(self, data):
-        print(self.context['request'].user)
-
-
         if data['password'] != data['confirm_password']:
             raise serializers.ValidationError({'confirm_password': 'The two password fields did not match.'})
 
-        password_validation.validate_password(data['new_password1'], self.context['request'].user)
+        password_validation.validate_password(data['password'], self.context['request'].user)
         return data
 
     def save(self):

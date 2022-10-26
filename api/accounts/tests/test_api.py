@@ -1,4 +1,4 @@
-from typing_extensions import Self
+from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
@@ -202,13 +202,14 @@ class UpdateAccountUsernameTest(APITestCase):
         }
 
         response = self.client.patch('/api/v1/accounts/%s/' % self.account.id, post_data)
+
         self.assertEquals(response.status_code, status.HTTP_200_OK)
 
         updated_account = Account.objects.get(username=post_data['username'])
         self.assertEqual(updated_account.username, post_data['username'])
 
 
-class AccountUpdatePasswordTest(self):
+class AccountUpdatePasswordTest(APITestCase):
     def setUp(self):
         self.account = Account.objects.create_user(
             username='johndoe',
@@ -222,20 +223,55 @@ class AccountUpdatePasswordTest(self):
         token = Token.objects.create(user=self.account)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
+        post_data = {}
+
+        response = self.client.patch(reverse('update-password'), post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['password'][0], 'This field is required.')
+        self.assertEqual(response.data['confirm_password'][0], 'This field is required.')
+
+    def test_cannot_update_password_with_black_fields(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
         post_data = {
             'password': '',
             'confirm_password': '',
         }
 
-        response = self.client.patch('api/v1/account/update-password', post_data)
+        response = self.client.patch(reverse('update-password'), post_data)
 
-        print(response)
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['password'][0], 'This field may not be blank.')
+        self.assertEqual(response.data['confirm_password'][0], 'This field may not be blank.')
 
-        self.assertEquals(response.status_code, status.HTTP_200_OK)
-        
+    def test_cannot_update_password_when_too_short_common_numeric(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
-    # update password
-    #  validation
-    #    not empty
-    #    at least 8 characters
-    #    confirmation matches
+        post_data = {
+            'password': '1',
+            'confirm_password': '1',
+        }
+
+        response = self.client.patch(reverse('update-password'), post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['non_field_errors'][0], 'This password is too short. It must contain at least 8 characters.')
+        self.assertEqual(response.data['non_field_errors'][1], 'This password is too common.')
+        self.assertEqual(response.data['non_field_errors'][2], 'This password is entirely numeric.')
+
+    def test_cannot_update_password_when_do_not_match(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        post_data = {
+            'password': 'top_secret_123',
+            'confirm_password': 'top_secret_1234',
+        }
+
+        response = self.client.patch(reverse('update-password'), post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['confirm_password'][0], 'The two password fields did not match.')
