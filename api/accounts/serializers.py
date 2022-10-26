@@ -1,3 +1,4 @@
+from django.contrib.auth import password_validation
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from .models import Account
@@ -39,3 +40,27 @@ class SignUpSerializer(serializers.ModelSerializer):
 
         return account
 
+
+class UpdatePasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(write_only=True)
+    confirm_password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = Account
+
+    def validate(self, data):
+        print(self.context['request'].user)
+
+
+        if data['password'] != data['confirm_password']:
+            raise serializers.ValidationError({'confirm_password': 'The two password fields did not match.'})
+
+        password_validation.validate_password(data['new_password1'], self.context['request'].user)
+        return data
+
+    def save(self):
+        password = self.validated_data['password']
+        user = self.context['request'].user
+        user.set_password(password)
+        user.save()
+        return user

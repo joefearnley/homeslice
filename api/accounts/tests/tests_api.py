@@ -1,3 +1,4 @@
+from typing_extensions import Self
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
@@ -6,7 +7,6 @@ from accounts.models import Account
 
 
 class AccessAccountTest(APITestCase):
-
     def setUp(self):
         self.account = Account.objects.create_user(
             username='johndoe',
@@ -206,6 +206,33 @@ class UpdateAccountUsernameTest(APITestCase):
 
         updated_account = Account.objects.get(username=post_data['username'])
         self.assertEqual(updated_account.username, post_data['username'])
+
+
+class AccountUpdatePasswordTest(self):
+    def setUp(self):
+        self.account = Account.objects.create_user(
+            username='johndoe',
+            first_name='John',
+            last_name='Doe',
+            email='john.m.doe@gmail.com',
+            password='top_secret'
+        )
+
+    def test_cannot_update_password_with_missing_fields(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+
+        post_data = {
+            'password': '',
+            'confirm_password': '',
+        }
+
+        response = self.client.patch('api/v1/account/update-password', post_data)
+
+        print(response)
+
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        
 
     # update password
     #  validation

@@ -1,8 +1,17 @@
 from rest_framework import views, viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from .serializers import AccountSerializer, SignUpSerializer
+from .serializers import AccountSerializer, SignUpSerializer, UpdatePasswordSerializer
 from .models import Account
+
+
+class AccountViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows accounts to be viewed or edited.
+    """
+    queryset = Account.objects.all().order_by('-date_joined')
+    serializer_class = AccountSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class AccountSignUpAPIView(views.APIView):
@@ -44,10 +53,27 @@ class LogoutAPIView(views.APIView):
         return Response(success_message, status=status.HTTP_200_OK)
 
 
-class AccountViewSet(viewsets.ModelViewSet):
+class UpdatePasswordAPIView(views.APIView):
     """
-    API endpoint that allows accounts to be viewed or edited.
+    API for handling password updates
     """
-    queryset = Account.objects.all().order_by('-date_joined')
-    serializer_class = AccountSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UpdatePasswordSerializer
+    permissions_classes = [permissions.AllowAny]
+
+    def update(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        account = serializer.save()
+
+        if hasattr(account, 'auth_token'):
+            account.auth_token.delete()
+
+        token = Token.objects.get_or_create(user=account)
+
+        response_data = {
+            'message': 'Password successfully updated.',
+            'token': token.key
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
