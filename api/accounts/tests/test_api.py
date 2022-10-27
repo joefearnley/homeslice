@@ -23,7 +23,6 @@ class AccessAccountTest(APITestCase):
 
     def test_can_access_account_information_when_authenticated(self):
         token = Token.objects.create(user=self.account)
-
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
         response = self.client.get('/api/v1/accounts/')
@@ -102,10 +101,10 @@ class UpdateAccountEmailAddressTest(APITestCase):
             password='top_secret'
         )
 
-    def test_cannot_update_email_address_when_empty(self):
         token = Token.objects.create(user=self.account)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
+    def test_cannot_update_email_address_when_empty(self):
         post_data = {
             'username': self.account.username,
             'email': '',
@@ -117,9 +116,6 @@ class UpdateAccountEmailAddressTest(APITestCase):
         self.assertEqual(response.data['email'][0], 'This field may not be blank.')
 
     def test_cannot_update_email_address_when_not_unique(self):
-        token = Token.objects.create(user=self.account)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-
         other_users_email = self.other_account.email
 
         post_data = {
@@ -133,9 +129,6 @@ class UpdateAccountEmailAddressTest(APITestCase):
         self.assertEqual(response.data['email'][0], 'This field must be unique.')
 
     def test_can_update_email_address(self):
-        token = Token.objects.create(user=self.account)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-
         post_data = {
             'username': self.account.username,
             'email': 'johnny.d.doe@gmail.com'
@@ -219,10 +212,22 @@ class AccountUpdatePasswordTest(APITestCase):
             password='top_secret'
         )
 
+    def authenticate(self):
         token = Token.objects.create(user=self.account)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
+    def test_cannot_update_password_when_not_authenticated(self):
+        post_data = {
+            'password': 'secrect_1243',
+            'confirm_password': 'secrect_1243'
+        }
+        response = self.client.patch(reverse('update-password'), post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
     def test_cannot_update_password_with_missing_fields(self):
+        self.authenticate()
+
         post_data = {}
 
         response = self.client.patch(reverse('update-password'), post_data)
@@ -232,6 +237,8 @@ class AccountUpdatePasswordTest(APITestCase):
         self.assertEqual(response.data['confirm_password'][0], 'This field is required.')
 
     def test_cannot_update_password_with_black_fields(self):
+        self.authenticate()
+
         post_data = {
             'password': '',
             'confirm_password': '',
@@ -244,6 +251,8 @@ class AccountUpdatePasswordTest(APITestCase):
         self.assertEqual(response.data['confirm_password'][0], 'This field may not be blank.')
 
     def test_cannot_update_password_when_too_short_common_numeric(self):
+        self.authenticate()
+
         post_data = {
             'password': '1',
             'confirm_password': '1',
@@ -257,6 +266,8 @@ class AccountUpdatePasswordTest(APITestCase):
         self.assertEqual(response.data['non_field_errors'][2], 'This password is entirely numeric.')
 
     def test_cannot_update_password_when_do_not_match(self):
+        self.authenticate()
+
         post_data = {
             'password': 'top_secret_123',
             'confirm_password': 'top_secret_1234',
@@ -266,3 +277,20 @@ class AccountUpdatePasswordTest(APITestCase):
 
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['confirm_password'][0], 'The two password fields did not match.')
+
+
+    def test_can_update_password(self):
+        self.authenticate()
+
+        new_password = 'top_secret_123'
+        post_data = {
+            'password': new_password,
+            'confirm_password': new_password,
+        }
+
+        response = self.client.patch(reverse('update-password'), post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+        updated_account = Account.objects.get(username=self.account.username)
+        self.assertEquals(updated_account.check_password(new_password), True)

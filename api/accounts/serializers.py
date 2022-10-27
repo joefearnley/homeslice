@@ -57,7 +57,7 @@ class UpdatePasswordSerializer(serializers.Serializer):
 
     def save(self):
         password = self.validated_data['password']
-        user = self.context['request'].user
-        user.set_password(password)
-        user.save()
-        return user
+        account = self.context['request'].user
+        account.set_password(password)
+        account.save()
+        return account

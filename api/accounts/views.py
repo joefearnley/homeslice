@@ -58,17 +58,19 @@ class UpdatePasswordAPIView(generics.UpdateAPIView):
     API for handling password updates
     """
     serializer_class = UpdatePasswordSerializer
-    permissions_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
 
     def patch(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         account = serializer.save()
 
-        if hasattr(account, 'auth_token'):
-            account.auth_token.delete()
+        current_token = Token.objects.filter(user=account)
 
-        token = Token.objects.get_or_create(user=account)
+        if current_token.exists():
+            current_token.delete()
+
+        token, created = Token.objects.get_or_create(user=account)
 
         response_data = {
             'message': 'Password successfully updated.',
