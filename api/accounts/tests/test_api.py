@@ -3,7 +3,6 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
-from django.contrib.auth.admin import User
 from accounts.models import Account
 
 
@@ -31,7 +30,6 @@ class AccountTestMixin(TestCase):
 
 
 class AccessAccountTest(APITestCase, AccountTestMixin):
-
     def test_cannot_access_account_information_when_not_authenticated(self):
         response = self.client.get('/api/v1/accounts/')
 

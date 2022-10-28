@@ -7,8 +7,7 @@ class Profile(models.Model):
         Account,
         on_delete=models.CASCADE,
     )
-    name = models.CharField(max_length=100)
-    username  = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     bio = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
 
