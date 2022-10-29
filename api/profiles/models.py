@@ -11,6 +11,9 @@ class Profile(models.Model):
     bio = models.TextField(blank=True)
     is_active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Link(models.Model):
     profile = models.ForeignKey(
@@ -20,3 +23,6 @@ class Link(models.Model):
     url = models.CharField(max_length=30, blank=False)
     title = models.CharField(max_length=30, blank=False)
     is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return '{} | {}'.format(self.title, self.url)
