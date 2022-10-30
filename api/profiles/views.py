@@ -29,3 +29,11 @@ class LinkViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         profile = Profile.objects.get(account=self.request.user)
         return self.queryset.filter(profile=profile)
+
+    def perform_create(self, serializer):
+        profile = Profile.objects.get(account=self.request.user)
+        serializer.save(profile=profile)
+
+    def perform_update(self, serializer):
+        profile = Profile.objects.get(account=self.request.user)
+        serializer.save(profile=profile)

@@ -93,3 +93,116 @@ class AccessLinksTest(APITestCase, LinkTestMixin):
         self.assertNotContains(response, other_link.url)
         self.assertNotContains(response, other_link.title)
 
+
+class CreateLinksTest(APITestCase, LinkTestMixin):
+    def test_cannot_create_link_when_not_authenticated(self):
+        post_data = {
+            'url': 'https://instagram.com/jdoe1234',
+            'title': 'Instagram Account'
+        }
+
+        response = self.client.get('/api/v1/links/', post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_cannot_create_link_when_no_data_is_provided(self):
+        self.authenticate_account()
+
+        post_data = {}
+
+        response = self.client.post('/api/v1/links/', post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['url'][0], 'This field is required.')
+        self.assertEqual(response.data['title'][0], 'This field is required.')
+
+    def test_cannot_create_link_when_data_is_empty(self):
+        self.authenticate_account()
+
+        post_data = {
+            'url': '',
+            'title': ''
+        }
+
+        response = self.client.post('/api/v1/links/', post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['url'][0], 'This field may not be blank.')
+        self.assertEqual(response.data['title'][0], 'This field may not be blank.')
+
+    def test_cannot_create_link_when_no_url_is_provided(self):
+        self.authenticate_account()
+
+        post_data = {
+            'title': 'Instagram Account'
+        }
+
+        response = self.client.post('/api/v1/links/', post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['url'][0], 'This field is required.')
+
+    def test_cannot_create_link_when_url_is_blank(self):
+        self.authenticate_account()
+
+        post_data = {
+            'url': '',
+            'title': 'Instagram Account'
+        }
+
+        response = self.client.post('/api/v1/links/', post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['url'][0], 'This field may not be blank.')
+
+    def test_cannot_create_link_when_no_title_is_provided(self):
+        self.authenticate_account()
+
+        post_data = {
+            'url': 'https://instagram.com/jdoe1234',
+        }
+
+        response = self.client.post('/api/v1/links/', post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['title'][0], 'This field is required.')
+
+    def test_cannot_create_link_when_title_is_blank(self):
+        self.authenticate_account()
+
+        post_data = {
+            'url': 'https://instagram.com/jdoe1234',
+            'title': ''
+        }
+
+        response = self.client.post('/api/v1/links/', post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['title'][0], 'This field may not be blank.')
+
+    def test_can_create_link(self):
+        self.authenticate_account()
+
+        post_data = {
+            'url': 'https://instagram.com/jdoe1234',
+            'title': 'Instagram Account'
+        }
+
+        response = self.client.post('/api/v1/links/', post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+
+        link = Link.objects.filter(profile=self.profile).first()
+        self.assertEqual(link.url, post_data['url'])
+        self.assertEqual(link.title, post_data['title'])
+
+class UpdateLinksTest(APITestCase, LinkTestMixin):
+    def test_cannot_update_link_when_not_authenticated(self):
+        post_data = {
+            'url': 'https://instagram.com/jdoe1234',
+            'title': 'Instagram Account'
+        }
+
+        response = self.client.get('/api/v1/links/', post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
