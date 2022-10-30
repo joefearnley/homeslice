@@ -26,6 +26,13 @@ class LinkTestMixin(TestCase):
         token = Token.objects.create(user=self.account)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
+    def create_link(self):
+        self.link = Link.objects.create(
+            profile=self.profile,
+            url='https://www.twitter.com/johndoe123',
+            title='Twitter'
+        )
+
 
 class AccessLinksTest(APITestCase, LinkTestMixin):
     def test_cannot_access_link_information_when_not_authenticated(self):
@@ -42,27 +49,17 @@ class AccessLinksTest(APITestCase, LinkTestMixin):
 
     def test_can_view_links_data(self):
         self.authenticate_account()
-
-        link = Link.objects.create(
-            profile=self.profile,
-            url='https://www.twitter.com/johndoe123',
-            title='Twitter'
-        )
+        self.create_link()
 
         response = self.client.get('/api/v1/links/')
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertContains(response, link.url)
-        self.assertContains(response, link.title)
+        self.assertContains(response, self.link.url)
+        self.assertContains(response, self.link.title)
 
     def test_can_only_view_links_data_for_authenticated_account(self):
         self.authenticate_account()
-
-        link = Link.objects.create(
-            profile=self.profile,
-            url='https://www.twitter.com/johndoe123',
-            title='Twitter'
-        )
+        self.create_link()
 
         other_account = Account.objects.create_user(
             username='janedoe',
@@ -87,8 +84,8 @@ class AccessLinksTest(APITestCase, LinkTestMixin):
         response = self.client.get('/api/v1/links/')
 
         self.assertEquals(response.status_code, status.HTTP_200_OK)
-        self.assertContains(response, link.url)
-        self.assertContains(response, link.title)
+        self.assertContains(response, self.link.url)
+        self.assertContains(response, self.link.title)
 
         self.assertNotContains(response, other_link.url)
         self.assertNotContains(response, other_link.title)
@@ -196,6 +193,7 @@ class CreateLinksTest(APITestCase, LinkTestMixin):
         self.assertEqual(link.url, post_data['url'])
         self.assertEqual(link.title, post_data['title'])
 
+
 class UpdateLinksTest(APITestCase, LinkTestMixin):
     def test_cannot_update_link_when_not_authenticated(self):
         post_data = {
@@ -206,3 +204,84 @@ class UpdateLinksTest(APITestCase, LinkTestMixin):
         response = self.client.get('/api/v1/links/', post_data)
 
         self.assertEquals(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_cannot_update_link_when_no_data_is_provided(self):
+        self.authenticate_account()
+        self.create_link()
+
+        post_data = {}
+
+        response = self.client.put('/api/v1/links/%s/' % self.link.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['url'][0], 'This field is required.')
+        self.assertEqual(response.data['title'][0], 'This field is required.')
+
+    def test_cannot_update_link_when_data_is_blank(self):
+        self.authenticate_account()
+        self.create_link()
+
+        post_data = {
+            'url': '',
+            'title': ''
+        }
+
+        response = self.client.put('/api/v1/links/%s/' % self.link.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['url'][0], 'This field may not be blank.')
+        self.assertEqual(response.data['title'][0], 'This field may not be blank.')
+
+    def test_cannot_update_link_when_url_is_not_provided(self):
+        self.authenticate_account()
+        self.create_link()
+
+        post_data = {
+            'title': 'Twitter'
+        }
+
+        response = self.client.put('/api/v1/links/%s/' % self.link.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['url'][0], 'This field is required.')
+
+    def test_cannot_update_link_when_url_is_blank(self):
+        self.authenticate_account()
+        self.create_link()
+
+        post_data = {
+            'url': '',
+            'title': 'Twitter'
+        }
+
+        response = self.client.put('/api/v1/links/%s/' % self.link.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['url'][0], 'This field may not be blank.')
+
+    def test_cannot_update_link_when_title_is_not_provided(self):
+        self.authenticate_account()
+        self.create_link()
+
+        post_data = {
+            'url': 'https://www.twitter.com/johndoe123'
+        }
+
+        response = self.client.put('/api/v1/links/%s/' % self.link.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['title'][0], 'This field is required.')
+
+    def test_cannot_update_link_when_url_is_blank(self):
+        self.authenticate_account()
+        self.create_link()
+
+        post_data = {
+            'url': 'https://www.twitter.com/johndoe123',
+            'title': ''
+        }
+
+        response = self.client.put('/api/v1/links/%s/' % self.link.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data['title'][0], 'This field may not be blank.')
