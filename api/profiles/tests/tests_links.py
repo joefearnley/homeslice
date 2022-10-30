@@ -237,7 +237,7 @@ class UpdateLinksTest(APITestCase, LinkTestMixin):
         self.create_link()
 
         post_data = {
-            'title': 'Twitter'
+            'title': 'Instagram'
         }
 
         response = self.client.put('/api/v1/links/%s/' % self.link.id, post_data)
@@ -251,7 +251,7 @@ class UpdateLinksTest(APITestCase, LinkTestMixin):
 
         post_data = {
             'url': '',
-            'title': 'Twitter'
+            'title': 'Instagram'
         }
 
         response = self.client.put('/api/v1/links/%s/' % self.link.id, post_data)
@@ -264,7 +264,7 @@ class UpdateLinksTest(APITestCase, LinkTestMixin):
         self.create_link()
 
         post_data = {
-            'url': 'https://www.twitter.com/johndoe123'
+            'url': 'https://instagram.com/jdoe1234'
         }
 
         response = self.client.put('/api/v1/links/%s/' % self.link.id, post_data)
@@ -277,7 +277,7 @@ class UpdateLinksTest(APITestCase, LinkTestMixin):
         self.create_link()
 
         post_data = {
-            'url': 'https://www.twitter.com/johndoe123',
+            'url': 'https://instagram.com/jdoe1234',
             'title': ''
         }
 
@@ -285,3 +285,20 @@ class UpdateLinksTest(APITestCase, LinkTestMixin):
 
         self.assertEquals(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data['title'][0], 'This field may not be blank.')
+
+    def test_can_update_link(self):
+        self.authenticate_account()
+        self.create_link()
+
+        post_data = {
+            'url': 'https://instagram.com/jdoe1234',
+            'title': 'Instagram Account'
+        }
+
+        response = self.client.put('/api/v1/links/%s/' % self.link.id, post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+
+        updated_link = Link.objects.get(id=self.link.id)
+        self.assertEqual(updated_link.url, post_data['url'])
+        self.assertEqual(updated_link.title, post_data['title'])
