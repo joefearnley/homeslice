@@ -7,6 +7,7 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
         model = Profile
         fields = ['account', 'title', 'bio', 'is_active']
 
+
 class LinkSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Link
