@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
 from accounts.models import Account
-from profiles.models import Profile, Link
+from profiles.models import Profile
 
 
 class ProfileTestMixin(TestCase):
@@ -16,16 +16,15 @@ class ProfileTestMixin(TestCase):
             password='top_secret'
         )
 
-    def authenticate_account(self):
-        token = Token.objects.create(user=self.account)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-
-    def create_profile(self):
         self.profile = Profile.objects.create(
             account=self.account,
             title='The John Doe Home Page',
             bio='this is a little somthing about me'
         )
+
+    def authenticate_account(self):
+        token = Token.objects.create(user=self.account)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
 
 
 class AccessProfileTest(APITestCase, ProfileTestMixin):
@@ -43,7 +42,6 @@ class AccessProfileTest(APITestCase, ProfileTestMixin):
 
     def test_can_view_profile_data(self):
         self.authenticate_account()
-        self.create_profile()
 
         response = self.client.get('/api/v1/profiles/')
 
@@ -64,7 +62,6 @@ class UpdateProfileTitleTest(APITestCase, ProfileTestMixin):
 
     def test_cannot_update_title_when_blank(self):
         self.authenticate_account()
-        self.create_profile()
 
         post_data = {
             'title': ''
@@ -77,7 +74,6 @@ class UpdateProfileTitleTest(APITestCase, ProfileTestMixin):
 
     def test_can_update_title(self):
         self.authenticate_account()
-        self.create_profile()
 
         updated_title = 'New Title'
         post_data = {
@@ -104,7 +100,6 @@ class UpdateProfileBioTest(APITestCase, ProfileTestMixin):
 
     def test_can_update_bio(self):
         self.authenticate_account()
-        self.create_profile()
 
         updated_bio = 'New Bio'
         post_data = {
