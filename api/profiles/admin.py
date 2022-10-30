@@ -13,8 +13,13 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 class LinkAdmin(admin.ModelAdmin):
-      list_display = ('title', 'is_active',)
+    list_display = ('get_profile', 'title', 'is_active',)
 
+    def get_profile(self, obj):
+        return obj.profile.title
+
+    get_profile.admin_order_field  = 'profile' 
+    get_profile.short_description = 'Profile'
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Link, LinkAdmin)

@@ -1,5 +1,5 @@
-from rest_framework import views, viewsets, permissions, status, generics
-from .serilizers import ProfileSerializer
+from rest_framework import viewsets, permissions
+from .serilizers import ProfileSerializer, LinkSerializer
 from .models import Profile, Link
 
 
@@ -11,5 +11,21 @@ class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        return self.queryset.filter(account=self.request.user)
+
     def perform_update(self, serializer):
         serializer.save(account=self.request.user)
+
+
+class LinkViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows CRUD operations on Profile Links.
+    """
+    queryset = Link.objects.all()
+    serializer_class = LinkSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        profile = Profile.objects.get(account=self.request.user)
+        return self.queryset.filter(profile=profile)

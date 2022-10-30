@@ -49,6 +49,32 @@ class AccessProfileTest(APITestCase, ProfileTestMixin):
         self.assertContains(response, self.profile.title)
         self.assertContains(response, self.profile.bio)
 
+    def test_can_only_view_profile_data_for_authenticatd_account(self):
+        self.authenticate_account()
+
+        other_account = Account.objects.create_user(
+            username='janedoe',
+            first_name='Jane',
+            last_name='Doe',
+            email='jane.b.doe@gmail.com',
+            password='top_secret'
+        )
+
+        other_profile = Profile.objects.create(
+            account=other_account,
+            title='The Jane Doe Home Page',
+            bio='this is a little somthing about me (the jane doe)'
+        )
+
+        response = self.client.get('/api/v1/profiles/')
+
+        self.assertEquals(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, self.profile.title)
+        self.assertContains(response, self.profile.bio)
+
+        self.assertNotContains(response, other_profile.title)
+        self.assertNotContains(response, other_profile.bio)
+
 
 class UpdateProfileTitleTest(APITestCase, ProfileTestMixin):
     def test_cannot_update_title_when_not_authenticated(self):
