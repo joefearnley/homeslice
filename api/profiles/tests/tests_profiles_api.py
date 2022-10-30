@@ -27,6 +27,7 @@ class ProfileTestMixin(TestCase):
             bio='this is a little somthing about me'
         )
 
+
 class AccessProfileTest(APITestCase, ProfileTestMixin):
     def test_cannot_access_profile_information_when_not_authenticated(self):
         response = self.client.get('/api/v1/profiles/')

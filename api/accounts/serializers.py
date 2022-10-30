@@ -2,6 +2,7 @@ from django.contrib.auth import password_validation
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from .models import Account
+from profiles.models import Profile
 
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
@@ -37,6 +38,12 @@ class SignUpSerializer(serializers.ModelSerializer):
 
         account.set_password(validated_data['password'])
         account.save()
+
+        # create a new profile on account creation
+        Profile.objects.create(
+            account=account,
+            title=account.username,
+        )
 
         return account
 

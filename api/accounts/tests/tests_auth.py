@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
 from accounts.models import Account
+from profiles.models import Profile
 
 
 class SignUpTest(APITestCase):
@@ -79,6 +80,23 @@ class SignUpTest(APITestCase):
         new_account = Account.objects.get(username=post_data['username'])
         self.assertEqual(new_account.username, post_data['username'])
         self.assertEqual(new_account.email, post_data['email'])
+
+
+    def test_profile_is_created_when_account_sign_up_is_completed(self):
+        post_data = {
+            'username': 'johndoe',
+            'email': 'john.m.doe@gmail.com',
+            'password': 'secret_123'
+        }
+
+        response = self.client.post('/api/v1/signup/', post_data)
+
+        self.assertEquals(response.status_code, status.HTTP_201_CREATED)
+
+        new_account = Account.objects.get(username=post_data['username'])
+        new_profile = Profile.objects.get(account_id=new_account.id)
+
+        self.assertEqual(new_profile.title, new_account.username)
 
 
 class LoginTest(APITestCase):
