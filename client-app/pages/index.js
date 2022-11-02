@@ -7,7 +7,7 @@ export default function Home() {
     <div className="bg-gray-50">
       <Head>
         <title>Homeslice</title>
-        <meta name="description" content="Your Landing Page" />
+        <meta name="description" content="All of your internet locations in one place." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
