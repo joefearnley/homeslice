@@ -19,13 +19,16 @@ const Signup = () => {
             body: data,
         };
 
-        console.log(`process.env.API_BASE_URL: ${process.env.API_BASE_URL}`);
-        console.log(`${process.env.API_BASE_URL}/accounts/`);
+        console.log(`process.env.NEXT_PUBLIC_API_BASE_URL: ${process.env.NEXT_PUBLIC_API_BASE_URL}`);
+        console.log(`${process.env.NEXT_PUBLIC_API_BASE_URL}/accounts/`);
 
-        fetch(`${process.env.API_BASE_URL}/accounts/`, options)
+        fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/accounts/`, options)
             .then(response => response.json())
             .then(response => {
                 console.log(response);
+            })
+            .catch((error) => {
+                console.log(error)
             });
     }
 
