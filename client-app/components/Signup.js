@@ -22,7 +22,7 @@ const Signup = () => {
         console.log(`process.env.NEXT_PUBLIC_API_BASE_URL: ${process.env.NEXT_PUBLIC_API_BASE_URL}`);
         console.log(`${process.env.NEXT_PUBLIC_API_BASE_URL}/accounts/`);
 
-        fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/accounts/`, options)
+        fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/signup/`, options)
             .then(response => response.json())
             .then(response => {
                 console.log(response);

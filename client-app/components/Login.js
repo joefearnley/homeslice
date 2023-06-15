@@ -1,4 +1,31 @@
 const Login = () => {
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const data = JSON.stringify({
+            email: event.target.email.value,
+            password: event.target.password.value,
+        });
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: data,
+        };
+
+        fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`, options)
+            .then(response => response.json())
+            .then(response => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+    }
+
     return (
         <div>
             <div className="mt-24 text-center">
@@ -6,7 +33,7 @@ const Login = () => {
                 <span className="text-sm">or <a href="/signup" className="text-gray-500 hover:underline"> register a new account </a> </span>
             </div>
             <div className="my-2 mx-4 flex justify-center md:mx-0">
-                <form className="w-full max-w-xl rounded-lg bg-white p-6">
+                <form className="w-full max-w-xl rounded-lg bg-white p-6" onSubmit={handleSubmit}>
                     <div className="-mx-3 mb-6 flex flex-wrap">
                         <div className="mb-6 w-full px-3 md:w-full">
                             <label className="mb-2 block text-xs font-bold tracking-wide text-gray-700" htmlFor="Password">Email address
