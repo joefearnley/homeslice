@@ -3,9 +3,12 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        console.log(event);
+
         const data = JSON.stringify({
             email: event.target.email.value,
             password: event.target.password.value,
+            remember_me: event.target.remember,
         });
 
         const options = {
