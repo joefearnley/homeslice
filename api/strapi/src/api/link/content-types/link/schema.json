@@ -4,21 +4,22 @@
   "info": {
     "singularName": "link",
     "pluralName": "links",
-    "displayName": "Link"
+    "displayName": "Link",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "url": {
+    "Title": {
       "type": "string"
     },
-    "title": {
+    "Url": {
       "type": "string"
     },
-    "is_active": {
-      "type": "boolean"
+    "Description": {
+      "type": "text"
     }
   }
 }
