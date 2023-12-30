@@ -9,6 +9,7 @@ const Signup = () => {
             password: event.target.password.value,
         });
 
+        console.log(`data to be submitted`);
         console.log(data);
 
         const options = {
