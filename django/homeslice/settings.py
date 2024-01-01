@@ -152,10 +152,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# TEST_RUNNER="redgreenunittest.django.runner.RedGreenDiscoverRunner"
-# RAINBOWTESTS_HIGHLIGHT_PATH = '~/projects/homeslice/'
-# TEST_RUNNER = 'rainbowtests.test.runner.RainbowDiscoverRunner'
-
+TEST_RUNNER="redgreenunittest.django.runner.RedGreenDiscoverRunner"
 
 COMPRESS_ROOT = BASE_DIR / 'static'
 COMPRESS_ENABLED = True
