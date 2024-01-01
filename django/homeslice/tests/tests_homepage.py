@@ -8,5 +8,5 @@ class HomepageTest(TestCase):
         response = self.client.get(reverse('home'))
 
         self.assertEquals(response.status_code, HTTPStatus.OK)
+        self.assertTemplateUsed(response, 'home.html')
         self.assertContains(response, 'Homeslice')
-        self.assertTemplateUsed(response, 'home/index.html')

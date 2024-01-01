@@ -4,7 +4,7 @@ from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 from accounts.views import AccountViewSet, AccountSignUpAPIView, LogoutAPIView, UpdatePasswordAPIView
 from profiles.views import ProfileViewSet, LinkViewSet
-from .views import HomeView
+from .views import HomeView, DashboardView
 
 router = routers.DefaultRouter()
 router.register(r'accounts', AccountViewSet)
@@ -13,6 +13,7 @@ router.register(r'links', LinkViewSet)
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
+    path('', DashboardView.as_view(), name='dashboard'),
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
     path('api/v1/signup/', AccountSignUpAPIView.as_view(), name='signup'),
