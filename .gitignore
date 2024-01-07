@@ -155,3 +155,5 @@ venv.bak/
 .pyre/
 
 node_modules
+
+django/static/CACHE

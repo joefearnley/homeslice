@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load allauth widget_tweaks %}
+
+{% block content %}
+<div class="flex items-center justify-center px-4 py-12 my-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-2xl space-y-8">
+        <div class="text-center">
+            <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Signup for Homeslice</h1>
+            <p class="mt-2 text-sm text-center text-gray-600">Already have an account? Then please <a href="{{ login_url }}" class="font-bold">sign in</a>.</p>
+        </div>
+        <form class="mt-8 space-y-6" id="signup_form" method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+
+            {{ form.non_field_errors | safe }}
+            <input type="hidden" name="remember" value="true" />
+            <div class="-space-y-px rounded-md shadow-sm">
+                <div>
+                    {{ form.username.errors | safe }}
+                    <label for="username" class="sr-only">Username</label>
+                    {% render_field form.username placeholder="Username" id="username" name="username" type="text" autocomplete="username" required=True class="relative block w-full px-3 py-2 mb-4 text-gray-900 placeholder-gray-500 border border-gray-300 appearance-none rounded-md focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm" %}
+                </div>
+                <div>
+                    {{ form.email.errors | safe }}
+                    <label for="email" class="sr-only">Username</label>
+                    {% render_field form.email id="email" name="email" placeholder="Email" type="email" autocomplete="email" required="True" class="relative block w-full px-3 py-2 mb-4 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm" %}
+                </div>
+                <div>
+                    {{ form.password1.errors | safe }}
+                    <label for="password1" class="sr-only">Password</label>
+                    {% render_field form.password1 id="password1" name="password1" placeholder="Password" type="password" autocomplete="current-password" required="True" class="relative block w-full px-3 py-2 mb-4 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm" %}
+                </div>
+                <div>
+                    {{ form.password2.errors | safe }}
+                    <label for="password2" class="sr-only">Password</label>
+                    {% render_field form.password2 id="password2" name="password2" type="password" autocomplete="current-password" required="True" class="relative block w-full px-3 py-2 mb-4 text-gray-900 placeholder-gray-500 border border-gray-300 appearance-none rounded-md focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm" placeholder="Cofirm Password" %}
+                </div>
+            </div>
+
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+
+            <div>
+                <button type="submit" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-gray-900">
+                    Sign up
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
