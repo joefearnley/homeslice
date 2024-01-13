@@ -23,14 +23,18 @@
                 <div class="mb-5">
                     {{ form.password1.errors | safe }}
                     <label for="password1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                    {% render_field form.password1 id="password1" name="password1" type="password" autocomplete="current-password" required="True" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" %}
+                    {% render_field form.password id="password" name="password" type="password" autocomplete="current-password" required="True" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" %}
                 </div>
 
             {% if redirect_field_value %}
-                <input type="hidden"
-                       name="{{ redirect_field_name }}"
-                       value="{{ redirect_field_value }}" />
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
+
+                <div class="mt-5">
+                    <button type="submit" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-gray-900">
+                        Sign in
+                    </button>
+                </div>
             </div>
         </form>
     </div>

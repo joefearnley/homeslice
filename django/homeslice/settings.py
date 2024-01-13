@@ -162,3 +162,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder', 
 )
+
+LOGIN_REDIRECT_URL = '/dashboard'
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+

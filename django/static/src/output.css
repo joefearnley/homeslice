@@ -1238,6 +1238,10 @@ input:checked + .toggle-bg {
   margin-top: 1.25rem;
 }
 
+.mr-6 {
+  margin-right: 1.5rem;
+}
+
 .block {
   display: block;
 }
