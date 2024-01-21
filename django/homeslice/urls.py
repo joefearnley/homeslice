@@ -6,9 +6,9 @@ from .views import HomeView, DashboardView
 from allauth.account.views import signup, login, logout
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
+    path('admin/', admin.site.urls),
 
-    # path('signup/', SignupView.as_view(), name='signup'),
+    path('', HomeView.as_view(), name='home'),
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
 
     path('signup/', signup, name='allauth_signup'),
@@ -16,9 +16,6 @@ urlpatterns = [
     path('logout/', logout, name='allauth_logout'),
 
     path('accounts/', include('allauth.urls')),
-
-    path('admin/', admin.site.urls),
-
 
     # include api urls
 ]
