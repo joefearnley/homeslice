@@ -18,6 +18,7 @@
     <div>
         {% if request.user.is_authenticated %}
         {% include '_navbar_auth.html' %}
+        {% include '_sidebar.html' %}
         {% elif request.path != '/' %}
         {% include '_navbar.html' %}
         {% endif %}

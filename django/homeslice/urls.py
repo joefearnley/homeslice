@@ -3,7 +3,7 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import HomeView, DashboardView
-from accouts.views import AccountSettingsView
+from accounts.views import AccountSettingsView
 from allauth.account.views import signup, login, logout
 
 urlpatterns = [
