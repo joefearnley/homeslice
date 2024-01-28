@@ -5,31 +5,52 @@
 <div class="p-4 sm:ml-64">
     <div class="px-4">
         <h1 class="text-2xl font-semibold mb-4">Account Settings</h1>
-        <div class="my-8">
-            <h2 class="text-xl font-semibold mb-4">My Information</h2>
-            <form action="">
-                {% csrf_token %}
+        <div class="flex flex-row my-8">
+            <div class="basis-full md:basis-8/12 p-8 rounded bg-gray-50 dark:bg-gray-800">
+                <h2 class="text-xl font-semibold mb-4">My Information</h2>
+                <form action="">
+                    {% csrf_token %}
 
-                <div class="rounded-md shadow-sm">
-                    <div class="mb-5">
-                        <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
-                        <input id="first-name" name="first-name" placeholder="first name" type="text" autocomplete="first-name" required="True" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" >
+                    <div class="rounded-md shadow-sm">
+                        <div class="mb-5">
+                            <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                            <input id="first-name" name="first-name" placeholder="first name" type="text" autocomplete="first-name" required="True" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" >
+                        </div>
+                        <div class="mb-5">
+                            <label for="last-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                            <input id="last-name" name="last-name" placeholder="last name" type="text" autocomplete="last-name" required="True" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" >
+                        </div>
+                        <div class="mb-5">
+                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">username</label>
+                            <input id="username" name="username" placeholder="username" type="text" autocomplete="username" required="True" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" >
+                        </div>
+                        <div class="mb-5">
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                            <input id="email" name="email" placeholder="name@company.com" type="email" autocomplete="email" required="True" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" >
+                        </div>
                     </div>
-                    <div class="mb-5">
-                        <label for="last-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
-                        <input id="last-name" name="last-name" placeholder="last name" type="text" autocomplete="last-name" required="True" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" >
+                    <div class="mt-5">
+                        <button type="submit" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-gray-900">
+                            Save
+                        </button>
                     </div>
-                    <div class="mb-5">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                        <input id="email" name="email" placeholder="name@company.com" type="email" autocomplete="email" required="True" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" >
+                </form>
+            </div>
+        </div>
+
+        <div class="flex flex-row my-12">
+            <div class="basis-full md:basis-8/12 p-12 rounded bg-gray-50 dark:bg-gray-800">
+                <h2 class="text-xl font-semibold mb-4">Delete Account</h2>
+                <p>Once you delete your account, all information will be gone forever.</p>
+                <form action="">
+                    {% csrf_token %}
+                    <div class="mt-5">
+                        <button type="submit" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-red-900">
+                            Delete Account
+                        </button>
                     </div>
-                </div>
-                <div class="mt-5">
-                    <button type="submit" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-gray-900">
-                        Save
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
  </div>
