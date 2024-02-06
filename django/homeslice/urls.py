@@ -3,7 +3,7 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import HomeView, DashboardView
-from accounts.views import AccountSettingsView
+from accounts.views import AccountSettingsView, AccountUpateView
 from allauth.account.views import signup, login, logout
 
 urlpatterns = [
@@ -19,6 +19,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
 
     path('my-account/', AccountSettingsView.as_view(), name='my-account'),
+    path('my-account/update', AccountUpateView.as_view(), name='update-my-account'),
 
     # include api urls
 ]
