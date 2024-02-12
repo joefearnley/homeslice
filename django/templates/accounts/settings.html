@@ -29,7 +29,7 @@
                 <h2 class="text-xl font-semibold mb-4">My Information</h2>
                 <form action="{% url 'update-my-account' %}" method="post">
                     {% csrf_token %}
-
+                    <input type="hidden" name="id" value="{{ user_account.id }}">
                     <div class="rounded-md shadow-sm">
                         <div class="mb-5">
                             <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
