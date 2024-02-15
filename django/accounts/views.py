@@ -23,16 +23,25 @@ class AccountUpateView(UpdateView):
     # fields = ['id', 'username', 'first_name', 'last_name', 'email']
     success_url = reverse_lazy('my-account')
 
+    def get_object(self):
+        print(self.request)
+        return Account.objects.get(pk=self.request.user.id)
+
     def post(self, request, *args):
         form = self.form_class(data=request.POST)
         
         print('form valid?')
         print(form.is_valid())
-        
+        self.object = self.get_object()
+
         if form.is_valid():
             print('form valid....')
             form.save()
             messages.success(request, 'Account Updated')
+            return self.form_valid(form)
+
+       
+        # return self.form_invalid(form)
 
         return redirect(self.success_url)
 
