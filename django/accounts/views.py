@@ -12,7 +12,7 @@ class AccountSettingsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user_account"] = self.request.user
+        context['user_account'] = self.request.user
         return context
 
 
@@ -40,10 +40,15 @@ class AccountUpateView(UpdateView):
             messages.success(request, 'Account Updated')
             return self.form_valid(form)
 
-       
-        # return self.form_invalid(form)
+        return self.form_invalid(form)
 
-        return redirect(self.success_url)
+        #return redirect(self.success_url)
+
+    def form_invalid(self, form):
+
+        print(form)
+
+        return super().form_valid(form)
 
     def form_valid(self, form):
         print('form is valid....')
