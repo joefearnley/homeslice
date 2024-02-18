@@ -9,6 +9,8 @@ class UpdateAccountForm(forms.ModelForm):
         fields = ['username', 'first_name', 'last_name', 'email']
 
 
-class DeleteAccountForm(forms.Form):
-    pass
+class DeleteAccountForm(forms.ModelForm):
 
+    class Meta:
+        model = Account
+        fields = ['id']
