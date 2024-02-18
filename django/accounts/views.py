@@ -19,12 +19,6 @@ class AccountSettingsView(TemplateView):
         return context
 
 
-# class AccountUpateView(View):
-#     def get_object(self):
-#         print(self.request)
-#         return Account.objects.get(pk=self.request.user.id)
-
-
 class AccountUpateView(UpdateView):
     form_class = UpdateAccountForm
     success_url = reverse_lazy('my-account')
@@ -33,25 +27,15 @@ class AccountUpateView(UpdateView):
         return Account.objects.get(pk=self.request.user.id)
 
     def post(self, request, *args):
-        form = self.form_class(data=request.POST)
-        
-        # print('form valid?')
-        # print(form.is_valid())
-        self.object = self.get_object()
+        form = self.form_class(data=request.POST, instance = request.user)
+
+        # self.object = self.get_object()
 
         if form.is_valid():
-            print('form valid....')
             form.save()
             messages.success(request, 'Account Updated')
-            return self.form_valid(form)
-        
-
-        print(form.errors)
-
-        messages.error(request, form.errors)
-
-
-        # return self.form_invalid(form)
+        else :
+            messages.error(request, form.errors)
 
         return redirect(self.success_url)
 

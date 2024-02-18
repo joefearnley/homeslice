@@ -45,6 +45,7 @@
                 <h2 class="text-xl font-semibold mb-4">My Information</h2>
                 <form action="{% url 'update-my-account' %}" method="post">
                     {% csrf_token %}
+
                     <div class="mt-5">
                         <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                         {% render_field update_account_form.username placeholder="@username" id="username" name="login" type="text" autocomplete="username" required=True class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" %}
