@@ -4,7 +4,7 @@ const Login = () => {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget)
-        const email = formData.get('email');
+        const username = formData.get('username');
         const password = formData.get('password');
         const remember_me = formData.get('remember');
 
@@ -14,7 +14,7 @@ const Login = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                email,
+                username,
                 password,
                 remember_me,
             }),
@@ -40,8 +40,8 @@ const Login = () => {
                 <form className="w-full max-w-xl rounded-lg bg-white p-6" onSubmit={handleSubmit}>
                     <div className="-mx-3 mb-6 flex flex-wrap">
                         <div className="mb-6 w-full px-3 md:w-full">
-                            <label className="mb-2 block text-xs font-bold tracking-wide text-gray-700" htmlFor="Password">Email address
-                                <input type="text" name="email" id="email" placeholder="Email Address" className="block w-full appearance-none rounded-lg border border-gray-400 bg-white py-3 px-3 font-medium leading-tight text-gray-900 focus:outline-none" required />
+                            <label className="mb-2 block text-xs font-bold tracking-wide text-gray-700" htmlFor="Password">Username
+                                <input type="text" name="username" id="username" placeholder="@username" className="block w-full appearance-none rounded-lg border border-gray-400 bg-white py-3 px-3 font-medium leading-tight text-gray-900 focus:outline-none" required />
                             </label>
                         </div>
                         <div className="mb-6 w-full px-3 md:w-full">
@@ -59,7 +59,7 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="mb-6 w-full px-3 md:w-full">
-                            <button className="block w-full appearance-none rounded-lg border border-gray-200 bg-gray-600 py-3 px-3 font-bold leading-tight text-gray-100 hover:bg-gray-500 focus:border-gray-500 focus:bg-white focus:outline-none">Sign in</button>
+                            <button className="block w-full appearance-none rounded-lg border border-gray-200 bg-gray-600 py-3 px-3 font-bold leading-tight text-gray-100">Sign in</button>
                         </div>
                     </div>
                 </form>
