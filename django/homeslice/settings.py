@@ -17,8 +17,6 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -34,6 +32,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'widget_tweaks',
+
+    'corsheaders',
 
     'compressor',
     
@@ -99,6 +99,39 @@ if 'test' in sys.argv:
     }
 
 
+ALLOWED_HOSTS = ['localhost']
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+]
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "cache-control",
+    "pragma",
+]
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -152,7 +185,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-TEST_RUNNER="redgreenunittest.django.runner.RedGreenDiscoverRunner"
+TEST_RUNNER='redgreenunittest.django.runner.RedGreenDiscoverRunner'
 
 COMPRESS_ROOT = BASE_DIR / 'static'
 COMPRESS_ENABLED = True

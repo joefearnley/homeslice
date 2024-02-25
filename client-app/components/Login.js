@@ -3,20 +3,21 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        console.log(event);
-
-        const data = JSON.stringify({
-            email: event.target.email.value,
-            password: event.target.password.value,
-            remember_me: event.target.remember,
-        });
+        const formData = new FormData(event.currentTarget)
+        const email = formData.get('email');
+        const password = formData.get('password');
+        const remember_me = formData.get('remember');
 
         const options = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: data,
+            body: JSON.stringify({
+                email,
+                password,
+                remember_me,
+            }),
         };
 
         fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`, options)
@@ -40,12 +41,12 @@ const Login = () => {
                     <div className="-mx-3 mb-6 flex flex-wrap">
                         <div className="mb-6 w-full px-3 md:w-full">
                             <label className="mb-2 block text-xs font-bold tracking-wide text-gray-700" htmlFor="Password">Email address
-                                <input type="text" name="username" id="username" className="block w-full appearance-none rounded-lg border border-gray-400 bg-white py-3 px-3 font-medium leading-tight text-gray-900 focus:outline-none" required />
+                                <input type="text" name="email" id="email" placeholder="Email Address" className="block w-full appearance-none rounded-lg border border-gray-400 bg-white py-3 px-3 font-medium leading-tight text-gray-900 focus:outline-none" required />
                             </label>
                         </div>
                         <div className="mb-6 w-full px-3 md:w-full">
                             <label className="mb-2 block text-xs font-bold tracking-wide text-gray-700" htmlFor="Password">Password
-                                <input type="password" name="password" id="password" className="block w-full appearance-none rounded-lg border border-gray-400 bg-white py-3 px-3 font-medium leading-tight text-gray-900 focus:outline-none" required />
+                                <input type="password" name="password" id="password" placeholder="Password" className="block w-full appearance-none rounded-lg border border-gray-400 bg-white py-3 px-3 font-medium leading-tight text-gray-900 focus:outline-none" required />
                             </label>
                         </div>
                         <div className="mb-3 flex w-full items-center justify-between px-3">

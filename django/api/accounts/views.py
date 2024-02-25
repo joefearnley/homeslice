@@ -2,7 +2,7 @@ from rest_framework import views, viewsets, permissions, status, generics
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from .serializers import AccountSerializer, SignUpSerializer, UpdatePasswordSerializer
-from .models import Account
+from accounts.models import Account
 
 
 class AccountViewSet(viewsets.ModelViewSet):

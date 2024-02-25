@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Profile, Link
+from profiles.models import Profile, Link
 
 
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):

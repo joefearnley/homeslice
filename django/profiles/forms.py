@@ -5,5 +5,5 @@ from .models import Link
 class LinkForm(forms.ModelForm):
 
     class Meta:
-        model = link
-        fields = ['url']
+        model = Link
+        fields = ['url', 'title', 'is_active']

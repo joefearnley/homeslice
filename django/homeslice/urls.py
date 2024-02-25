@@ -6,6 +6,7 @@ from .views import HomeView, DashboardView
 from accounts.views import AccountSettingsView, AccountUpateView
 from profiles.views import LinkListView
 from allauth.account.views import signup, login, logout
+from api.urls import urlpatterns as api_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,7 +23,8 @@ urlpatterns = [
     path('my-account/', AccountSettingsView.as_view(), name='my-account'),
     path('my-account/update', AccountUpateView.as_view(), name='update-my-account'),
 
-    path('links/', AccountSettingsView.as_view(), name='my-account'),
-
-    # include api urls
+    path('profile/links/', LinkListView.as_view(), name='link-list'),
 ]
+
+# include api urls 
+urlpatterns += api_urlpatterns

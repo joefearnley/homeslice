@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
 from .serilizers import ProfileSerializer, LinkSerializer
-from .models import Profile, Link
+from profiles.models import Profile, Link
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
