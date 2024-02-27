@@ -1,4 +1,7 @@
+import { useRouter } from 'next/router'
+
 const Login = () => {
+    const router = useRouter();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -8,25 +11,27 @@ const Login = () => {
         const password = formData.get('password');
         const remember_me = formData.get('remember');
 
+        const bodyData = JSON.stringify({
+            username,
+            password,
+            remember_me,
+        });
+
         const options = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                username,
-                password,
-                remember_me,
-            }),
+            body: bodyData,
         };
 
         fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`, options)
             .then(response => response.json())
             .then(response => {
-                console.log(response);
+                router.push('/dashboard');
             })
             .catch((error) => {
-                console.log(error)
+                console.log(error);
             });
     }
 

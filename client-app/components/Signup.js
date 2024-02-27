@@ -1,32 +1,37 @@
+import { useRouter } from 'next/router'
+
 const Signup = () => {
+    const router = useRouter()
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const data = JSON.stringify({
-            username: event.target.username.value,
-            email: event.target.email.value,
-            password: event.target.password.value,
-        });
+        const formData = new FormData(event.currentTarget)
+        const username = formData.get('username');
+        const email = formData.get('email');
+        const password = formData.get('password');
 
-        console.log(`data to be submitted`);
-        console.log(data);
+        const bodyData = JSON.stringify({
+            username,
+            email,
+            password,
+        });
 
         const options = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: data,
+            body: bodyData,
         };
 
         fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/signup/`, options)
             .then(response => response.json())
             .then(response => {
-                console.log(response);
+                router.push('/dashboard');
             })
             .catch((error) => {
-                console.log(error)
+                console.log(error);
             });
     }
 
