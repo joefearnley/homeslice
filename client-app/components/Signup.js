@@ -39,7 +39,7 @@ const Signup = () => {
         <div>
             <div className="mt-24 text-center">
                 <h2 className="text-4xl font-bold tracking-tight">Create Account</h2>
-                <span className="text-sm">or <a href="#" className="text-gray-500 hover:underline"> register a new account </a> </span>
+                <span className="text-sm">Alread have an account? <a href="/login" className="text-gray-500 hover:underline">Sign In</a> </span>
             </div>
             <div className="my-2 mx-4 flex justify-center md:mx-0">
                 <form className="w-full max-w-xl rounded-lg bg-white p-6" onSubmit={handleSubmit}>
@@ -60,14 +60,7 @@ const Signup = () => {
                             </label>
                         </div>
                         <div className="mb-2 flex w-full items-center justify-between px-3">
-                            <div className="mb-6 w-full px-3 md:w-full">
-                                <button className="block w-full appearance-none rounded-lg border border-gray-200 bg-gray-600 py-3 px-3 font-bold leading-tight text-gray-100">Create Account</button>
-                            </div>
-                        </div>
-                        <div className="flex w-full">
-                            <div className="w-full text-center">
-                                Alread have an account? <a href="/login" className="tracking-tight text-gray-500 hover:underline">Login</a>
-                            </div>
+                            <button className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-gray-900">Create Account</button>
                         </div>
                     </div>
                 </form>

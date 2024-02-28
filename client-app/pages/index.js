@@ -20,8 +20,8 @@ export default function Home() {
                                 <h1 className="text-7xl font-bold">Homeslice</h1>
                                 <h3 className="text-lg">All of your internet locations in one place.</h3>
                                 <div className="sm:flex flex-row justify-evenly pt-3 w-3/4 sm:w-full">
-                                    <a href="/signup"  className="block sm:inline mb-7 sm:mb-0 bg-slate-800 px-6 py-2 border rounded-md text-white">Sign Up</a>
-                                    <a href="/login" className="block sm:inline bg-slate-800 px-6 py-2 border rounded-md text-white">Sign In</a>
+                                    <a href="/signup"  className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-gray-900">Sign Up</a>
+                                    <a href="/login" className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-gray-900">Sign In</a>
                                 </div>
                             </div>
                         </div>

@@ -63,8 +63,8 @@ const Login = () => {
                                 <a href="#" className="text-sm tracking-tight text-gray-500 hover:underline">Forget your password?</a>
                             </div>
                         </div>
-                        <div className="mb-6 w-full px-3 md:w-full">
-                            <button className="block w-full appearance-none rounded-lg border border-gray-200 bg-gray-600 py-3 px-3 font-bold leading-tight text-gray-100">Sign in</button>
+                        <div className="mb-6 mt-3 w-full px-3 md:w-full">
+                            <button className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-gray-900">Sign in</button>
                         </div>
                     </div>
                 </form>
