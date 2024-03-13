@@ -1,9 +1,14 @@
-const dashboard = () => {
+import Navbar from '../components/Navbar'
+
+const Dashboard = () => {
     return (
         <div>
-            This is the dashboard.
+            <Navbar />
+            <div>
+                <h1>This is the Dashboard</h1>
+            </div>
         </div>
     )
 }
 
-export default dashboard
+export default Dashboard
