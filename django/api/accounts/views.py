@@ -50,6 +50,7 @@ class LogoutAPIView(views.APIView):
         success_message = {
             'message': 'Account successfully logged out.'
         }
+
         return Response(success_message, status=status.HTTP_200_OK)
 
 
