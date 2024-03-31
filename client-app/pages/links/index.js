@@ -1,15 +1,15 @@
-
-import Navbar from '../../components/Navbar'
+import AuthLayout from '../../components/AuthLayout';
 
 const LinksIndex = () => {
     return (
-        <div className="container m-auto bg-base-100">   
-            <Navbar />
-            <div className="p-5">
-                <h1>This is the Link Index Page</h1>
-            </div>
+        <div className="pt-3">
+            <h1>This is the Link Index Page</h1>
         </div>
     )
 }
 
-export default LinksIndex
+LinksIndex.getLayout = (page) => (
+    <AuthLayout>{page}</AuthLayout>
+);
+
+export default LinksIndex;

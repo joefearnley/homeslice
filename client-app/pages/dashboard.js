@@ -1,14 +1,15 @@
-import Navbar from '../components/Navbar'
+import AuthLayout from '../components/AuthLayout';
 
 const Dashboard = () => {
     return (
-        <div className="container m-auto bg-base-100">   
-            <Navbar />
-            <div className="p-5">
-                <h1>This is the Dashboard</h1>
-            </div>
+        <div className="pt-3">
+            <h1>This is the Dashboard</h1>
         </div>
     )
 }
+
+Dashboard.getLayout = (page) => (
+    <AuthLayout>{page}</AuthLayout>
+);
 
 export default Dashboard
