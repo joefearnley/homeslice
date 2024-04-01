@@ -28,6 +28,7 @@ const Login = () => {
         fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`, options)
             .then(response => response.json())
             .then(response => {
+                
                 router.push('/dashboard');
             })
             .catch((error) => {
