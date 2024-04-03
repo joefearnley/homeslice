@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { setCookie } from 'cookies-next';
 
 const Login = () => {
     const router = useRouter();
@@ -28,6 +29,10 @@ const Login = () => {
         fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login/`, options)
             .then(response => response.json())
             .then(response => {
+                setCookie('homeslice_auth_token', response.token, {
+                    maxAge: 60 * 60 * 24 * 7,
+                    path: '/',
+                });
                 
                 router.push('/dashboard');
             })

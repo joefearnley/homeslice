@@ -1,5 +1,5 @@
-import Link from 'next/link'    
-import LogoutLink from './LogoutLink'
+import Link from 'next/link';
+import LogoutLink from './LogoutLink';
 
 const Navbar = () => {
     return (
@@ -55,4 +55,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default Navbar;

@@ -1,11 +1,16 @@
 import AuthLayout from '../../components/AuthLayout';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 
 const AccountSettings = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
-    // const [showAlert, setShowAlert] = useState(false);
+    const [user, setUser] = useState({});
+    const authToken = getCookie('homeslice_auth_token');
+
+    useEffect(() => {
+        
+    }, [authToken]);
 
     return (
         <div className="pt-3">
