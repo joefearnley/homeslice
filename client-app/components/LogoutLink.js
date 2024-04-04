@@ -12,7 +12,7 @@ const LogoutLink = () => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-               'Authorization': `Token ${authToken}`,
+                'Authorization': `Token ${authToken}`,
             },
         };
 
