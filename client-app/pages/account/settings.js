@@ -10,7 +10,12 @@ const AccountSettings = () => {
     const authToken = getCookie('homeslice_auth_token');
 
     const handleChange = (event) => {
+
         const { target } = event;
+
+        console.log(target.value);
+        console.log(target.name);
+
         setUser((prevState) => ({
             ...prevState,
             [target.name]: target.value,
@@ -27,6 +32,8 @@ const AccountSettings = () => {
             },
             data: JSON.stringify(user),
         };
+
+        console.log(options);
 
         fetch(`${user.url}`, options)
             .then(response => response.json())
@@ -80,13 +87,13 @@ const AccountSettings = () => {
                     <div className="mb-5">
                         <label htmlFor="firstname">First Name</label>
                         <div className="mt-3">
-                            <input type="text" value={ user.first_name || ''} onChange={handleChange} placeholder="first name" id="firstname" name="firstname" className="input input-bordered w-full max-w-xs" />
+                            <input type="text" value={ user.first_name || ''} onChange={handleChange} placeholder="first name" id="first_name" name="first_name" className="input input-bordered w-full max-w-xs" />
                         </div>
                     </div>
                     <div className="mb-5">
                         <label htmlFor="lastname">Last Name</label>
                         <div className="mt-3">
-                            <input type="text" value={ user.last_name || '' } onChange={handleChange} placeholder="last name" id="lastname" name="lastname" className="input input-bordered w-full max-w-xs" />
+                            <input type="text" value={ user.last_name || '' } onChange={handleChange} placeholder="last name" id="lastname" name="last_name" className="input input-bordered w-full max-w-xs" />
                         </div>
                     </div>
                     <div className="mb-5">
