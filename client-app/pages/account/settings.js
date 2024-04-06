@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { getCookie } from 'cookies-next';
 
 const AccountSettings = () => {
-
     const [isLoading, setIsLoading] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [user, setUser] = useState({});
@@ -20,8 +19,6 @@ const AccountSettings = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        console.log(user);
-
         const bodyData = JSON.stringify({
             username: user.username,
             first_name: user.first_name,
@@ -37,8 +34,6 @@ const AccountSettings = () => {
             },
             body: bodyData,
         };
-
-        console.log(options);
 
         fetch(`${user.url}`, options)
             .then(response => response.json())
