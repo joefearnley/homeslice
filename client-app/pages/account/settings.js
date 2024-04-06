@@ -18,6 +18,7 @@ const AccountSettings = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setIsLoading(true);
 
         const bodyData = JSON.stringify({
             username: user.username,
@@ -38,8 +39,30 @@ const AccountSettings = () => {
         fetch(`${user.url}`, options)
             .then(response => response.json())
             .then(response => {
-                console.log(response);
                 setShowAlert(true);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const deleteAccountSubmit = (event) => {
+        event.preventDefault();
+        setIsLoading(true);
+
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${authToken}`,
+            },
+        };
+
+        fetch(`${user.url}`, options)
+            .then(response => response.json())
+            .then(response => {
+                setIsLoading(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -102,8 +125,62 @@ const AccountSettings = () => {
                             <input type="email" placeholder="name@email.com" onChange={handleChange} value={ user.email || '' }  id="email" name="email" className="input input-bordered w-full" />
                         </div>
                     </div>
-                    <button type="submit" className="btn">Save</button>
+                    <button type="submit" className="btn btn-neutral btn-wide">
+                        Save
+                        {isLoading ? <span className="loading loading-dots loading-sm"></span> : null}
+                    </button>
                 </form>
+            </div>
+            <div className="border rounded-md p-5 mt-8 w-full md:w-1/2">
+                <div role="alert" className={`alert alert-success mt-5 mb-8 ${ showAlert ? 'block' : 'hidden' }`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>Password has been udpated!</span>
+                </div>
+                <article className="prose mb-5">
+                    <h2>Change Password</h2>
+                </article>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-5">
+                        <label htmlFor="firstname">New Password</label>
+                        <div className="mt-3">
+                            <input type="password" onChange={handleChange} placeholder="new password" id="password1" name="password1" className="input input-bordered w-full" />
+                        </div>
+                    </div>
+                    <div className="mb-5">
+                        <label htmlFor="lastname">New Password (again)</label>
+                        <div className="mt-3">
+                            <input type="password" onChange={handleChange} placeholder="new password (again)" id="password1" name="password1" className="input input-bordered w-full" />
+                        </div>
+                    </div>
+                    <button type="submit" className="btn btn-neutral btn-wide">
+                        Update
+                        {isLoading ? <span className="loading loading-dots loading-sm"></span> : null}
+                    </button>
+                </form>
+            </div>
+
+            <div className="border rounded-md p-5 mt-8 w-full md:w-1/2">
+                <article className="prose mb-5">
+                    <h2>Delete Account</h2>
+                </article>
+                <p className="mb-5">Delete links and along with all account information.</p>
+                <button type="submit" className="btn btn-neutral btn-wide" onClick={()=>document.getElementById('delete-account-modal').showModal()}>
+                    Delete
+                </button>
+                <dialog id="delete-account-modal" className="modal">
+                    <div className="modal-box">
+                        <form method="dialog">
+                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>  
+                        </form>
+                        <h3 className="font-bold text-lg">Warning!</h3>
+                        <p className="py-4">Once you click <strong>Delete Account</strong>, all account information (links, analytics, etc...) will be delete forever. Click <strong>Delete Account</strong> to proceed.</p>
+                        <div className="modal-action">
+                            <form method="dialog" onSubmit={deleteAccountSubmit}> 
+                                <button type="submit" className="btn btn-error btn-wide">Delete Account</button>
+                            </form>
+                        </div>
+                    </div>
+                </dialog>
             </div>
         </div>
     )

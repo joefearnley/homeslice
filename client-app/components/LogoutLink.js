@@ -29,7 +29,7 @@ const LogoutLink = () => {
 
     return (
         <a onClick={logout}>
-            Logout
+            Sign Out
         </a>
     )
 }
