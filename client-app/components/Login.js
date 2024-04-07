@@ -43,36 +43,27 @@ const Login = () => {
 
     return (
         <div>
-            <div className="mt-24 text-center">
-                <h2 className="text-4xl font-bold tracking-tight">Sign in into your account</h2>
+            <div className="mt-24 text-center mb-8">
+                <h2 className="text-4xl font-bold tracking-tight mb-4">Sign in into your account</h2>
                 <span className="text-sm">or <a href="/signup" className="text-gray-500 hover:underline"> register a new account </a> </span>
             </div>
             <div className="my-2 mx-4 flex justify-center md:mx-0">
-                <form className="w-full max-w-xl rounded-lg bg-white p-6" onSubmit={handleSubmit}>
-                    <div className="-mx-3 mb-6 flex flex-wrap">
-                        <div className="mb-6 w-full px-3 md:w-full">
-                            <label className="mb-2 block text-xs font-bold tracking-wide text-gray-700" htmlFor="Password">Username
-                                <input type="text" name="username" id="username" placeholder="@username" className="block w-full appearance-none rounded-lg border border-gray-400 bg-white py-3 px-3 font-medium leading-tight text-gray-900 focus:outline-none" required />
-                            </label>
-                        </div>
-                        <div className="mb-6 w-full px-3 md:w-full">
-                            <label className="mb-2 block text-xs font-bold tracking-wide text-gray-700" htmlFor="Password">Password
-                                <input type="password" name="password" id="password" placeholder="Password" className="block w-full appearance-none rounded-lg border border-gray-400 bg-white py-3 px-3 font-medium leading-tight text-gray-900 focus:outline-none" required />
-                            </label>
-                        </div>
-                        <div className="mb-3 flex w-full items-center justify-between px-3">
-                            <label htmlFor="remember" className="flex w-1/2 items-center cursor-pointer">
-                                <input type="checkbox" name="remember" id="remember" className="mr-1 bg-white shadow" />
-                                <span className="pt-1 text-sm text-gray-700">Remember Me</span>
-                            </label>
-                            <div className="w-1/2 text-right">
-                                <a href="#" className="text-sm tracking-tight text-gray-500 hover:underline">Forget your password?</a>
-                            </div>
-                        </div>
-                        <div className="mb-6 w-full px-3 md:w-full">
-                            <button className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-gray-900">Sign in</button>
+                <form className="w-full md:w-1/3" onSubmit={handleSubmit}>
+                    <div className="mb-5">
+                        <label htmlFor="username">Username</label>
+                        <div className="mt-3">
+                            <input type="text" placeholder="@username" id="username" name="username" className="input input-bordered w-full" />
                         </div>
                     </div>
+                    <div className="mb-5">
+                        <label htmlFor="username">Password</label>
+                        <div className="mt-3">
+                            <input type="password" placeholder="password" id="password" name="password" className="input input-bordered w-full" />
+                        </div>
+                    </div>
+                    <button type="submit" className="btn btn-primary">
+                        Sign in
+                    </button>
                 </form>
             </div>
         </div>

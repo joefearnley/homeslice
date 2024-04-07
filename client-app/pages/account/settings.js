@@ -172,8 +172,8 @@ const AccountSettings = () => {
                         <form method="dialog">
                             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>  
                         </form>
-                        <h3 className="font-bold text-lg">Warning!</h3>
-                        <p className="py-4">Once you click <strong>Delete Account</strong>, all account information (links, analytics, etc...) will be delete forever. Click <strong>Delete Account</strong> to proceed.</p>
+                        <h3 className="font-bold text-lg">Are you sure you want to delete your account?</h3>
+                        <p className="py-4">Once you click <strong>Delete Account</strong>, all account resources and data will be deleted forever. Click <strong>Delete Account</strong> to proceed.</p>
                         <div className="modal-action">
                             <form method="dialog" onSubmit={deleteAccountSubmit}> 
                                 <button type="submit" className="btn btn-error btn-wide">Delete Account</button>

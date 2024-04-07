@@ -1,37 +1,27 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Link from 'next/link';
+import RootLayout from '../components/RootLayout';
 
 export default function Home() {
   return (
-    <div className="bg-gray-50">
-        <Head>
-            <title>Homeslice</title>
-            <meta name="description" content="All of your internet locations in one place." />
-            <link rel="icon" href="/favicon.ico" />
-        </Head>
-
-        <main className="container mx-auto">
-            <div className="relative min-h-screen overflow-hidden py-6 sm:py-20">
-                <div className="relative px-6 pt-10 pb-8 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
-                    <div className="mx-auto max-w-md">
-                        <div className="divide-y divide-gray-300/50">
-                            <div className="space-y-6 py-8 text-base leading-7 text-gray-600 text-center">
-                                <h1 className="text-7xl font-bold">Homeslice</h1>
-                                <h3 className="text-lg">All of your internet locations in one place.</h3>
-                                <div className="sm:flex flex-row justify-evenly pt-3 w-3/4 sm:w-full">
-                                    <a href="/signup"  className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-gray-900">Sign Up</a>
-                                    <a href="/login" className="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-gray-900">Sign In</a>
-                                </div>
-                            </div>
-                        </div>
+    <div>
+        <RootLayout>
+            <div className="hero min-h-screen bg-base-200">
+                <div className="hero-content text-center">
+                    <div className="max-w-md">
+                        <h1 className="text-5xl font-bold flex gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+                            </svg>
+                            <span>Homeslice</span>
+                        </h1>
+                        <p className="py-8">All of your internet locations in one place.</p>
+                        <Link href="/signup"  className="btn btn-primary mr-4">Sign Up</Link>
+                        <Link href="/login" className="btn btn-primary ml-4">Sign In</Link>
                     </div>
                 </div>
-            </div>
-        </main>
-
-        <footer>
-
-        </footer>
+            </div>       
+        </RootLayout>
     </div>
   )
 }
