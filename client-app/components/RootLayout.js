@@ -8,11 +8,10 @@ const RootLayout = ({ children }) => {
                 <meta name="description" content="All of your internet locations in one place." />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            {children}
-
-            <footer>
-
-            </footer>
+            <main>
+                {children}
+            </main>
+            <footer></footer>
         </div>
     );
 };

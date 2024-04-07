@@ -1,11 +1,10 @@
 import Link from 'next/link';
 import RootLayout from '../components/RootLayout';
 
-export default function Home() {
-  return (
-    <div>
-        <RootLayout>
-            <div className="hero min-h-screen bg-base-200">
+const Home = () => {
+    return (
+        <div>
+            <div className="hero min-h-screen">
                 <div className="hero-content text-center">
                     <div className="max-w-md">
                         <h1 className="text-5xl font-bold flex gap-3">
@@ -20,8 +19,13 @@ export default function Home() {
                         <Link href="/login" className="btn btn-primary ml-4">Sign In</Link>
                     </div>
                 </div>
-            </div>       
-        </RootLayout>
-    </div>
-  )
+            </div>
+        </div>
+    )
 }
+
+Home.getLayout = (page) => (
+    <RootLayout>{page}</RootLayout>
+);
+
+export default Home;

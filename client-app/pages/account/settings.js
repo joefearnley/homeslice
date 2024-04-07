@@ -103,25 +103,25 @@ const AccountSettings = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="mb-5">
                         <label htmlFor="username">Username</label>
-                        <div className="mt-3">
+                        <div className="mt-2">
                             <input type="text" value={ user.username || '' } onChange={handleChange} placeholder="@username" id="username" name="username" className="input input-bordered w-full" />
                         </div>
                     </div>
                     <div className="mb-5">
                         <label htmlFor="firstname">First Name</label>
-                        <div className="mt-3">
+                        <div className="mt-2">
                             <input type="text" value={ user.first_name || ''} onChange={handleChange} placeholder="first name" id="first_name" name="first_name" className="input input-bordered w-full" />
                         </div>
                     </div>
                     <div className="mb-5">
                         <label htmlFor="lastname">Last Name</label>
-                        <div className="mt-3">
+                        <div className="mt-2">
                             <input type="text" value={ user.last_name || '' } onChange={handleChange} placeholder="last name" id="lastname" name="last_name" className="input input-bordered w-full" />
                         </div>
                     </div>
                     <div className="mb-5">
                         <label htmlFor="email">Email Address</label>
-                        <div className="mt-3">
+                        <div className="mt-2">
                             <input type="email" placeholder="name@email.com" onChange={handleChange} value={ user.email || '' }  id="email" name="email" className="input input-bordered w-full" />
                         </div>
                     </div>
@@ -142,13 +142,13 @@ const AccountSettings = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="mb-5">
                         <label htmlFor="firstname">New Password</label>
-                        <div className="mt-3">
+                        <div className="mt-2">
                             <input type="password" onChange={handleChange} placeholder="new password" id="password1" name="password1" className="input input-bordered w-full" />
                         </div>
                     </div>
                     <div className="mb-5">
                         <label htmlFor="lastname">New Password (again)</label>
-                        <div className="mt-3">
+                        <div className="mt-2">
                             <input type="password" onChange={handleChange} placeholder="new password (again)" id="password1" name="password1" className="input input-bordered w-full" />
                         </div>
                     </div>
