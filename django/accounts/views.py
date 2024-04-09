@@ -29,8 +29,6 @@ class AccountUpateView(UpdateView):
     def post(self, request, *args):
         form = self.form_class(data=request.POST, instance = request.user)
 
-        # self.object = self.get_object()
-
         if form.is_valid():
             form.save()
             messages.success(request, 'Account Updated')
@@ -38,12 +36,4 @@ class AccountUpateView(UpdateView):
             messages.error(request, form.errors)
 
         return redirect(self.success_url)
-
-    # def form_invalid(self, form):
-    #     return super().form_valid(form)
-
-    # def form_valid(self, form):
-    #     print('form is valid....')
-    #     form.save()
-    #     return super().form_valid(form)
 
