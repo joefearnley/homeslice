@@ -3,7 +3,7 @@ import LogoutLink from './LogoutLink';
 
 const Navbar = () => {
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar">
             <div className="flex-1">
                 <Link href="/" className="btn btn-ghost text-xl">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
