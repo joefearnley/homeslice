@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { getCookie } from 'cookies-next';
 
 const AccountSettings = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [showAlert, setShowAlert] = useState(false);
+    const [isLoadingInfo, setIsLoadingInfo] = useState(false);
+    const [isLoadingPassword, setIsLoadingPassword] = useState(false);
+    const [showInfoAlert, setShowInfoAlert] = useState(false);
+    const [showPasswordAlert, setShowPasswordAlert] = useState(false);
     const [user, setUser] = useState({});
     const authToken = getCookie('homeslice_auth_token');
 
@@ -16,9 +18,9 @@ const AccountSettings = () => {
         }));
     };
 
-    const handleSubmit = (event) => {
+    const handleInfoFormSubmit = (event) => {
         event.preventDefault();
-        setIsLoading(true);
+        setIsLoadingInfo(true);
 
         const bodyData = JSON.stringify({
             username: user.username,
@@ -39,12 +41,17 @@ const AccountSettings = () => {
         fetch(`${user.url}`, options)
             .then(response => response.json())
             .then(response => {
-                setShowAlert(true);
-                setIsLoading(false);
+                setShowInfoAlert(true);
+                setIsLoadingInfo(false);
             })
             .catch((error) => {
                 console.log(error);
             });
+    };
+
+    const handlePasswordFormSubmit = (event) => {
+        console.log('handling password change form submission');
+        setIsLoadingPassword(true);
     };
 
     const deleteAccountSubmit = (event) => {
@@ -92,71 +99,74 @@ const AccountSettings = () => {
             <article className="prose">
                 <h1 className="pb-8">Account Settings</h1>
             </article>
-            <div className="border rounded-md p-5 w-full md:w-1/2">
-                <div role="alert" className={`alert alert-success mt-5 mb-8 ${ showAlert ? 'block' : 'hidden' }`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span>Your information has been udpated!</span>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="border rounded-md p-5 w-full">
+                    <div role="alert" className={`alert alert-success mt-5 mb-8 ${ showInfoAlert ? '' : 'hidden' }`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span>Your information has been udpated!</span>
+                    </div>
+                    <article className="prose mb-5">
+                        <h2>My Information</h2>
+                    </article>
+                    <form onSubmit={handleInfoFormSubmit}>
+                        <div className="mb-5">
+                            <label htmlFor="username">Username</label>
+                            <div className="mt-2">
+                                <input type="text" value={ user.username || '' } onChange={handleChange} placeholder="@username" id="username" name="username" className="input input-bordered w-full" />
+                            </div>
+                        </div>
+                        <div className="mb-5">
+                            <label htmlFor="firstname">First Name</label>
+                            <div className="mt-2">
+                                <input type="text" value={ user.first_name || ''} onChange={handleChange} placeholder="first name" id="first_name" name="first_name" className="input input-bordered w-full" />
+                            </div>
+                        </div>
+                        <div className="mb-5">
+                            <label htmlFor="lastname">Last Name</label>
+                            <div className="mt-2">
+                                <input type="text" value={ user.last_name || '' } onChange={handleChange} placeholder="last name" id="lastname" name="last_name" className="input input-bordered w-full" />
+                            </div>
+                        </div>
+                        <div className="mb-5">
+                            <label htmlFor="email">Email Address</label>
+                            <div className="mt-2">
+                                <input type="email" placeholder="name@email.com" onChange={handleChange} value={ user.email || '' }  id="email" name="email" className="input input-bordered w-full" />
+                            </div>
+                        </div>
+                        <button type="submit" className="btn btn-primary">
+                            Submit
+                            {isLoadingInfo ? <span className="loading loading-dots loading-sm"></span> : null}
+                        </button>
+                    </form>
                 </div>
-                <article className="prose mb-5">
-                    <h2>My Information</h2>
-                </article>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-5">
-                        <label htmlFor="username">Username</label>
-                        <div className="mt-2">
-                            <input type="text" value={ user.username || '' } onChange={handleChange} placeholder="@username" id="username" name="username" className="input input-bordered w-full" />
-                        </div>
+                <div className="border rounded-md p-5 mt-8 md:mt-0 w-full">
+                    <div role="alert" className={`alert alert-success mt-5 mb-8 ${ showPasswordAlert ? '' : 'hidden' }`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span>Password has been udpated!</span>
                     </div>
-                    <div className="mb-5">
-                        <label htmlFor="firstname">First Name</label>
-                        <div className="mt-2">
-                            <input type="text" value={ user.first_name || ''} onChange={handleChange} placeholder="first name" id="first_name" name="first_name" className="input input-bordered w-full" />
+                    <article className="prose mb-5">
+                        <h2>Change Password</h2>
+                    </article>
+                    <form onSubmit={handlePasswordFormSubmit}>
+                        <div className="mb-5">
+                            <label htmlFor="firstname">New Password</label>
+                            <div className="mt-2">
+                                <input type="password" onChange={handleChange} placeholder="new password" id="password1" name="password1" className="input input-bordered w-full" />
+                            </div>
                         </div>
-                    </div>
-                    <div className="mb-5">
-                        <label htmlFor="lastname">Last Name</label>
-                        <div className="mt-2">
-                            <input type="text" value={ user.last_name || '' } onChange={handleChange} placeholder="last name" id="lastname" name="last_name" className="input input-bordered w-full" />
+                        <div className="mb-5">
+                            <label htmlFor="lastname">New Password (again)</label>
+                            <div className="mt-2">
+                                <input type="password" onChange={handleChange} placeholder="new password (again)" id="password1" name="password1" className="input input-bordered w-full" />
+                            </div>
                         </div>
-                    </div>
-                    <div className="mb-5">
-                        <label htmlFor="email">Email Address</label>
-                        <div className="mt-2">
-                            <input type="email" placeholder="name@email.com" onChange={handleChange} value={ user.email || '' }  id="email" name="email" className="input input-bordered w-full" />
-                        </div>
-                    </div>
-                    <button type="submit" className="btn btn-neutral btn-wide">
-                        Save
-                        {isLoading ? <span className="loading loading-dots loading-sm"></span> : null}
-                    </button>
-                </form>
-            </div>
-            <div className="border rounded-md p-5 mt-8 w-full md:w-1/2">
-                <div role="alert" className={`alert alert-success mt-5 mb-8 ${ showAlert ? 'block' : 'hidden' }`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <span>Password has been udpated!</span>
+                        <button type="submit" className="btn btn-primary">
+                            Submit
+                            {isLoadingPassword ? <span className="loading loading-dots loading-sm"></span> : null}
+                        </button>
+                    </form>
                 </div>
-                <article className="prose mb-5">
-                    <h2>Change Password</h2>
-                </article>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-5">
-                        <label htmlFor="firstname">New Password</label>
-                        <div className="mt-2">
-                            <input type="password" onChange={handleChange} placeholder="new password" id="password1" name="password1" className="input input-bordered w-full" />
-                        </div>
-                    </div>
-                    <div className="mb-5">
-                        <label htmlFor="lastname">New Password (again)</label>
-                        <div className="mt-2">
-                            <input type="password" onChange={handleChange} placeholder="new password (again)" id="password1" name="password1" className="input input-bordered w-full" />
-                        </div>
-                    </div>
-                    <button type="submit" className="btn btn-neutral btn-wide">
-                        Update
-                        {isLoading ? <span className="loading loading-dots loading-sm"></span> : null}
-                    </button>
-                </form>
             </div>
 
             <div className="border rounded-md p-5 mt-8 w-full md:w-1/2">
@@ -164,7 +174,7 @@ const AccountSettings = () => {
                     <h2>Delete Account</h2>
                 </article>
                 <p className="mb-5">Delete links and along with all account information.</p>
-                <button type="submit" className="btn btn-neutral btn-wide" onClick={()=>document.getElementById('delete-account-modal').showModal()}>
+                <button type="submit" className="btn btn-primary" onClick={()=>document.getElementById('delete-account-modal').showModal()}>
                     Delete
                 </button>
                 <dialog id="delete-account-modal" className="modal">
