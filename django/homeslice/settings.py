@@ -29,15 +29,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-
     'allauth',
     'allauth.account',
     'widget_tweaks',
-
     'corsheaders',
-
     'compressor',
-    
     'accounts',
     'profiles',
 ]
@@ -80,6 +76,10 @@ WSGI_APPLICATION = 'homeslice.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'mysql': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
@@ -101,7 +101,10 @@ if 'test' in sys.argv:
     }
 
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',

@@ -1,6 +1,6 @@
 import AuthLayout from '../../components/AuthLayout';
 import React, { useState, useEffect } from 'react';
-import { getCookie } from 'cookies-next';
+import { getCookie, deleteCookie } from 'cookies-next';
 
 const AccountSettings = () => {
     const [isLoadingInfo, setIsLoadingInfo] = useState(false);
@@ -50,8 +50,52 @@ const AccountSettings = () => {
     };
 
     const handlePasswordFormSubmit = (event) => {
-        console.log('handling password change form submission');
+        event.preventDefault();
+
         setIsLoadingPassword(true);
+
+        console.log(event.currentTarget);
+
+        const formData = new FormData(event.currentTarget)
+        const password = formData.get('password');
+        const confirmPassword = formData.get('confirm_password');
+
+        console.log(formData.get('password'));
+
+        const bodyData = JSON.stringify({
+            password,
+            confirmPassword,
+        });
+
+        console.log(bodyData);
+
+        const options = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${authToken}`,
+            },
+            body: bodyData,
+        };
+
+        fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/account/update-password/`, options)
+            .then(response => response.json())
+            .then(response => {
+
+                console.log(response);
+
+                // deleteCookie('homeslice_auth_token');
+                // setCookie('homeslice_auth_token', response.token, {
+                //     maxAge: 60 * 60 * 24 * 7,
+                //     path: '/',
+                // });
+
+                setShowPasswordAlert(true);
+                setIsLoadingPassword(false);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     const deleteAccountSubmit = (event) => {
@@ -100,7 +144,7 @@ const AccountSettings = () => {
                 <h1 className="pb-8">Account Settings</h1>
             </article>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="border rounded-md p-5 w-full">
                     <div role="alert" className={`alert alert-success mt-5 mb-8 ${ showInfoAlert ? '' : 'hidden' }`}>
                         <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -152,13 +196,13 @@ const AccountSettings = () => {
                         <div className="mb-5">
                             <label htmlFor="firstname">New Password</label>
                             <div className="mt-2">
-                                <input type="password" onChange={handleChange} placeholder="new password" id="password1" name="password1" className="input input-bordered w-full" />
+                                <input type="password" placeholder="new password" id="password" name="password" className="input input-bordered w-full" />
                             </div>
                         </div>
                         <div className="mb-5">
                             <label htmlFor="lastname">New Password (again)</label>
                             <div className="mt-2">
-                                <input type="password" onChange={handleChange} placeholder="new password (again)" id="password1" name="password1" className="input input-bordered w-full" />
+                                <input type="password" placeholder="new password (again)" id="confirm_password" name="confirm_password" className="input input-bordered w-full" />
                             </div>
                         </div>
                         <button type="submit" className="btn btn-primary">
@@ -180,7 +224,7 @@ const AccountSettings = () => {
                 <dialog id="delete-account-modal" className="modal">
                     <div className="modal-box">
                         <form method="dialog">
-                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>  
+                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>  
                         </form>
                         <h3 className="font-bold text-lg">Are you sure you want to delete your account?</h3>
                         <p className="py-4">Once you click <strong>Delete Account</strong>, all account resources and data will be deleted forever. Click <strong>Delete Account</strong> to proceed.</p>
