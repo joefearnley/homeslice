@@ -1,0 +1,25 @@
+{
+  "name": "homeslice",
+  "version": "1.0.0",
+  "description": "links....",
+  "main": "vite.config.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joefearnley/homeslice.git"
+  },
+  "author": "Joe Fearnley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joefearnley/homeslice/issues"
+  },
+  "homepage": "https://github.com/joefearnley/homeslice#readme",
+  "dependencies": {
+    "vite": "^6.2.6"
+  }
+}

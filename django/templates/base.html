@@ -1,5 +1,4 @@
-{% load compress %}
-{% load static %}
+{% load static django_vite %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,9 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homeslice</title>
 
-    {% compress css %}
-    <link rel="stylesheet" href="{% static 'src/output.css' %}">
-    {% endcompress %}
+    {% vite_hmr_client %}
+    {% vite_asset 'homeslice/static/js/main.js' %}
 </head>
 
 <body>
