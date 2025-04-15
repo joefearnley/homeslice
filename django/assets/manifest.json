@@ -1,8 +1,8 @@
 {
-  "homeslice/static/js/main.js": {
-    "file": "assets/main-l0sNRNKZ.js",
+  "static/js/main.js": {
+    "file": "assets/main-DSvBu4dE.js",
     "name": "main",
-    "src": "homeslice/static/js/main.js",
+    "src": "static/js/main.js",
     "isEntry": true
   }
 }
