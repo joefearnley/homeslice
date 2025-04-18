@@ -48,19 +48,19 @@
 
                     <div class="mt-5">
                         <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Username</label>
-                        {% render_field update_account_form.username placeholder="@username" id="username" name="login" type="text" autocomplete="username" required=True class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                        {% render_field update_account_form.username placeholder="@username" id="username" name="login" type="text" autocomplete="username" required=True class="bg-white shadow-sm border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
                     </div>
                     <div class="mt-5">
                         <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900">First Name</label>
-                        {% render_field update_account_form.first_name placeholder="First Name" id="first_name" name="first_name" type="text" autocomplete="first_name" required=True class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                        {% render_field update_account_form.first_name placeholder="First Name" id="first_name" name="first_name" type="text" autocomplete="first_name" required=True class="bg-white shadow-sm border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
                     </div>
                     <div class="mt-5">
                         <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900">First Name</label>
-                        {% render_field update_account_form.last_name placeholder="Last Name" id="last_name" name="login" type="text" autocomplete="last_name" required=True class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                        {% render_field update_account_form.last_name placeholder="Last Name" id="last_name" name="login" type="text" autocomplete="last_name" required=True class="bg-white shadow-sm border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
                     </div>
                     <div class="mt-5">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                        {% render_field update_account_form.email placeholder="@email" id="email" name="login" type="email" autocomplete="email" required=True class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                        {% render_field update_account_form.email placeholder="@email" id="email" name="login" type="email" autocomplete="email" required=True class="bg-white shadow-sm border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
                     </div>
                     <div class="mt-5">
                         <button type="submit" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 cursor-pointer">
@@ -78,22 +78,22 @@
                     {% csrf_token %}
                     <div class="mt-5">
                         <label for="id_oldpassword" class="block mb-2 text-sm font-medium text-gray-900">Current Password:</label>
-                        <input type="password" name="oldpassword" placeholder="Current Password" autocomplete="current-password" required="" id="id_oldpassword" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <input type="password" name="oldpassword" placeholder="Current Password" autocomplete="current-password" required="" id="id_oldpassword" class="shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     </div>
                     <div class="mt-5">
                         <label for="id_password1" class="block mb-2 text-sm font-medium text-gray-900">New Password:</label>
-                        <input type="password" name="password1" placeholder="New Password" autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password1" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <input type="password" name="password1" placeholder="New Password" autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password1" class="shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         <span class="helptext" id="id_password1_helptext"></span></p>
-                        <ul>
-                            <li>Your password can't be too similar to your other personal information.</li>
-                            <li>Your password must contain at least 8 characters.</li>
-                            <li>Your password can't be a commonly used password.</li>
-                            <li>Your password can't be entirely numeric.</li>
+                        <ul class="ml-4 mt-4 mb-8 list-disc list-inside">
+                            <li class="text-sm text-gray-500">Your password can't be too similar to your other personal information.</li>
+                            <li class="text-sm text-gray-500">Your password must contain at least 8 characters.</li>
+                            <li class="text-sm text-gray-500">Your password can't be a commonly used password.</li>
+                            <li class="text-sm text-gray-500">Your password can't be entirely numeric.</li>
                         </ul>    
                     </div>
                     <div class="mt-5">
                         <label for="id_password2" class="block mb-2 text-sm font-medium text-gray-900">New Password (again):</label>
-                        <input type="password" name="password2" placeholder="New Password (again)" required="" id="id_password2" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <input type="password" name="password2" placeholder="New Password (again)" required="" id="id_password2" class="shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     </div>
                     <div class="mt-5">
                         <button type="submit" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 cursor-pointer">
