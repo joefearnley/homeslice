@@ -11,8 +11,12 @@ class LinkListView(ListView):
     template = 'profiles/links.html'
 
     def get_queryset(self, **kwargs):
-        profile = self.request.account.profile
-        return Link.objects.filer
+        print(self.request.user.account)
+        links = Link.objects.filter(profile=self.request.user.profile)
+        
+        print(links)
+
+        return Link.objects.filter(profile=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
