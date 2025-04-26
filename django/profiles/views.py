@@ -9,25 +9,32 @@ from .models import Link, Profile
 
 class LinkListView(ListView):
     model = Link
-    template = 'profiles/links.html'
+    template_name = 'profiles/links/index.html'
 
-    def get_queryset(self, **kwargs):
+    def get_queryset(self, **kwargs):   
         return Link.objects.filter(profile=self.request.user.pk)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         account = Account.objects.get(pk=self.request.user.pk)
-        print(account.pk)
-        
-        profile = Profile.objects.get(account=account)
 
+        try:
+            profile = Profile.objects.get(account_id=account.pk).first()
+        except Profile.DoesNotExist:
+            profile = None
 
-        
-        # profile = account.profile
-        # context['links'] = profile.link_set.all()
+        try:
+            links = Link.objects.filter(profile=profile)
+        except Profile.DoesNotExist:
+            links = None
+
+        context['profile'] = profile
+        context['links'] = links
+
         return context
 
 
 class CreateLinkView(CreateView):
     form_class = LinkForm
     success_url = reverse_lazy('link-list')
+    template_name = 'profiles/links/create.html'

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load allauth widget_tweaks %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center px-4 py-8 my-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-2xl my-5 text-center">
+        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">Add Link</h1>
+        <p class="block my-8 text-sm font-medium text-gray-500">Already have an account? Then please <a href="{{ signup_url }}" class="font-bold">sign up</a>.</p>
+    </div>
+
+    <div class="w-full max-w-lg">
+        <form id="signin_form" method="post" action="{% url 'account_login' %}">
+            {% csrf_token %}
+
+            {{ form.non_field_errors | safe }}
+
+            {% for field in form %}
+            <div>
+                <div class="mb-5">
+                    {{ fieldf.errors | safe }}
+                    <label for="{{ field.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ field.label }}</label>
+                    {% render_field field class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                </div>
+            {% endfor %}
+                <div class="mt-5">
+                    <button type="submit" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 cursor-pointer">
+                        Create Link
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
