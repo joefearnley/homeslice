@@ -7,3 +7,8 @@ class LinkForm(forms.ModelForm):
     class Meta:
         model = Link
         fields = ['url', 'title', 'is_active']
+        widgets = {
+            'url': forms.TextInput(),
+            'title': forms.TextInput(),
+            'is_active': forms.CheckboxInput(),
+        }
