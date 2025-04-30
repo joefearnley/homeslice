@@ -9,7 +9,7 @@
     </div>
 
     <div class="w-full max-w-lg">
-        <form id="signin_form" method="post" action="{% url 'account_login' %}">
+        <form id="create_link_form" method="post" action="{% url 'link-create' %}">
             {% csrf_token %}
 
             {{ form.non_field_errors | safe }}
