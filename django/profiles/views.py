@@ -1,6 +1,7 @@
+from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
-from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from accounts.models import Account
 from profiles.models import Profile
 from .forms import LinkForm
@@ -34,7 +35,7 @@ class LinkListView(ListView):
         return context
 
 
-class CreateLinkView(CreateView):
+class CreateLinkView(LoginRequiredMixin, CreateView):
     form_class = LinkForm
     success_url = reverse_lazy('link-list')
     template_name = 'profiles/links/create.html'
