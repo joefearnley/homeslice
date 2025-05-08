@@ -19,7 +19,7 @@ class LinkTestMixin(TestCase):
         )
 
     def authenticate_account(self):
-        self.client.login(username=self.account.username, password=self.account.password)
+        self.client.force_login(user=self.account)
 
     def create_link(self):
         self.link = Link.objects.create(

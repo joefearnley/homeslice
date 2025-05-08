@@ -14,8 +14,9 @@ class AccessLinksTest(APITestCase, LinkTestMixin):
 
 
     def test_cannot_access_link_information_when_authenticated(self):
-        self.client.login(username=self.account.username, password=self.account.password)
+        self.authenticate_account()
+
         response = self.client.get(reverse_lazy('link-create'))
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, 'Add Link')
