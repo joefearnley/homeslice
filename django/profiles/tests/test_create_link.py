@@ -13,7 +13,7 @@ class AccessLinksTest(APITestCase, LinkTestMixin):
         self.assertRedirects(response, login_redirect_url, status_code=302, target_status_code=200)
 
 
-    def test_cannot_access_link_information_when_authenticated(self):
+    def test_can_access_link_information_when_authenticated(self):
         self.authenticate_account()
 
         response = self.client.get(reverse_lazy('link-create'))
