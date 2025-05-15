@@ -20,7 +20,7 @@ class Link(models.Model):
         Profile,
         on_delete=models.CASCADE,
     )
-    url = models.CharField(max_length=100, blank=False)
+    url = models.URLField(blank=False)
     title = models.CharField(max_length=250, blank=False)
     is_active = models.BooleanField(default=True)
 

@@ -39,3 +39,4 @@ class CreateLinkView(LoginRequiredMixin, CreateView):
     form_class = LinkForm
     success_url = reverse_lazy('link-list')
     template_name = 'profiles/links/create.html'
+    success_url = reverse_lazy('link-list')
