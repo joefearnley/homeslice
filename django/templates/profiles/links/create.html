@@ -16,12 +16,17 @@
             {% for field in form %}
             <div>
                 <div class="mb-5">
-                    {{ fieldf.errors | safe }}
                     <label for="{{ field.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ field.label }}</label>
                     {% if field.name == 'is_active' %}
                     {% render_field field class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" %}
                     {% else %}
                     {% render_field field class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" %}
+                    {% endif %}
+
+                    {% if field.errors %}
+                    <div class="text-red-500 text-sm mt-1">
+                        {{ field.errors | safe }}
+                    </div>
                     {% endif %}
                 </div>
             {% endfor %}
