@@ -12,16 +12,16 @@ class LinkForm(forms.ModelForm):
         instance.profile_id = self.user
 
         if commit:
-            instance.save()
+            instance.save(), 
 
         return instance
 
     class Meta:
         model = Link
-        fields = ['profile_id', 'url', 'title', 'is_active']
+        fields = ['profile', 'url', 'title', 'is_active']
 
         widgets = {
-            'profile_id': forms.HiddenInput(),
+            'profile': forms.HiddenInput(),
             'url': forms.URLInput(),
             'title': forms.TextInput(),
             'is_active': forms.CheckboxInput(),

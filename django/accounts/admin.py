@@ -1,7 +1,9 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 from accounts.models import Account
 
-class AccountAdmin(admin.ModelAdmin):
+
+class AccountAdmin(ModelAdmin):
     list_display = ('username', 'get_account_name', 'email', 'is_active',)
 
     def get_account_name(self, obj):
