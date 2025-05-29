@@ -7,9 +7,7 @@ class LinkForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(LinkForm, self).save(commit=False)
 
-        profile_id = self.data.get('profile_id')
-
-        instance.profile_id = self.user
+        instance.profile = self.user
 
         if commit:
             instance.save(), 
@@ -18,10 +16,9 @@ class LinkForm(forms.ModelForm):
 
     class Meta:
         model = Link
-        fields = ['profile', 'url', 'title', 'is_active']
+        fields = ['url', 'title', 'is_active']
 
         widgets = {
-            'profile': forms.HiddenInput(),
             'url': forms.URLInput(),
             'title': forms.TextInput(),
             'is_active': forms.CheckboxInput(),
