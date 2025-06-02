@@ -21,7 +21,7 @@ class LinkListView(ListView):
         account = Account.objects.get(pk=self.request.user.pk)
 
         try:
-            profile = Profile.objects.get(account_id=account.pk).first()
+            profile = Profile.objects.filter(account_id=account.pk).first()
         except Profile.DoesNotExist:
             profile = None
 
