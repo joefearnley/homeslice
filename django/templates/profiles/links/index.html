@@ -7,8 +7,10 @@
         <h1 class="text-2xl font-semibold mb-4">Links</h1>
         {% if links %}
             {% for link in links %}
+            <div class="mb-4 p-4 bg-white rounded-lg shadow-md">
                 <div>{{ link.title }}</div>
                 <div>{{ link.url }}</div>
+            </div>
             {% endfor %}
         {% else %}
             <div class="mb-8 font-semibold">No Link has been added yet.</div>
