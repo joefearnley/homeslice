@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import gettext as _
 from accounts.models import Account
@@ -41,3 +41,16 @@ class CreateLinkView(LoginRequiredMixin, CreateView):
     template_name = 'profiles/links/create.html'
     success_url = reverse_lazy('link-list')
     success_message = _('Profile Link successfully created!')
+
+
+class UpdateLinkView(LoginRequiredMixin, UpdateView):
+    form_class = LinkForm
+    template_name = 'profiles/links/update.html'
+    success_url = reverse_lazy('link-list')
+    success_message = _('Profile Link successfully updated!')
+
+
+class UpdateLinkView(LoginRequiredMixin, DeleteView):
+    model = Link
+    success_url = reverse_lazy('link-list')
+    success_message = _('Profile Link successfully delete!')
