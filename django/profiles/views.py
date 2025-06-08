@@ -50,7 +50,7 @@ class UpdateLinkView(LoginRequiredMixin, UpdateView):
     success_message = _('Profile Link successfully updated!')
 
 
-class UpdateLinkView(LoginRequiredMixin, DeleteView):
+class DeleteLinkView(LoginRequiredMixin, DeleteView):
     model = Link
     success_url = reverse_lazy('link-list')
     success_message = _('Profile Link successfully delete!')

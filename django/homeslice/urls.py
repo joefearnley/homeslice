@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import HomeView, DashboardView
 from accounts.views import AccountSettingsView, AccountUpateView
-from profiles.views import LinkListView, CreateLinkView, UpdateLinkView
+from profiles.views import LinkListView, CreateLinkView, UpdateLinkView, DeleteLinkView
 from allauth.account.views import signup, login, logout
 from api.urls import urlpatterns as api_urlpatterns
 
