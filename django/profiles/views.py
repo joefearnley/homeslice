@@ -9,7 +9,7 @@ from .forms import LinkForm
 from .models import Link, Profile
 
 
-class LinkListView(ListView):
+class LinkListView(LoginRequiredMixin, ListView):
     model = Link
     template_name = 'profiles/links/index.html'
 

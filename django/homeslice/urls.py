@@ -23,7 +23,7 @@ urlpatterns = [
     path('my-account/', AccountSettingsView.as_view(), name='my-account'),
     path('my-account/update', AccountUpateView.as_view(), name='update-my-account'),
 
-    path('profile/links/', LinkListView.as_view(), name='link-list'),
+    path('profile/links/', LinkListView.as_view(), name='link-index'),
     path('profile/links/create', CreateLinkView.as_view(), name='link-create'),
     path('profile/links/<pk>', UpdateLinkView.as_view(), name='link-update'),
     path('profile/links/<pk>/delete', DeleteLinkView.as_view(), name='link-delete'),
