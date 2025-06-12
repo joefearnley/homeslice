@@ -2,7 +2,15 @@ from django.db import models
 from accounts.models import Account
 
 
-class Profile(models.Model):
+class TimeStampMixin(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class Profile(TimeStampMixin):
     account = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
@@ -15,7 +23,7 @@ class Profile(models.Model):
         return self.title
 
 
-class Link(models.Model):
+class Link(TimeStampMixin):
     profile = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
