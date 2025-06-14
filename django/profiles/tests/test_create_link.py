@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 from .test_links_base import LinkTestMixin
 
 
-class AccessLinksTest(APITestCase, LinkTestMixin):
+class CreateLinksTest(APITestCase, LinkTestMixin):
     def test_cannot_access_link_information_when_not_authenticated(self):
         login_redirect_url = reverse_lazy('account_login') + '?next=' + reverse_lazy('link-create')
 
