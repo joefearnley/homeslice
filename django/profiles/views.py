@@ -42,6 +42,11 @@ class CreateLinkView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('link-list')
     success_message = _('Profile Link successfully created!')
 
+    def form_valid(self, form):
+        profile = Profile.objects.filter(account=self.request.user).first()
+        form.instance.profile = profile
+        return super().form_valid(form)
+
 
 class UpdateLinkView(LoginRequiredMixin, UpdateView):
     form_class = LinkForm
