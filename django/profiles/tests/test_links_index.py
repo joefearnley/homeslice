@@ -17,3 +17,9 @@ class LinksIndexTest(APITestCase, LinkTestMixin):
 
         self.assertRedirects(response, login_redirect_url, status_code=302, target_status_code=200)
 
+    def test_cannot_access_link_index_page_with_invalid_profile(self):
+        self.authenticate_account()
+        response = self.client.get(reverse_lazy('link-index'))
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertContains(response, 'Profile does not exist.', status_code=404)
