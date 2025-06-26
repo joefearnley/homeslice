@@ -49,6 +49,7 @@ class CreateLinkView(LoginRequiredMixin, CreateView):
 
 
 class UpdateLinkView(LoginRequiredMixin, UpdateView):
+    model = Link
     form_class = LinkForm
     template_name = 'profiles/links/update.html'
     success_url = reverse_lazy('link-list')
